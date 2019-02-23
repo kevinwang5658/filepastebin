@@ -4,22 +4,29 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('transferfirst:server');
-var http = require('http');
+const app = require('../app');
+const debug = require('debug')('transferfirst:server');
+const http = require('http');
+const SocketManager = require('./SocketManager');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+const server = http.createServer(app);
+
+const redis = require('redis');
+const pub = redis.createClient('18102', 'redis-18102.c89.us-east-1-3.ec2.cloud.redislabs.com');
+pub.auth('LQphEEdckP9eE62vKedKTLflcQ4J40Bm');
+
+const socketManager = new SocketManager(server, redis);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -88,3 +95,5 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+export {};

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="/styles/mobile.css"/>
+    <title>FilePasteBin</title>
+</head>
+<body>
+    <h1>FilePasteBin</h1>
+    <h1 id="code"></h1>
+    <h1 id="url"></h1>
+    <input id="in" type="file">
+    <button id="paste" disabled>Paste</button>
+    <div style="margin-top: 25px">
+        FilePasteBin is a free file transfer tool. Choose a tool then click paste. Use the link
+        displayed to download the file onto another device. Browsers supported include Firefox, Chrome,
+        and Safari on Windows, MacOS and Android. Mostly works on iOS
+    </div>
+    <script src="/javascript/adapter.js"></script>
+    <script src="socket.io/socket.io.js"></script>
+    <script src="/javascript/index.js"></script>
+</body>
+</html>
