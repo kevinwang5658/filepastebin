@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "clean": "rimraf dist/*",
-    "start": "node ./bin/www",
+    "start": "node ./dist/bin/www",
     "copyassets": "ts-node copyStaticAssets.ts",
-    "build": "npm-run-all copyassets"
+    "build": "npm-run-all copyassets",
+    "test": "mocha --require ts-node/register test/**/*"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
@@ -20,13 +21,10 @@
     "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "chai": "~4.2.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~4.0.0",
-    "karma-chrome-launcher": "~2.2.0",
-    "karma-coverage-istanbul-reporter": "~2.0.1",
-    "karma-jasmine": "~1.1.2",
-    "karma-jasmine-html-reporter": "^0.2.2",
+    "mocha": "~6.0.1",
     "protractor": "~5.4.0",
     "shelljs": "~0.8.3",
     "ts-node": "~7.0.0",
