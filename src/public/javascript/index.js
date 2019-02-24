@@ -3,7 +3,11 @@
 const inp_element = document.getElementById('in');
 const code_element = document.getElementById('code');
 const paste = document.getElementById('paste');
-const host_url = document.getElementById('url');
+const share_url = document.getElementById('share-url');
+const center_initial = document.getElementById("initial-wrapper");
+const center_host = document.getElementById("host-wrapper");
+const file_name = document.getElementById("file-name");
+const client_connected_number = document.getElementById("device-connected-number");
 
 //******************************************
 // Page Events
@@ -11,12 +15,19 @@ const host_url = document.getElementById('url');
 
 paste.addEventListener('click', (e) => {
   e.preventDefault();
-  socketInitialize(inp_element.files[0].slice(0, inp_element.files[0].size/5));
+  socketInitialize(inp_element.files[0]);
   paste.disabled = true;
+  paste.innerHTML = "<div class=\"lds-ring\"><div></div><div></div><div></div><div></div></div>";
+  paste.style.background = "#62A4F0";
 });
 
 inp_element.addEventListener('change', () => {
-  paste.disabled = !inp_element.files[0];
+  if (inp_element.files[0] && inp_element.files[0].name !== '') {
+    paste.disabled = false;
+
+    let filename = inp_element.files[0].name;
+    inp_element.nextElementSibling.innerHTML = filename.fontcolor("#4A4A4A");
+  }
 });
 
 function socketInitialize(file) {
@@ -38,8 +49,16 @@ function socketInitialize(file) {
 
   socket.on('host_created', (session) => {
     console.log('Created room: ' + session);
-    url.innerText = window.location + session;
+    share_url.innerText = window.location + session;
     code_element.innerText = session;
+    file_name.innerText = file.name;
+
+    center_initial.style.display = 'none';
+    center_host.style.display = 'flex';
+  });
+
+  socket.on('client_connected', (num) => {
+    client_connected_number.innerText = num;
   });
 
   socket.on('disconnect', (reason) => console.log(`Disconnected from Socket: ${reason}`));

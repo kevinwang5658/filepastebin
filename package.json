@@ -6,9 +6,10 @@
     "clean": "rimraf dist/*",
     "start": "node ./dist/bin/www",
     "copyassets": "ts-node copyStaticAssets.ts",
-    "build": "npm-run-all copyassets tsc",
+    "build": "npm-run-all clean copyassets tsc",
     "tsc": "tsc",
-    "test": "mocha --require ts-node/register test/**/*"
+    "test": "mocha --require ts-node/register test/**/*",
+    "build-then-run": "npm-run-all build start"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",

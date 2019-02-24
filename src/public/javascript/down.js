@@ -1,9 +1,12 @@
 'use strict';
 
-const down = document.getElementById('down');
+const down = document.getElementById('download');
 const progress = document.getElementById('progress');
 const code = document.getElementById('code');
 const file_name = document.getElementById('file_name');
+const reveal = document.getElementById('reveal');
+const slide_down = document.getElementById('text-wrapper');
+const download_speed = document.getElementById('download-speed');
 
 const SESSION = code.textContent;
 
@@ -13,6 +16,13 @@ const SESSION = code.textContent;
 
 down.addEventListener('click', () => {
   down.disabled = true;
+  down.style.background = "#62A4F0";
+
+  reveal.style.transform = 'translate(0px, 60px';
+  slide_down.style.transform = 'translate(0px, 200px)';
+  setTimeout( ()=> {
+    reveal.style.visibility = 'visible';
+  }, 750);
 
   rtcInitialize()
 });
@@ -135,12 +145,9 @@ peer.onnegotiationneeded = (event) => {
 };
 
 function rtcInitialize(){
-  dataChannel = [];
-  for (let counter = 0; counter < 5; counter++) {
-    dataChannel[counter] = peer.createDataChannel(counter.toString(12));
-    dataChannel[counter].binaryType = 'arraybuffer';
-    rtcSetupDataChannel(dataChannel[counter]);
-  }
+  dataChannel = peer.createDataChannel(SESSION);
+  dataChannel.binaryType = 'arraybuffer';
+  rtcSetupDataChannel(dataChannel);
 }
 
 function rtcSetupDataChannel(channel) {
