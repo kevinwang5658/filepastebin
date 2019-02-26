@@ -15,6 +15,8 @@ const client_connected_number = document.getElementById("device-connected-number
 
 paste.addEventListener('click', (e) => {
   e.preventDefault();
+  console.log('hi');
+
   socketInitialize(inp_element.files[0]);
   paste.disabled = true;
   paste.innerHTML = "<div class=\"lds-ring\"><div></div><div></div><div></div><div></div></div>";
@@ -22,6 +24,7 @@ paste.addEventListener('click', (e) => {
 });
 
 inp_element.addEventListener('change', () => {
+  console.log('hi');
   if (inp_element.files[0] && inp_element.files[0].name !== '') {
     paste.disabled = false;
 
