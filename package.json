@@ -5,9 +5,9 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "dev": "gulp copy-client && run-p nodemon watch",
-    "nodemon": "nodemon ./src/bin/www.ts 3000",
+    "nodemon": "nodemon ./src/server/www.ts 3000",
     "watch": "gulp watch",
-    "start": "gulp build && node ./dist/bin/www 3000"
+    "start": "gulp build && node ./dist/server/www.ts 3000"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",

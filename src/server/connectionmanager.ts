@@ -1,9 +1,11 @@
 import { Socket } from "socket.io";
 
-class ConnectionManager {
+class Connectionmanager {
     constructor(private io: SocketIO.Server, private client: Socket) {
         console.log(client.conn.id);
+
+
     }
 }
 
-module.exports = ConnectionManager;
+module.exports = Connectionmanager;

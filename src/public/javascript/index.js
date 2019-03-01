@@ -1,6 +1,7 @@
 'use strict';
 
 const inp_element = document.getElementById('in');
+const inp_element_label = document.getElementById("in_label");
 const code_element = document.getElementById('code');
 const paste = document.getElementById('paste');
 const share_url = document.getElementById('share-url');
@@ -29,7 +30,7 @@ inp_element.addEventListener('change', () => {
     paste.disabled = false;
 
     let filename = inp_element.files[0].name;
-    inp_element.nextElementSibling.innerHTML = filename.fontcolor("#4A4A4A");
+    inp_element_label.innerHTML = filename.fontcolor("#4A4A4A");
   }
 });
 

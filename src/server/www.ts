@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/server/env node
 
 /**
  * Environment variables
@@ -10,10 +10,10 @@ require('dotenv').config();
  * Module dependencies.
  */
 
-const app = require('../app');
+const app = require('./app');
 const debug = require('debug')('transferfirst:server');
 const http = require('http');
-const SocketManager = require('./SocketManager');
+const SocketManager = require('./socketmanager');
 
 /**
  * Get port from environment and store in Express.

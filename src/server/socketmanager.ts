@@ -1,13 +1,15 @@
 import {Socket} from "socket.io";
+import {Server} from "http";
+import {RedisClient} from "redis";
 
 const SocketIo = require('socket.io');
-const ConnectionManager = require('./ConnectionManager');
+const ConnectionManager = require('./connectionmanager');
 
-class SocketManager {
+class Socketmanager {
 
     private io: SocketIO.Server;
 
-    constructor(private server, private redisClient) {
+    constructor(private server: Server, private redisClient: RedisClient) {
         this.io = SocketIo(server);
         this.io.on('connect', this.connection);
         this.io.on('disconnect', this.disconnection);
@@ -23,6 +25,6 @@ class SocketManager {
 
 }
 
-module.exports = SocketManager;
+module.exports = Socketmanager;
 
 export {};
