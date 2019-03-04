@@ -10,6 +10,8 @@ const center_host = document.getElementById("host-wrapper");
 const file_name = document.getElementById("file-name");
 const client_connected_number = document.getElementById("device-connected-number");
 
+const Constants = window.Constants;
+
 //******************************************
 // Page Events
 //*******************************************
@@ -40,18 +42,18 @@ function socketInitialize(file) {
   // Socket
   //************************
 
-  let socket = io.connect();
+  let socket = window.io.connect();
 
   socket.on('connect', () => {
     console.log('Connected to Socket');
-    socket.emit('create_host', {
+    socket.emit(Constants.SocketIO.REQUEST_HOST, {
       fileName: file.name,
       fileSize: file.size,
       fileType: file.type
     })
   });
 
-  socket.on('host_created', (session) => {
+  socket.on(Constants.SocketIO.REQUEST_HOST_ACCEPTED, (session) => {
     console.log('Created room: ' + session);
     share_url.innerText = window.location + session;
     code_element.innerText = session;

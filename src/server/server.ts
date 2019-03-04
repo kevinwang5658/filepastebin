@@ -1,5 +1,10 @@
 #!/usr/server/env node
 
+import * as http from "http";
+import * as App from "./app";
+import {SocketManager} from "./rtc/socketmanager";
+import {HostModel} from "./models/models";
+
 /**
  * Environment variables
  */
@@ -10,14 +15,25 @@ require('dotenv').config();
  * Module dependencies.
  */
 
-const app = require('./app');
 const debug = require('debug')('transferfirst:server');
-const http = require('http');
-const SocketManager = require('./socketmanager');
+
+/**
+ * Redis
+ */
+
+const redis = require('redis');
+const redisClient = redis
+    .createClient({ host: 'redis-18102.c89.us-east-1-3.ec2.cloud.redislabs.com', port: '18102'});
+redisClient.auth('LQphEEdckP9eE62vKedKTLflcQ4J40Bm');
+
+//TODO: Switch from a map to redis in the future
+const hostMap = new Map<String, HostModel>();
 
 /**
  * Get port from environment and store in Express.
  */
+
+let app = App.newInstance(hostMap);
 
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
@@ -28,11 +44,7 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-const redis = require('redis');
-const pub = redis.createClient('18102', 'redis-18102.c89.us-east-1-3.ec2.cloud.redislabs.com');
-pub.auth('LQphEEdckP9eE62vKedKTLflcQ4J40Bm');
-
-const socketManager = new SocketManager(server, redis);
+const socketManager = new SocketManager(server, hostMap);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -101,5 +113,3 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
-
-export {};

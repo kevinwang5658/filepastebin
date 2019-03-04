@@ -1,30 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<% if (dev) { %>
-
-<!-- Dev Layout -->
-
-<head>
-    <title>FilePasteBin</title>
-</head>
-<body>
-    <h1>FilePasteBin</h1>
-    <h1 id="code"><%= code %></h1>
-    <h1 id="file-name"><%= fileName %></h1>
-    <h1 id="progress">0%</h1>
-    <button id="download" disabled>Download</button>
-    <script src="/javascript/download.js"></script>
-    <script src="/javascript/adapter.js"></script>
-    <script src="socket.io/socket.io.js"></script>
-    <script src="/javascript/down.js"></script>
-</body>
-</html>
-
-<% } else { %>
-
-<!-- Actual Layout -->
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height"/>
@@ -41,6 +17,21 @@
     </script>
 </head>
 <body>
+
+<% if (dev) { %>
+
+<!-- Dev Layout -->
+
+<h1>FilePasteBin</h1>
+<h1 id="code"><%= code %></h1>
+<h1 id="file-name"><%= fileName %></h1>
+<h1 id="progress">0%</h1>
+<button id="download" disabled>Download</button>
+
+<% } else { %>
+
+<!-- Actual Layout -->
+
 <div id="container">
     <div class="column ad side">
         <div class="line left"></div>
@@ -72,11 +63,13 @@
     </div>
 </div>
 <div id="code" style="display: none"><%= code%></div>
+
+
+<% }%>
+
 <script src="/javascript/download.js"></script>
 <script src="/javascript/adapter.js"></script>
 <script src="socket.io/socket.io.js"></script>
 <script src="/javascript/down.js"></script>
 </body>
-
-
-<% }%>
+</html>

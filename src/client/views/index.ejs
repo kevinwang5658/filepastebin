@@ -1,30 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<% if(dev) { %>
-
-<head>
-    <title>FilePasteBin</title>
-</head>
-<body>
-    <h1>FilePasteBin</h1>
-    <h1 id="code"></h1>
-    <h1 id="url"></h1>
-    <input id="in" type="file">
-    <button id="paste">Paste</button>
-    <div style="margin-top:25px;">
-        FilePasteBin is a free file transfer tool. Choose a file then click paste. Use the link <br/>
-        displayed to download the file onto another device. Browsers supported include Firefox, Chrome, <br/>
-        and Safari on Windows, MacOS, and Android. Mostly works on iOS
-    </div>
-    <script src="/javascript/adapter.js"></script>
-    <script src="socket.io/socket.io.js"></script>
-    <script src="/javascript/index.js"></script>
-</body>
-</html>
-
-<% } else { %>
-
 <head>
     <meta charset="utf-8">
     <meta name="description" content="Free file transfer tool. Allows you to transfer files between devices">
@@ -46,6 +21,30 @@
     </script>
 </head>
 <body>
+
+<% if(dev) { %>
+
+<h1>FilePasteBin</h1>
+<div id="code"></div>
+<div id="share-url"></div>
+<input id="in" type="file">
+<button id="paste">Paste</button>
+<div style="margin-top:25px;">
+    FilePasteBin is a free file transfer tool. Choose a file then click paste. Use the link <br/>
+    displayed to download the file onto another device. Browsers supported include Firefox, Chrome, <br/>
+    and Safari on Windows, MacOS, and Android. Mostly works on iOS
+</div>
+<div id="file-name"></div>
+<div class="device-connected">
+    <div class="device-connected-text-wrapper">
+        <span id="device-connected-number">0</span> <span>Devices connected</span>
+    </div>
+</div>
+<div id="host-wrapper"></div>
+<div id="initial-wrapper"></div>
+
+<% } else { %>
+
 <div id="container">
     <div class="column ad side">
         <div class="line left"></div>
@@ -91,9 +90,19 @@
         <div class="line right"></div>
     </div>
 </div>
-<script src="/javascript/adapter.js"></script>
-<script src="socket.io/socket.io.js"></script>
-<script src="/javascript/index.js"></script>
-</body>
 
 <% } %>
+
+<script src="/javascript/require.min.js"></script>
+<script>
+    require(['socket.io/socket.io', 'constants', 'javascript/adapter'], (io, constants) => {
+        window.io = io
+        window.Constants = constants
+
+        require(['javascript/index'], () => {
+
+        })
+    })
+</script>
+</body>
+</html>

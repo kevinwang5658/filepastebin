@@ -3,7 +3,6 @@
 const down = document.getElementById('download');
 const progress = document.getElementById('progress');
 const code = document.getElementById('code');
-const file_name = document.getElementById('file_name');
 const reveal = document.getElementById('reveal');
 const slide_down = document.getElementById('text-wrapper');
 const download_speed = document.getElementById('download-speed');
@@ -69,7 +68,7 @@ let sendOffer = (content) => socket.send(Message('signal', 'offer', content));
 
 let sendAnswer = (content) => socket.send(Message('signal', 'answer', content));
 
-let requestDownload = () => socket.send(Message('request', 'download'));
+let requestDownload = () => socket.send(Message('request', 'download', null));
 
 //***************
 // RTC
