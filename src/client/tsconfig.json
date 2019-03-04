@@ -7,7 +7,7 @@
       ]
     },
     "baseUrl": "./",
-    "outDir": "./dist/public/javascript",
+    "outDir": "./dist/client/javascript",
     "sourceMap": true,
     "declaration": false,
     "module": "umd",

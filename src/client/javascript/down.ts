@@ -1,6 +1,6 @@
 'use strict';
 
-const down = document.getElementById('download');
+const down = <HTMLInputElement>document.getElementById('download');
 const progress = document.getElementById('progress');
 const code = document.getElementById('code');
 const reveal = document.getElementById('reveal');
@@ -30,6 +30,7 @@ down.addEventListener('click', () => {
 // Socket.io
 //**********************
 
+// @ts-ignore
 let socket = io.connect();
 
 socket.on('connect', () => {
@@ -236,6 +237,7 @@ function run(dataConn) {
       type: incomingFileInfo.type
     });
 
+    // @ts-ignore
     download(blob, incomingFileInfo.fileName, incomingFileInfo.fileType)
   }
 }
