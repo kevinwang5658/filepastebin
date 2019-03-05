@@ -1,0 +1,3 @@
+This folder is served like client is the root directory. However only javascript, public and views are provided. The reason why it
+was structured this way was to make it easier for the build script to copy files to the output folder. The public and views folders are copied
+directly, while the javascript folder is compiled and processed.

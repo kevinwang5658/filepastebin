@@ -5,27 +5,32 @@ const nodemon = require('gulp-nodemon');
 const tsProject = ts.createProject('tsconfig.json');
 const tsClient = ts.createProject('./src/client/tsconfig.json');
 const watch = require('gulp-watch');
+const exec = require('child_process').exec;
 
 gulp.task('clean', () => {
     return del(['./dist'])
 });
 
-gulp.task('compile-ts', () => {
-    return tsProject.src()
-        .pipe(tsProject())
-        .js.pipe(gulp.dest('dist'))
+gulp.task('compile-ts', (done) => {
+    exec('tsc', (err, stdout, stderr) => {
+        console.log(stdout);
+        console.log(stderr);
+        done(err);
+    })
 });
 
-gulp.task('compile-client', () => {
-    return gulp.src('./src/client/public/javascript/**/*')
-        .pipe(tsClient())
-        .js.pipe(gulp.dest('dist/client/public/javascript'))
+gulp.task('compile-client', (done) => {
+    exec('cd src/client && tsc', (err, stdout, stderr) => {
+        console.log(stdout);
+        console.log(stderr);
+        done(err);
+    })
 });
 
 gulp.task('copy-client', gulp.parallel(
     function copypublic() {
-        return gulp.src('./src/client/public/styles/**/*')
-            .pipe(gulp.dest('dist/client/public/styles'))
+        return gulp.src('./src/client/public/**/*')
+            .pipe(gulp.dest('dist/client/public/'))
     }, function copyviews() {
         return gulp.src('./src/client/views/**/*')
             .pipe(gulp.dest('dist/client/views'))
@@ -37,8 +42,8 @@ gulp.task('build', gulp.series(
 ));
 
 gulp.task('watch-public', () => {
-    watch('src/client/public/styles/**/*', { ignoreInitial: true })
-        .pipe(gulp.dest('dist/client/public/styles'))
+    watch('src/client/public/**/*', { ignoreInitial: true })
+        .pipe(gulp.dest('dist/client/public/'))
 });
 
 gulp.task('watch-views', () => {
@@ -47,20 +52,22 @@ gulp.task('watch-views', () => {
 });
 
 gulp.task('watch-client', () => {
-   watch('src/client/public/javascript/**/*', { ignoreInitial: true})
-       .pipe(tsClient())
-       .js
-       .pipe(gulp.dest('dist/client/public/javascript'))
+   gulp.watch('src/client/javascript/**/*', { ignoreInitial: true},
+       (done)=> {exec('cd src/client && tsc', (err, stdout, stderr) => {
+           console.log(stdout);
+           console.log(stderr);
+           done(err);
+       })})
 });
 
-gulp.task('nodemon', gulp.series('compile-ts', (done) => {
+gulp.task('nodemon', (done) => {
     return nodemon({
         script: 'dist/server/server.js',
-        watch: ['src/server', 'src/constants'],
+        watch: ['src/server', 'src/shared'],
         tasks: ['compile-ts'],
         done: done
     })
-}));
+});
 
 gulp.task('watch', gulp.series(
     gulp.parallel('watch-public', 'watch-views', 'watch-client'))
@@ -69,6 +76,7 @@ gulp.task('watch', gulp.series(
 gulp.task('start-dev', (done)=> {
     gulp.series(
         'clean',
+        'compile-ts',
         gulp.parallel('copy-client', 'compile-client'),
         gulp.parallel('nodemon', 'watch'))(done)
 });

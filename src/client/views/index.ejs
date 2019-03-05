@@ -92,16 +92,10 @@
 </div>
 
 <% } %>
-
 <script src="/libs/require.min.js"></script>
 <script>
-    require(['socket.io/socket.io', 'constants', 'libs/adapter'], (io, constants) => {
-        window.io = io
-        window.Constants = constants
+    require(['javascript/index'], () => {
 
-        require(['index'], () => {
-
-        })
     })
 </script>
 </body>

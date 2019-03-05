@@ -5,12 +5,13 @@
     "rootDir": "src/",
     "baseUrl": ".",
     "sourceMap": true,
-    "declaration": false,
+    "declaration": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "module": "umd",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "composite": true,
     "importHelpers": true,
     "target": "es5",
     "typeRoots": [
@@ -25,10 +26,11 @@
       ]
     }
   },
+
   "include": [
-    "src/**/*"
+    "src/**/*", "src/shared/**/*"
   ],
   "exclude": [
-    "src/client/public"
+    "src/client/**/*"
   ]
 }

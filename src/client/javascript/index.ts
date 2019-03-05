@@ -13,13 +13,17 @@ const client_connected_number = document.getElementById("device-connected-number
 // @ts-ignore
 const Constants = window.Constants;
 
+import {SocketIO} from "../../shared/constants";
+
+import {B} from './a'
+console.log(SocketIO);
+
 //******************************************
 // Page Events
 //*******************************************
 
 paste.addEventListener('click', (e) => {
     e.preventDefault();
-    console.log('hi');
 
     socketInitialize(inp_element.files[0]);
     paste.disabled = true;
@@ -28,7 +32,6 @@ paste.addEventListener('click', (e) => {
 });
 
 inp_element.addEventListener('change', () => {
-    console.log('hi');
     if (inp_element.files[0] && inp_element.files[0].name !== '') {
         paste.disabled = false;
 

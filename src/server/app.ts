@@ -26,21 +26,22 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
-  app.use(express.static(path.join(__dirname, '../client/public')));
-  app.use(express.static(path.join(__dirname, '../shared')));
+  app.use('/', express.static(path.join(__dirname, '../client/public')));
+  app.use('/shared', express.static(path.join(__dirname, '../shared')));
+  app.use('/javascript', express.static(path.join(__dirname, '../client/javascript')));
 
-  app.get('/', (req: Request, res: Response, next: NextFunction) => {
+  app.get('/', (req: Request, res: Response) => {
     res.render('index', { dev: process.env.DEV && process.env.DEBUG });
   });
 
   app.get('/:room_id', (req: Request, res: Response, next: NextFunction) => {
     if (req.params.room_id && hostMap.get(req.params.room_id)) {
 
-      let roomId = req.params.room_id;
+      let sessionId = req.params.room_id;
 
       res.render('download', {
         dev: process.env.DEV && process.env.DEBUG,
-        code: roomId,
+        code: sessionId,
         fileName: 'name'
       })
     } else {

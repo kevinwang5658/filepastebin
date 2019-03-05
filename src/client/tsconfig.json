@@ -7,15 +7,16 @@
       ]
     },
     "baseUrl": "./",
-    "outDir": "./dist/client/javascript",
+    "outDir": "../../dist/client/",
     "sourceMap": true,
-    "declaration": false,
+    "declaration": true,
     "module": "umd",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "importHelpers": true,
-    "allowJs": true,
+    "composite": true,
+    "importHelpers": false,
+    "allowJs": false,
     "target": "es5",
     "typeRoots": [
       "node_modules/@types"
@@ -25,5 +26,6 @@
       "dom"
     ]
   },
-  "include": ["./javascript/**/*"]
+  "include": ["javascript/**/*"],
+  "references": [{ "path": "../../tsconfig.json" }]
 }
