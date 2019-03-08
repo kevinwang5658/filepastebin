@@ -1,5 +1,7 @@
 'use strict';
 
+import * as SocketIO from "socket.io";
+
 const inp_element = <HTMLInputElement>document.getElementById('in');
 const inp_element_label = document.getElementById("in_label");
 const code_element = document.getElementById('code');
@@ -10,13 +12,9 @@ const center_host = document.getElementById("host-wrapper");
 const file_name = document.getElementById("file-name");
 const client_connected_number = document.getElementById("device-connected-number");
 
-// @ts-ignore
-const Constants = window.Constants;
-
-import {SocketIO} from "../../shared/constants";
-
-import {B} from './a'
-console.log(SocketIO);
+import {Constants} from "../../shared/constants";
+import {Socket} from "socket.io";
+declare const io: any;
 
 //******************************************
 // Page Events
@@ -46,19 +44,18 @@ function socketInitialize(file) {
     // Socket
     //************************
 
-    // @ts-ignore
-    let socket = window.io.connect();
+    let socket: Socket = io.connect();
 
-    socket.on('connect', () => {
+    socket.on(Constants.CONNECT, () => {
         console.log('Connected to Socket');
-        socket.emit(Constants.SocketIO.REQUEST_HOST, {
+        socket.emit(Constants.REQUEST_HOST, <Constants.RequestHostRequestModel>{
             fileName: file.name,
             fileSize: file.size,
             fileType: file.type
         })
     });
 
-    socket.on(Constants.SocketIO.REQUEST_HOST_ACCEPTED, (session) => {
+    socket.on(Constants.REQUEST_HOST_ACCEPTED, (session) => {
         console.log('Created room: ' + session);
         share_url.innerText = window.location + session;
         code_element.innerText = session;

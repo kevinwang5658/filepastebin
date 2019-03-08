@@ -5,8 +5,10 @@ import {Host} from "./host";
 import * as redis from "redis";
 import * as randomstring from "randomstring";
 
-import * as Constants from '../../shared/constants'
 import {HostModel} from "../models/models";
+import {Constants} from "../../shared/constants";
+import RequestHostRequestModel = Constants.RequestHostRequestModel;
+import {Client} from "./client";
 
 const SocketIo = require('socket.io');
 
@@ -14,17 +16,24 @@ export class SocketManager {
 
     private io: SocketIO.Server;
 
-    constructor(private server: Server, private hostMap: Map<String, HostModel>) {
+    constructor(private server: Server, private hostMap: Map<string, HostModel>) {
         this.io = new SocketIo(server);
         this.io.on('connect', this.connection);
     }
 
     private connection = (socket: Socket) => {
-        socket.on(Constants.SocketIO.REQUEST_HOST, () => {
+        socket.on(Constants.REQUEST_HOST, (req: RequestHostRequestModel) => {
             let host = new Host(socket, this.io, this.hostMap);
             host.createHost();
 
+            console.log(req);
+
             socket.on('disconnect', () => host.destroyHost())
         });
+
+        socket.on(Constants.REQUEST_CLIENT, (session: string) => {
+            let client = new Client(socket, this.io, this.hostMap, session);
+            client.createClient();
+        })
     }
 }

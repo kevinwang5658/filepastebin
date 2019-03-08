@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import * as Constants from '../../shared/constants'
+import { Constants } from '../../shared/constants'
 import {RedisClient} from "redis";
 import {HostModel} from "../models/models";
 import {Logger} from "../config/logger";
@@ -7,15 +7,15 @@ import {Logger} from "../config/logger";
 import * as randomstring from 'randomstring'
 import {Base} from "./base";
 
-export class Host extends Base{
+export class Host extends Base {
 
     private model: HostModel;
 
     constructor(
-        private socket: Socket,
+        socket: Socket,
         private io: SocketIO.Server,
-        private hostMap: Map<String, HostModel>) {
-        super()
+        private hostMap: Map<string, HostModel>) {
+        super(socket)
     }
 
     public createHost() {
@@ -27,7 +27,7 @@ export class Host extends Base{
         this.hostMap.set(sessionId, this.model);
 
         this.socket.join(sessionId);
-        this.socket.emit(Constants.SocketIO.REQUEST_HOST_ACCEPTED, sessionId);
+        this.socket.emit(Constants.REQUEST_HOST_ACCEPTED, sessionId);
 
         Logger.info(`Host created: ${this.model.sessionId}`);
     }

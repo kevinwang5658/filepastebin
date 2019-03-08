@@ -1,5 +1,7 @@
 'use strict';
 
+import {Constants} from "../../shared/constants";
+
 const down = <HTMLInputElement>document.getElementById('download');
 const progress = document.getElementById('progress');
 const code = document.getElementById('code');
@@ -36,10 +38,10 @@ let socket = io.connect();
 socket.on('connect', () => {
   console.log('Connected to socket');
 
-  socket.emit('request_join', SESSION);
+  socket.emit(Constants.REQUEST_CLIENT, SESSION);
 });
 
-socket.on('client_joined', () => {
+socket.on(Constants.REQUEST_CLIENT_ACCEPTED, () => {
   console.log('Client joined');
 
   down.disabled = false;

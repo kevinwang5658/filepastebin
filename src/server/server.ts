@@ -27,7 +27,7 @@ const redisClient = redis
 redisClient.auth('LQphEEdckP9eE62vKedKTLflcQ4J40Bm');
 
 //TODO: Switch from a map to redis in the future
-const hostMap = new Map<String, HostModel>();
+const hostMap = new Map<string, HostModel>();
 
 /**
  * Get port from environment and store in Express.
