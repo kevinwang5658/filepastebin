@@ -38,17 +38,18 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
     if (req.params.room_id && hostMap.get(req.params.room_id)) {
 
       let sessionId = req.params.room_id;
+      let hostModel = hostMap.get(req.params.room_id);
 
       res.render('download', {
         dev: process.env.DEV && process.env.DEBUG,
         code: sessionId,
-        fileName: 'name'
+        fileName: hostModel.fileName,
+        fileSize: hostModel.fileSize
       })
     } else {
       next()
     }
   });
-
 
 // catch 404 and forward to error handler
   app.use(function(req, res, next) {

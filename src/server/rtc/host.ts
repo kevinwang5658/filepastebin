@@ -6,6 +6,8 @@ import {Logger} from "../config/logger";
 
 import * as randomstring from 'randomstring'
 import {Base} from "./base";
+import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
+import RequestHostRequestModel = Constants.RequestHostRequestModel;
 
 export class Host extends Base {
 
@@ -18,16 +20,25 @@ export class Host extends Base {
         super(socket)
     }
 
-    public createHost() {
-        let sessionId = this.generateSessionID();
+    public createHost(req: RequestHostRequestModel) {
+        let roomId = this.generateSessionID();
         this.model = {
-            sessionId: sessionId,
+            sessionId: roomId,
             hostId: this.socket.id,
-        };
-        this.hostMap.set(sessionId, this.model);
+            fileName: req.fileName,
+            fileSize: req.fileSize,
+            fileType: req.fileType
 
-        this.socket.join(sessionId);
-        this.socket.emit(Constants.REQUEST_HOST_ACCEPTED, sessionId);
+        };
+        this.hostMap.set(roomId, this.model);
+
+        this.socket.join(roomId);
+        this.socket.emit(Constants.REQUEST_HOST_ACCEPTED, <RequestHostAcceptedModel>{
+            roomId: roomId,
+            fileName: req.fileName,
+            fileSize: req.fileSize,
+            fileType: req.fileType
+        });
 
         Logger.info(`Host created: ${this.model.sessionId}`);
     }
