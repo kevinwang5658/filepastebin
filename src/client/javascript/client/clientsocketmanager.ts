@@ -25,15 +25,22 @@ export class ClientSocketManager {
         }
     };
 
+    public onprogresschanged: (progress: number) => void = (progress) => {};
+
     private requestClient = () => {
         this.socket.emit(REQUEST_CLIENT, this.roomId)
     };
 
     private requestClientAccepted = (res: RequestClientAcceptedModel) => {
-        this.rtcManager = new ClientRTCManager(this.socket, res.fileName, res.fileSize, res.fileType)
+        this.rtcManager = new ClientRTCManager(this.socket, res.fileName, res.fileSize, res.fileType);
+        this.rtcManager.onprogresschanged = this.handleProgressChanged;
     };
 
     private onmessage = (message: Message) => {
         this.rtcManager.handleMessage(message)
+    };
+
+    private handleProgressChanged = (progress: number) => {
+        this.onprogresschanged(progress);
     }
 }

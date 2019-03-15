@@ -37,3 +37,7 @@ client.addEventListener('click', () => {
 
   socketManager.requestDownload()
 });
+
+socketManager.onprogresschanged = (num: number) => {
+  progress.innerText = `${num.toFixed(2)}%`
+};

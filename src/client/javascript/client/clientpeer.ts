@@ -2,8 +2,12 @@ import {Socket} from "socket.io";
 import {FileChunkRequest, Message, MessageAction, MessageType} from "../connection/message";
 import {ClientPeerWrapper} from "../connection/peerwrapper";
 import {ExternalPromise} from "../connection/externalpromise";
+import {Constants} from "../../../shared/constants";
+import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
 
 export class ClientPeer {
+
+    public progress = 0;
 
     private rtcPeer: RTCPeerConnection;
     private rtcWrapper: ClientPeerWrapper;
@@ -13,7 +17,7 @@ export class ClientPeer {
 
     private fileData: ArrayBuffer[] = [];
 
-    constructor(public id: string, private socket: Socket, private fileName: string, private chunkStart: number, private chunkEnd: number){
+    constructor(public id: string, private socket: Socket, private fileName: string, private chunkStart: number, private chunkEnd: number, private chunkSize: number){
         this.rtcPeer = new RTCPeerConnection();
         this.rtcWrapper = new ClientPeerWrapper(this.rtcPeer, id, socket);
 
@@ -27,6 +31,8 @@ export class ClientPeer {
     public getCompleteListener() {
         return this.externalPromise.promise;
     }
+
+    public onprogresschanged: (number: number) => void = (number) => {};
 
     private requestFileChunk = () => this.socket.send(
         new Message(
@@ -57,9 +63,15 @@ export class ClientPeer {
 
     private onmessage = (message: MessageEvent) => {
         if (message.data !== 'eof') {
-            this.fileData.push(message.data)
+            this.fileData.push(message.data);
+            this.progress = (this.fileData.length * BYTES_PER_CHUNK) / this.chunkSize
         } else {
-            this.externalPromise.resolve(this.fileData)
+            this.externalPromise.resolve(this.fileData);
+            this.progress = 1;
+            this.dataChannel.close();
+            this.rtcPeer.close();
         }
+
+        this.onprogresschanged(this.progress);
     }
 }

@@ -15,7 +15,7 @@ export class ClientRTCManager {
         this.workerFileSize = Math.ceil(fileSize / NUMBER_WORKERS);
     }
 
-    initializeWorkers = () => {
+    public initializeWorkers = () => {
         let chunkStart = 0;
         while (chunkStart < this.fileSize) {
             let id = this.fileName + chunkStart;
@@ -27,7 +27,8 @@ export class ClientRTCManager {
                     this.socket,
                     this.fileName,
                     chunkStart,
-                    Math.min(this.fileSize, chunkStart + this.workerFileSize)));
+                    Math.min(this.fileSize, chunkStart + this.workerFileSize),
+                    this.workerFileSize));
 
             chunkStart += this.workerFileSize;
         }
@@ -35,13 +36,26 @@ export class ClientRTCManager {
         Promise.all([ ...this.workers.values() ].map((peer: ClientPeer) => peer.getCompleteListener()))
             .then((value: ArrayBuffer[][]) => {
                 this.onDataLoaded(value)
-            })
+            });
+
+        [ ...this.workers.values() ].forEach((peer: ClientPeer) => peer.onprogresschanged = this.handleprogresschanged)
     };
 
-    handleMessage = (message: Message) => {
+    public handleMessage = (message: Message) => {
         if (message.type === MessageType.Signal) {
             this.workers.get(message.senderId).handleMessage(message);
         }
+    };
+
+    public onprogresschanged: (number: number) => void = number => {};
+
+    private handleprogresschanged = () => {
+        let progress = [ ...this.workers.values() ]
+            .map((peer: ClientPeer) => peer.progress)
+            .map((progress) => progress * (this.workerFileSize / this.fileSize) * 100)
+            .reduce((previousValue, currentValue) => previousValue + currentValue);
+
+        this.onprogresschanged(progress);
     };
 
     private onDataLoaded = (value: ArrayBuffer[][]) => {
