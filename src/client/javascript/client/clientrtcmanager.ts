@@ -32,11 +32,7 @@ export class ClientRTCManager {
             chunkStart += this.workerFileSize;
         }
 
-        Promise.all([ ...this.workers.values() ].map((peer: ClientPeer) => {
-            console.log(peer.id);
-
-            return peer.getCompleteListener()
-        }))
+        Promise.all([ ...this.workers.values() ].map((peer: ClientPeer) => peer.getCompleteListener()))
             .then((value: ArrayBuffer[][]) => {
                 this.onDataLoaded(value)
             })
