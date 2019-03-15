@@ -1427,7 +1427,7 @@
     }
 
     function shimSendThrowTypeError(window) {
-      if (!(window.RTCPeerConnection && 'createDataChannel' in window.RTCPeerConnection.prototype)) {
+      if (!(window.RTCPeerConnection && 'initDataChannel' in window.RTCPeerConnection.prototype)) {
         return;
       }
 

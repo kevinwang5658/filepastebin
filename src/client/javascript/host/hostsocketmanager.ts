@@ -21,7 +21,7 @@ export class HostSocketManager {
         socket.on(REQUEST_HOST_ACCEPTED, this.onhost);
         socket.on(MESSAGE, this.onmessage);
 
-        this.peerManager = new HostPeerManager(socket);
+        this.peerManager = new HostPeerManager(socket, file);
         this.requestHost();
     }
 

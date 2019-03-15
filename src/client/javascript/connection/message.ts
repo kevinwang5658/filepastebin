@@ -15,7 +15,8 @@ export enum MessageType {
 export enum MessageAction {
     Offer = 'offer',
     Answer = 'answer',
-    CreatePeer = 'create-peer'
+    CreatePeer = 'create-peer',
+    IceCandidate = 'ice-candidate'
 }
 
 export class FileChunkRequest {

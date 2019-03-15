@@ -1,9 +1,9 @@
 import {Socket} from "socket.io";
-import {BasePeer} from "./basepeer";
+import {BasePeerWrapper} from "./peerwrapper";
 
 export class BaseManager {
 
-    protected peerList: BasePeer[];
+    protected peerList: BasePeerWrapper[];
 
     constructor(protected socket: Socket) {
         this.peerList = []

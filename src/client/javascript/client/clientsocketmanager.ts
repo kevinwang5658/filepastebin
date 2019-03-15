@@ -4,6 +4,8 @@ import REQUEST_CLIENT = Constants.REQUEST_CLIENT;
 import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;
 import {ClientRTCManager} from "./clientrtcmanager";
 import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
+import {Message} from "../connection/message";
+import MESSAGE = Constants.MESSAGE;
 
 export class ClientSocketManager {
 
@@ -12,6 +14,7 @@ export class ClientSocketManager {
     constructor(private socket: Socket,
                 private roomId: string) {
         socket.on(REQUEST_CLIENT_ACCEPTED, this.requestClientAccepted);
+        socket.on(MESSAGE, this.onmessage);
 
         this.requestClient()
     }
@@ -27,6 +30,10 @@ export class ClientSocketManager {
     };
 
     private requestClientAccepted = (res: RequestClientAcceptedModel) => {
-        this.rtcManager = new ClientRTCManager(this.socket, res.fileName, res.fileSize)
+        this.rtcManager = new ClientRTCManager(this.socket, res.fileName, res.fileSize, res.fileType)
+    };
+
+    private onmessage = (message: Message) => {
+        this.rtcManager.handleMessage(message)
     }
 }

@@ -46,6 +46,20 @@ export namespace Constants {
     // RTC Constants
     //*********************
 
-    export const CHUNK_SIZE = 15000;
+    export const BYTES_PER_CHUNK = 15000;
+    export const MAX_BUFFER = 100 * 1024;
+
     export const NUMBER_WORKERS = 10;
+    export const RTC_OPEN = 'open';
+
+    //***********************
+    // Channel Constants
+    //************************
+
+    // client =====> host
+    export const READY = 'ready';
+    // bytes are sent
+    // host =====> client
+    export const EOF = 'eof';
+
 }

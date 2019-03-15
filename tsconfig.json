@@ -11,6 +11,7 @@
     "module": "umd",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "downlevelIteration": true,
     "composite": true,
     "importHelpers": true,
     "target": "es5",
