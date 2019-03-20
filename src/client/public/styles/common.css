@@ -7,6 +7,10 @@ html, body {
     font-family: Helvetica, Arial, sans-serif;
 }
 
+p {
+    color: #4A4A4A;
+}
+
 #container {
     display: flex;
     width: 100%;
@@ -39,12 +43,10 @@ html, body {
 }
 
 .column.side {
-    width: 230px;
-    flex: 0 0 230px;
+    width: 400px;
 }
 
 .column.center {
-    all: revert;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -67,7 +69,7 @@ html, body {
 
 
 #logo {
-    height: 250px;
+    height: 200px;
     display: flex;
     justify-content: center;
 }
@@ -87,6 +89,9 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .center-wrapper {
@@ -105,10 +110,13 @@ html, body {
     font-weight: bold;
     font-size: 20px;
     color: white;
+    cursor: pointer;
 }
 
-.blue-round:hover {
-    background: #2078D5;
+@media (hover: hover) {
+    .blue-round:hover .blue-round:active {
+        background: #2078D5;
+    }
 }
 
 .blue-round:focus {

@@ -42,9 +42,7 @@ export class ClientRTCManager {
     };
 
     public handleMessage = (message: Message) => {
-        if (message.type === MessageType.Signal) {
-            this.workers.get(message.senderId).handleMessage(message);
-        }
+        this.workers.get(message.senderId).handleMessage(message);
     };
 
     public onprogresschanged: (number: number) => void = number => {};

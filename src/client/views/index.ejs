@@ -7,8 +7,10 @@
     <meta name="author" content="Kevin Wang">
     <meta name="viewport" content="width=device-width, height=device-height">
     <link rel="stylesheet" type="text/css" href="styles/common.css">
+    <link rel="stylesheet" type="text/css" href="styles/index-dialog.css">
     <link rel="stylesheet" type="text/css" href="styles/index-initial.css">
     <link rel="stylesheet" type="text/css" href="styles/index-host.css">
+    <link rel="stylesheet" type="text/css" href="styles/loading-ring-gray.css">
     <link rel="stylesheet" type="text/css" href="styles/loading-ring.css">
     <title>FilePasteBin</title>
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -44,17 +46,12 @@
 <div id="initial-wrapper"></div>
 
 <% } else { %>
-
 <div id="container">
     <div class="column ad side">
         <div class="line left"></div>
     </div>
     <div class="column center">
-        <div id="top-bar">
-            <div id="mini-logo">
-                <span class="mini-title front">File</span><span class="mini-title end">PasteBin</span>
-            </div>
-        </div>
+        <div id="join-room-button">JOIN ROOM</div>
         <div id="initial-wrapper">
             <div id="logo">
                 <div id="main-logo">
@@ -89,9 +86,21 @@
     <div class="column ad side">
         <div class="line right"></div>
     </div>
+
+    <div id="dialog-container">
+        <div id="dialog">
+            <h1 id="dialog-code" class="secondary-title"></h1>
+            <p id="dialog-description">
+                Use this code to receive files <br>
+                (must keep dialog open)
+            </p>
+            <div id="dialog-back">BACK</div>
+        </div>
+    </div>
 </div>
 
 <% } %>
+
 <script src="/libs/adapter.js"></script>
 <script src="socket.io/socket.io.js"></script>
 <script src="/libs/require.min.js"></script>

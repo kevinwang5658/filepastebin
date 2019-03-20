@@ -4,6 +4,7 @@ import {ClientPeerWrapper} from "../connection/peerwrapper";
 import {ExternalPromise} from "../connection/externalpromise";
 import {Constants} from "../../../shared/constants";
 import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
+import MESSAGE = Constants.MESSAGE;
 
 export class ClientPeer {
 
@@ -18,7 +19,7 @@ export class ClientPeer {
     private fileData: ArrayBuffer[] = [];
 
     constructor(public id: string, private socket: Socket, private fileName: string, private chunkStart: number, private chunkEnd: number, private chunkSize: number){
-        this.rtcPeer = new RTCPeerConnection();
+        this.rtcPeer = new RTCPeerConnection(Constants.PeerConfiguration);
         this.rtcWrapper = new ClientPeerWrapper(this.rtcPeer, id, socket);
 
         this.init();
@@ -26,6 +27,9 @@ export class ClientPeer {
 
     public handleMessage = (message: Message) => {
         this.rtcWrapper.handleMessage(message);
+        if (message.type === MessageType.Data) {
+            this.onmessage(message.content)
+        }
     };
 
     public getCompleteListener() {
@@ -45,31 +49,27 @@ export class ClientPeer {
     private init = () => {
         this.rtcWrapper.initDataChannel()
             .then((dataChannel) => {
+                console.log(`onopen: ${this.id}`);
+
                 this.dataChannel = dataChannel;
-                this.onopen()
+                this.dataChannel.onmessage = (ev: MessageEvent) => this.onmessage(ev.data);
             });
 
         this.requestFileChunk();
     };
 
-    private onopen = () => {
-        console.log(`onopen: ${this.id}`);
-        this.dataChannel.onmessage = this.onmessage;
-    };
-
-    private onclose = () => {
-        console.log(`onclose: ${this.id}`)
-    };
-
-    private onmessage = (message: MessageEvent) => {
-        if (message.data !== 'eof') {
-            this.fileData.push(message.data);
+    private onmessage = (message: any) => {
+        if (message !== 'eof') {
+            this.fileData.push(message);
             this.progress = (this.fileData.length * BYTES_PER_CHUNK) / this.chunkSize
         } else {
             this.externalPromise.resolve(this.fileData);
             this.progress = 1;
-            this.dataChannel.close();
-            this.rtcPeer.close();
+
+            if (this.dataChannel) {
+                this.dataChannel.close();
+                this.rtcPeer.close();
+            }
         }
 
         this.onprogresschanged(this.progress);

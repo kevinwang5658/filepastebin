@@ -9,7 +9,8 @@ export class Message {
 
 export enum MessageType {
     Request = 'request',
-    Signal = 'signal'
+    Signal = 'signal',
+    Data = 'data'
 }
 
 export enum MessageAction {

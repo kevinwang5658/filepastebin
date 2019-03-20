@@ -51,6 +51,17 @@ export namespace Constants {
 
     export const NUMBER_WORKERS = 10;
     export const RTC_OPEN = 'open';
+    export const RTC_INIT_TIMEOUT = 5000;
+
+    export const PeerConfiguration = {
+        iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+    };
+
+    //***********************
+    // Socket Constants
+    //************************
+
+    export const DATA = 'data';
 
     //***********************
     // Channel Constants

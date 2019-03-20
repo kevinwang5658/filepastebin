@@ -1,5 +1,5 @@
 export interface HostModel {
-    sessionId: string
+    roomId: string
     hostId: string,
     fileName: string,
     fileSize: number,

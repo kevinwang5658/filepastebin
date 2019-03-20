@@ -1,34 +1,41 @@
 import {Constants} from "../../../shared/constants";
 import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
 import MAX_BUFFER = Constants.MAX_BUFFER;
+import {IFileSender} from "./ifilesender";
+import EOF = Constants.EOF;
 
-export class FileSender {
-    private currentChunk = 0;
+export class RtcFileSender implements IFileSender{
+    public currentChunk = 0;
     private fileReader = new FileReader();
 
     constructor(private file: Blob, private dataChannel: RTCDataChannel) {
         this.dataChannel.bufferedAmountLowThreshold = BYTES_PER_CHUNK;
     }
 
-    public sendFiles = async () => {
+    public sendFiles = async (progress: number = 0) => {
+        this.currentChunk = progress / BYTES_PER_CHUNK;
+
         while(this.currentChunk * BYTES_PER_CHUNK < this.file.size) {
             if (this.dataChannel.bufferedAmount > MAX_BUFFER) {
                 await this.bufferedAmountLow()
             }
 
 
-            var start = BYTES_PER_CHUNK * this.currentChunk;
-            var end = Math.min(this.file.size, start + BYTES_PER_CHUNK);
+            let start = BYTES_PER_CHUNK * this.currentChunk;
+            let end = Math.min(this.file.size, start + BYTES_PER_CHUNK);
 
             await this.readAsArrayBuffer(this.file.slice(start, end));
             this.dataChannel.send(<ArrayBuffer> this.fileReader.result);
 
             this.currentChunk++;
 
+            this.onprogresschanged(this.currentChunk * BYTES_PER_CHUNK);
         }
 
-        this.dataChannel.send('eof');
+        this.dataChannel.send(EOF);
     };
+
+    public onprogresschanged: (progress: number) => void = progress_ => {};
 
     private readAsArrayBuffer = (file: Blob) => {
         return new Promise((resolve, reject) => {

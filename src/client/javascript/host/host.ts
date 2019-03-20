@@ -8,8 +8,8 @@ import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 import {Socket} from "socket.io";
 import CONNECT = Constants.CONNECT;
 
-const inp_element = <HTMLInputElement>document.getElementById('in');
-const inp_element_label = document.getElementById("in_label");
+const inp_element = <HTMLInputElement> document.getElementById('in');
+const join_room_button = <HTMLDivElement> document.getElementById('join-room-button');
 const code_element = document.getElementById('code');
 const paste = <HTMLInputElement>document.getElementById('paste');
 const share_url = document.getElementById('share-url');
@@ -17,6 +17,13 @@ const center_initial = document.getElementById("initial-wrapper");
 const center_host = document.getElementById("host-wrapper");
 const file_name = document.getElementById("file-name");
 const client_connected_number = document.getElementById("device-connected-number");
+
+const dialog_container = <HTMLDivElement> document.getElementById('dialog-container');
+const dialog_box = <HTMLDivElement> document.getElementById('dialog');
+const dialog_code = <HTMLHeadingElement> document.getElementById('dialog-code');
+const dialog_description = <HTMLParagraphElement> document.getElementById('dialog-description');
+const dialog_loading_spinner = <HTMLDivElement> document.getElementById('dialog-loading-spinner');
+const dialog_back = <HTMLDivElement> document.getElementById('dialog-back');
 
 declare const io: any;
 
@@ -50,11 +57,20 @@ inp_element.addEventListener('change', () => {
     }
 });
 
-function onRoomCreated(response: RequestHostAcceptedModel) {
-    share_url.innerText = window.location + response.roomId;
-    code_element.innerText = response.roomId;
-    file_name.innerText = response.fileName;
+join_room_button.addEventListener('click', (ev: Event) => {
+    alert('hi');
+});
 
-    center_initial.style.display = 'none';
-    center_host.style.display = 'flex';
+function onRoomCreated(response: RequestHostAcceptedModel) {
+    dialog_code.innerText = response.roomId;
+    dialog_container.style.display = 'flex';
 }
+
+dialog_back.addEventListener('click', (ev) => {
+    paste.disabled = false;
+    paste.innerText = "Paste It";
+    paste.style.background = '#297FE2';
+    socket.disconnect(true);
+
+    dialog_container.style.display = 'none';
+});

@@ -31,7 +31,9 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
   app.use('/javascript', express.static(path.join(__dirname, '../client/javascript')));
 
   app.get('/', (req: Request, res: Response) => {
-    res.render('index', { dev: process.env.DEV && process.env.DEBUG });
+    res.render('index', {
+      dev: process.env.DEV && process.env.DEBUG,
+    });
   });
 
   app.get('/:room_id', (req: Request, res: Response, next: NextFunction) => {

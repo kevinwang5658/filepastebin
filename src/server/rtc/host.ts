@@ -23,7 +23,7 @@ export class Host extends Base {
     public createHost(req: RequestHostRequestModel) {
         let roomId = this.generateSessionID();
         this.model = {
-            sessionId: roomId,
+            roomId: roomId,
             hostId: this.socket.id,
             fileName: req.fileName,
             fileSize: req.fileSize,
@@ -40,12 +40,13 @@ export class Host extends Base {
             fileType: req.fileType
         });
 
-        Logger.info(`Host created: ${this.model.sessionId}`);
+        Logger.info(`Host created: ${this.model.roomId}`);
     }
 
     public destroyHost() {
-        this.socket.leave(this.model.sessionId);
-        Logger.info(`Host destroyed: ${this.model.sessionId}`);
+        this.socket.leave(this.model.roomId);
+        this.hostMap.delete(this.model.roomId);
+        Logger.info(`Host destroyed: ${this.model.roomId}`);
     }
 
     private generateSessionID(): string {
@@ -53,8 +54,8 @@ export class Host extends Base {
 
         do {
             sessionId = randomstring.generate({
-                length:5,
-                capitalization: 'uppercase'
+                length:6,
+                charset: 'numeric'
             })
         } while (this.hostMap.get(sessionId));
 
