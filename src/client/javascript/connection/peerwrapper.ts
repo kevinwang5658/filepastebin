@@ -1,9 +1,9 @@
-import {Socket} from "socket.io";
 import {Message, MessageAction, MessageType} from "./message";
 import {Constants} from "../../../shared/constants";
 import RTC_OPEN = Constants.RTC_OPEN;
 import {ExternalPromise} from "./externalpromise";
 import READY = Constants.READY;
+import Socket = SocketIOClient.Socket;
 
 export abstract class BasePeerWrapper {
 

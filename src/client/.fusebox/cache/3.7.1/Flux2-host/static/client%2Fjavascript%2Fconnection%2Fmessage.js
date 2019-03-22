@@ -1,0 +1,9 @@
+module.exports = { contents: "(function (factory) {\n    if (typeof module === \"object\" && typeof module.exports === \"object\") {\n        var v = factory(require, exports);\n        if (v !== undefined) module.exports = v;\n    }\n    else if (typeof define === \"function\" && define.amd) {\n        define([\"require\", \"exports\"], factory);\n    }\n})(function (require, exports) {\n    \"use strict\";\n    Object.defineProperty(exports, \"__esModule\", { value: true });\n    var Message = /** @class */ (function () {\n        function Message(senderId, type, action, content) {\n            this.senderId = senderId;\n            this.type = type;\n            this.action = action;\n            this.content = content;\n        }\n        return Message;\n    }());\n    exports.Message = Message;\n    var MessageType;\n    (function (MessageType) {\n        MessageType[\"Request\"] = \"request\";\n        MessageType[\"Signal\"] = \"signal\";\n        MessageType[\"Data\"] = \"data\";\n    })(MessageType = exports.MessageType || (exports.MessageType = {}));\n    var MessageAction;\n    (function (MessageAction) {\n        MessageAction[\"Offer\"] = \"offer\";\n        MessageAction[\"Answer\"] = \"answer\";\n        MessageAction[\"CreatePeer\"] = \"create-peer\";\n        MessageAction[\"IceCandidate\"] = \"ice-candidate\";\n    })(MessageAction = exports.MessageAction || (exports.MessageAction = {}));\n    var FileChunkRequest = /** @class */ (function () {\n        function FileChunkRequest(fileName, chunkStart, chunkEnd) {\n            this.fileName = fileName;\n            this.chunkStart = chunkStart;\n            this.chunkEnd = chunkEnd;\n        }\n        return FileChunkRequest;\n    }());\n    exports.FileChunkRequest = FileChunkRequest;\n});\n//# sourceMappingURL=message.js.map",
+dependencies: [],
+sourceMap: {},
+headerContent: undefined,
+mtime: 1553221562127,
+devLibsRequired : undefined,
+ac : undefined,
+_ : {}
+}

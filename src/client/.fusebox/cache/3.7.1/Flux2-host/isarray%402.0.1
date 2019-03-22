@@ -1,0 +1,12 @@
+FuseBox.pkg("isarray@2.0.1", {}, function(___scope___){
+___scope___.file("index.js", function(exports, require, module, __filename, __dirname){
+
+var toString = {}.toString;
+
+module.exports = Array.isArray || function (arr) {
+  return toString.call(arr) == '[object Array]';
+};
+
+});
+return ___scope___.entry = "index.js";
+});

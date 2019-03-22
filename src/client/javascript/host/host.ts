@@ -3,10 +3,11 @@
 import * as SocketIO from "socket.io";
 
 import {HostSocketManager} from "./hostsocketmanager";
-import {Constants} from "../../../shared/constants";
-import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
-import {Socket} from "socket.io";
+import {Constants} from "../../../shared/constants.js";
+import * as io from "socket.io-client";
 import CONNECT = Constants.CONNECT;
+import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
+import Socket = SocketIOClient.Socket;
 
 const inp_element = <HTMLInputElement> document.getElementById('in');
 const join_room_button = <HTMLDivElement> document.getElementById('join-room-button');
@@ -23,9 +24,7 @@ const dialog_box = <HTMLDivElement> document.getElementById('dialog');
 const dialog_code = <HTMLHeadingElement> document.getElementById('dialog-code');
 const dialog_description = <HTMLParagraphElement> document.getElementById('dialog-description');
 const dialog_loading_spinner = <HTMLDivElement> document.getElementById('dialog-loading-spinner');
-const dialog_back = <HTMLDivElement> document.getElementById('dialog-back');
-
-declare const io: any;
+const dialog_back = <HTMLDivElement> document.getElementById('dialog-cancel');
 
 let file: File;
 let socket: Socket;
@@ -58,7 +57,8 @@ inp_element.addEventListener('change', () => {
 });
 
 join_room_button.addEventListener('click', (ev: Event) => {
-    alert('hi');
+    dialog_container.style.display = 'flex';
+
 });
 
 function onRoomCreated(response: RequestHostAcceptedModel) {
@@ -70,7 +70,13 @@ dialog_back.addEventListener('click', (ev) => {
     paste.disabled = false;
     paste.innerText = "Paste It";
     paste.style.background = '#297FE2';
-    socket.disconnect(true);
+    socket.disconnect();
 
     dialog_container.style.display = 'none';
 });
+
+/*let cleave = new Cleave('.room-input', {
+    numeral: true,
+    numeralThousandsGroupStyle: 'none',
+    numeralIntegerScale: 6,
+});*/

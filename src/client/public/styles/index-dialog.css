@@ -10,7 +10,7 @@
     align-items: center;
 }
 
-#dialog {
+.dialog {
     background: white;
     border-radius: 5px;
     width: 330px;
@@ -46,10 +46,11 @@
     margin-bottom: 0;
 }
 
-#dialog-back {
+#dialog-cancel {
     color: #4A90E2;
     padding: 10px;
     align-self: flex-end;
+    font-size: 14px;
     margin-right: 24px;
     margin-top: auto;
     margin-bottom: 10px;
@@ -60,4 +61,39 @@
     #dialog-back:hover {
         background: #F2F2F2;
     }
+}
+
+#host-dialog {
+}
+
+.room-title {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 14px;
+    padding-left: 41px;
+    padding-right: 41px;
+    margin-bottom: 0;
+}
+
+.room-input {
+    height: 40px;
+    width: 260px;
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: center;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+}
+
+#join-dialog {
+    display: none;
+}
+
+#join-button-wrapper {
+    margin-top: auto;
+    margin-bottom: 23px;
+    padding-left: 38px;
+    padding-right: 38px;
+    width: 100%;
+    box-sizing: border-box;
 }

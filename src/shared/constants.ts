@@ -1,4 +1,3 @@
-
 export namespace Constants {
     //***********************
     // SocketIO lifecycle

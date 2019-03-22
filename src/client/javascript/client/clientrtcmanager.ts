@@ -1,8 +1,8 @@
 import {Constants} from "../../../shared/constants";
 import {ClientPeer} from "./clientpeer";
-import {Socket} from "socket.io";
 import {Message, MessageType} from "../connection/message";
 import NUMBER_WORKERS = Constants.NUMBER_WORKERS;
+import Socket = SocketIOClient.Socket;
 
 declare var download: any;
 

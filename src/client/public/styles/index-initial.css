@@ -2,6 +2,7 @@
     align-self: flex-end;
     margin: 10px;
     padding: 10px;
+    font-size: 14px;
     box-sizing: border-box;
     cursor: pointer;
     color: #297FE2;;
@@ -50,9 +51,13 @@
     color: #9B9B9B;
     line-height: 44px;
     padding-left: 15px;
+    padding-right: 15px;
     font-family: Helvetica, sans-serif;
     font-weight: normal;
     font-size: 15px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .inputfile:hover + label {

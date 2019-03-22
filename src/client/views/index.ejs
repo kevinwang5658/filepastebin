@@ -13,15 +13,8 @@
     <link rel="stylesheet" type="text/css" href="styles/loading-ring-gray.css">
     <link rel="stylesheet" type="text/css" href="styles/loading-ring.css">
     <title>FilePasteBin</title>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134611312-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-134611312-1');
-    </script>
 </head>
+
 <body>
 
 <% if(dev) { %>
@@ -88,26 +81,37 @@
     </div>
 
     <div id="dialog-container">
-        <div id="dialog">
+        <div id="host-dialog" class="dialog">
             <h1 id="dialog-code" class="secondary-title"></h1>
             <p id="dialog-description">
                 Use this code to receive files <br>
                 (must keep dialog open)
             </p>
-            <div id="dialog-back">BACK</div>
+            <div id="dialog-cancel">CANCEL</div>
+        </div>
+        <div id="join-dialog" class="dialog">
+            <p class="room-title">
+                Enter the 6 digit room code:
+            </p>
+            <input class="room-input" type="text"/>
+            <div id="dialog-cancel">CANCEL</div>
         </div>
     </div>
 </div>
 
 <% } %>
+</body>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script src="https://www.googletagmanager.com/gtag/js?id=UA-134611312-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-134611312-1');
+</script>
 
 <script src="/libs/adapter.js"></script>
-<script src="socket.io/socket.io.js"></script>
-<script src="/libs/require.min.js"></script>
-<script>
-    require(['javascript/host/host'], () => {
+<script src="/javascript/host.js"></script>
 
-    })
-</script>
-</body>
 </html>

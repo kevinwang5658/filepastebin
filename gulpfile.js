@@ -20,7 +20,7 @@ gulp.task('compile-ts', (done) => {
 });
 
 gulp.task('compile-client', (done) => {
-    exec('cd src/client && tsc', (err, stdout, stderr) => {
+    exec('cd src/client && node fuse', (err, stdout, stderr) => {
         console.log(stdout);
         console.log(stderr);
         done(err);
@@ -53,7 +53,7 @@ gulp.task('watch-views', () => {
 
 gulp.task('watch-client', () => {
    gulp.watch('src/client/javascript/**/*', { ignoreInitial: true},
-       (done)=> {exec('cd src/client && tsc', (err, stdout, stderr) => {
+       (done)=> {exec('cd src/client && node fuse', (err, stdout, stderr) => {
            console.log(stdout);
            console.log(stderr);
            done(err);

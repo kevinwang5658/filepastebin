@@ -1,10 +1,10 @@
-import {Socket} from "socket.io";
 import {FileChunkRequest, Message, MessageAction, MessageType} from "../connection/message";
 import {ClientPeerWrapper} from "../connection/peerwrapper";
 import {ExternalPromise} from "../connection/externalpromise";
 import {Constants} from "../../../shared/constants";
 import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
 import MESSAGE = Constants.MESSAGE;
+import Socket = SocketIOClient.Socket;
 
 export class ClientPeer {
 

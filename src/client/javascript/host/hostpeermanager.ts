@@ -1,6 +1,6 @@
 import {FileChunkRequest, Message, MessageAction, MessageType} from "../connection/message";
-import {Socket} from "socket.io";
 import {HostPeer} from "./hostpeer";
+import Socket = SocketIOClient.Socket;
 
 export class HostPeerManager {
 

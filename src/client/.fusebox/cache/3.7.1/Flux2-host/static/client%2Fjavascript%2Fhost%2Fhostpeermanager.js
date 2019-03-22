@@ -1,0 +1,9 @@
+module.exports = { contents: "(function (factory) {\n    if (typeof module === \"object\" && typeof module.exports === \"object\") {\n        var v = factory(require, exports);\n        if (v !== undefined) module.exports = v;\n    }\n    else if (typeof define === \"function\" && define.amd) {\n        define([\"require\", \"exports\", \"../connection/message\", \"./hostpeer\"], factory);\n    }\n})(function (require, exports) {\n    \"use strict\";\n    Object.defineProperty(exports, \"__esModule\", { value: true });\n    var message_1 = require(\"../connection/message\");\n    var hostpeer_1 = require(\"./hostpeer\");\n    var HostPeerManager = /** @class */ (function () {\n        function HostPeerManager(socket, file) {\n            var _this = this;\n            this.socket = socket;\n            this.file = file;\n            this.workers = new Map();\n            this.handleMessage = function (message) {\n                if (message.type === message_1.MessageType.Request && message.action === message_1.MessageAction.CreatePeer) {\n                    var request = message.content;\n                    console.log(message.content);\n                    _this.workers.set(message.senderId, new hostpeer_1.HostPeer(message.senderId, _this.socket, _this.file.slice(request.chunkStart, request.chunkEnd)));\n                }\n                else if (message.type === message_1.MessageType.Signal) {\n                    _this.workers.get(message.senderId).handleMessage(message);\n                }\n            };\n        }\n        return HostPeerManager;\n    }());\n    exports.HostPeerManager = HostPeerManager;\n});\n//# sourceMappingURL=hostpeermanager.js.map",
+dependencies: ["../connection/message","./hostpeer"],
+sourceMap: {},
+headerContent: undefined,
+mtime: 1553221562259,
+devLibsRequired : undefined,
+ac : undefined,
+_ : {}
+}

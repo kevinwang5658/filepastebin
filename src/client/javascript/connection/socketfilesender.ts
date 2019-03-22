@@ -1,9 +1,9 @@
-import {Socket} from "socket.io";
 import {Constants} from "../../../shared/constants";
 import {IFileSender} from "./ifilesender";
 import {Message, MessageType} from "./message";
 import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
 import EOF = Constants.EOF;
+import Socket = SocketIOClient.Socket;
 
 export class SocketFileSender implements IFileSender{
 

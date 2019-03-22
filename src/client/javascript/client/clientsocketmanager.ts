@@ -1,4 +1,3 @@
-import {Socket} from "socket.io";
 import {Constants} from "../../../shared/constants";
 import REQUEST_CLIENT = Constants.REQUEST_CLIENT;
 import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;
@@ -6,6 +5,7 @@ import {ClientRTCManager} from "./clientrtcmanager";
 import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
 import {Message} from "../connection/message";
 import MESSAGE = Constants.MESSAGE;
+import Socket = SocketIOClient.Socket;
 
 export class ClientSocketManager {
 

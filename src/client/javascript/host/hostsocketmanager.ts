@@ -1,4 +1,3 @@
-import {Socket} from "socket.io";
 import {Constants} from "../../../shared/constants";
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 import MESSAGE = Constants.MESSAGE;
@@ -7,6 +6,7 @@ import DISCONNECT = Constants.DISCONNECT;
 import ERROR = Constants.ERROR;
 import REQUEST_HOST_ACCEPTED = Constants.REQUEST_HOST_ACCEPTED;
 import {HostPeerManager} from "./hostpeermanager";
+import Socket = SocketIOClient.Socket;
 
 export class HostSocketManager {
 
