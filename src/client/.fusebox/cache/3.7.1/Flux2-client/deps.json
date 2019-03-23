@@ -1,10 +1,5 @@
 {
   "tree": {
-    "tslib@1.9.3": {
-      "deps": {},
-      "name": "tslib",
-      "version": "1.9.3"
-    },
     "socket.io-client@2.2.0": {
       "deps": {
         "parseuri@0.0.5": {
@@ -148,13 +143,6 @@
     }
   },
   "flat": {
-    "tslib@1.9.3": {
-      "name": "tslib",
-      "version": "1.9.3",
-      "files": [
-        "tslib.js"
-      ]
-    },
     "socket.io-client@2.2.0": {
       "name": "socket.io-client",
       "version": "2.2.0",

@@ -10,7 +10,7 @@
     "outDir": "../../dist/client/",
     "sourceMap": true,
     "declaration": true,
-    "module": "umd",
+    "module": "commonjs",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -29,6 +29,6 @@
       "dom"
     ]
   },
-  "include": ["javascript/**/*"],
+  "include": ["javascript/**/*.ts", "javascript/**/*.tsx"],
   "references": [{ "path": "../../tsconfig.json" }]
 }

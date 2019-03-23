@@ -1,10 +1,5 @@
 {
   "tree": {
-    "tslib@1.9.3": {
-      "deps": {},
-      "name": "tslib",
-      "version": "1.9.3"
-    },
     "socket.io-client@2.2.0": {
       "deps": {
         "parseuri@0.0.5": {
@@ -145,16 +140,19 @@
       },
       "name": "socket.io-client",
       "version": "2.2.0"
+    },
+    "preact@8.4.2": {
+      "deps": {},
+      "name": "preact",
+      "version": "8.4.2"
+    },
+    "fuse-box-css@0.0.1": {
+      "deps": {},
+      "name": "fuse-box-css",
+      "version": "0.0.1"
     }
   },
   "flat": {
-    "tslib@1.9.3": {
-      "name": "tslib",
-      "version": "1.9.3",
-      "files": [
-        "tslib.js"
-      ]
-    },
     "socket.io-client@2.2.0": {
       "name": "socket.io-client",
       "version": "2.2.0",
@@ -357,6 +355,20 @@
     "backo2@1.0.2": {
       "name": "backo2",
       "version": "1.0.2",
+      "files": [
+        "index.js"
+      ]
+    },
+    "preact@8.4.2": {
+      "name": "preact",
+      "version": "8.4.2",
+      "files": [
+        "dist/preact.js"
+      ]
+    },
+    "fuse-box-css@0.0.1": {
+      "name": "fuse-box-css",
+      "version": "0.0.1",
       "files": [
         "index.js"
       ]

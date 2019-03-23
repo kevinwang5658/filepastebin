@@ -67,19 +67,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var hasMultipleElements = false;
 
 	    if (typeof element === 'string') {
-	        owner.element = document.querySelector(element);
+	        owner.dialog = document.querySelector(element);
 	        hasMultipleElements = document.querySelectorAll(element).length > 1;
 	    } else {
 	      if (typeof element.length !== 'undefined' && element.length > 0) {
-	        owner.element = element[0];
+	        owner.dialog = element[0];
 	        hasMultipleElements = element.length > 1;
 	      } else {
-	        owner.element = element;
+	        owner.dialog = element;
 	      }
 	    }
 
 	    if (!owner.element) {
-	        throw new Error('[cleave.js] Please check the element');
+	        throw new Error('[cleave.js] Please check the dialog');
 	    }
 
 	    if (hasMultipleElements) {
@@ -1366,7 +1366,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                element.setSelectionRange(position, position);
 	            } catch (e) {
 	                // eslint-disable-next-line
-	                console.warn('The input element type does not support selection');
+	                console.warn('The input dialog type does not support selection');
 	            }
 	        }
 	    },
