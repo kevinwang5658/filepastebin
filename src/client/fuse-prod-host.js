@@ -19,8 +19,4 @@ fuse
     .bundle("host")
     .instructions("> client/javascript/host/host.ts");
 
-fuse
-    .bundle('client')
-    .instructions("> client/javascript/client/client.ts");
-
 fuse.run();

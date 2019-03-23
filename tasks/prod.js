@@ -15,7 +15,7 @@ gulp.task('compile-server-prod', (done) => {
 });
 
 gulp.task('compile-client-prod', (done) => {
-    exec('cd src/client && node fuse-prod', (err, stdout, stderr) => {
+    exec('cd src/client && node fuse-prod-host && node fuse-prod-client', (err, stdout, stderr) => {
         console.log(stdout);
         console.log(stderr);
         done(err);
