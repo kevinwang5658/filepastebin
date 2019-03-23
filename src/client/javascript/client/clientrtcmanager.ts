@@ -1,6 +1,6 @@
-import {Constants} from "../../../shared/constants";
+import {Constants} from "../../../shared/constants.js";
 import {ClientPeer} from "./clientpeer";
-import {Message, MessageType} from "../connection/message";
+import {Message} from "../connection/message";
 import NUMBER_WORKERS = Constants.NUMBER_WORKERS;
 import Socket = SocketIOClient.Socket;
 

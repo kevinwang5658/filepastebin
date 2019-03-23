@@ -11,4 +11,4 @@ dist/
 
 src/client/.fusebox
 
-*.envgitgi
+*.env

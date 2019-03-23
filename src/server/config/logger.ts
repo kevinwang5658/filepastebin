@@ -1,6 +1,5 @@
 import winston from 'winston'
 import * as rootPath from 'app-root-path';
-import {message} from "gulp-typescript/release/utils";
 
 let options = {
     file: {

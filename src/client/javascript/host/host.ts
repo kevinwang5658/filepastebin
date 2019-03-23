@@ -8,6 +8,7 @@ import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 import Socket = SocketIOClient.Socket;
 import {DialogManager} from "./components/dialogmanager";
 import {JoinManager} from "./joinmanager";
+import adapter from 'webrtc-adapter';
 
 const inp_element = <HTMLInputElement> document.getElementById('in');
 const join_room_button = <HTMLDivElement> document.getElementById('join-room-button');

@@ -3,12 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "clean": "rimraf dist/*",
-    "dev": "gulp clean && gulp copy-client && run-p nodemon watch",
+    "clean": "rimraf dist && rimraf node_modules && rimraf src/client/node_modules",
     "start-dev": "gulp start-dev",
-    "nodemon": "nodemon ./src/server/www.ts 3000",
-    "watch": "gulp watch",
-    "start": "gulp build && node ./dist/server/www.ts 3000",
+    "start": "gulp start-dev",
     "postinstall": "cd src/client && npm install"
   },
   "dependencies": {
@@ -42,11 +39,9 @@
     "chai": "~4.2.0",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
-    "gulp-babel": "^8.0.0",
-    "gulp-better-rollup": "^4.0.1",
+    "gulp-hub": "^4.2.0",
     "gulp-nodemon": "^2.4.2",
     "gulp-shell": "^0.7.0",
-    "gulp-typescript": "^5.0.1",
     "gulp-watch": "^5.0.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
@@ -56,10 +51,10 @@
     "protractor": "~5.4.0",
     "shelljs": "~0.8.3",
     "socket.io": "~2.2.0",
-    "ts-loader": "^5.3.3",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.2.2",
-    "watch": "^1.0.2"
+    "watch": "^1.0.2",
+    "uglify-js": "^3.5.2"
   }
 }
