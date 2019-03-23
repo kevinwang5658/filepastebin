@@ -6,3 +6,9 @@
 .idea/**/shelf
 
 node_modules/
+
+dist/
+
+src/client/.fusebox
+
+*.envgitgi

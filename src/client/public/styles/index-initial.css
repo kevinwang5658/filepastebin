@@ -1,0 +1,73 @@
+#join-room-button {
+    align-self: flex-end;
+    margin: 10px;
+    padding: 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+    cursor: pointer;
+    color: #297FE2;;
+}
+
+@media (hover: hover) {
+    #join-room-button:hover {
+        background: #F2F2F2;
+    }
+}
+
+#main-logo {
+    align-self: flex-end;
+    margin-bottom: 70px;
+}
+
+.title {
+    font-family: "Arial Black", sans-serif;
+    font-weight: 900;
+    font-size: 30px;
+}
+
+.secondary-title {
+    font-family: "Arial Black", sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    color: #4A4A4A;
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    border-radius: 25px;
+    background: #E9E9E9;
+    display: block;
+    height: 44px;
+    cursor: text;
+    vertical-align: middle;
+    color: #9B9B9B;
+    line-height: 44px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-family: Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 15px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.inputfile:hover + label {
+    background:  #D8D8D8;
+}
+
+.inputfile + label * {
+    pointer-events: none;
+}
+
+#paste {
+    margin-top: 40px;
+}
