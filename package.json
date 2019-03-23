@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "rimraf dist && rimraf node_modules && rimraf src/client/node_modules",
     "start-dev": "gulp start-dev",
-    "start": "gulp start-dev",
+    "start": "gulp start",
     "postinstall": "cd src/client && npm install"
   },
   "dependencies": {
