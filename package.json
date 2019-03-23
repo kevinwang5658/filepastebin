@@ -8,7 +8,7 @@
     "start-dev": "gulp start-dev",
     "nodemon": "nodemon ./src/server/www.ts 3000",
     "watch": "gulp watch",
-    "start": "gulp build && node ./dist/server/www.ts 3000",
+    "start": "gulp start-dev",
     "postinstall": "cd src/client && npm install"
   },
   "dependencies": {
