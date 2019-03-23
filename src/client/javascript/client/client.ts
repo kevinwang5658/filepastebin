@@ -1,6 +1,5 @@
 'use strict';
 
-import {Constants} from "../../../shared/constants.js";
 import {ClientSocketManager} from "./clientsocketmanager";
 import * as io from "socket.io-client";
 
