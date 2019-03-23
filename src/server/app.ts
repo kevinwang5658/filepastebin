@@ -2,6 +2,8 @@ import {HostModel} from "./models/models";
 import {NextFunction, Request, Response} from "express";
 import {Logger} from "./config/logger";
 import {StreamOptions} from "morgan";
+import {Constants} from "../shared/constants";
+import REQUEST_JOIN_ROOM = Constants.REQUEST_JOIN_ROOM;
 
 const createError = require('http-errors');
 const express = require('express');
@@ -29,11 +31,20 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
   app.use('/', express.static(path.join(__dirname, '../client/public')));
   app.use('/shared', express.static(path.join(__dirname, '../shared')));
   app.use('/javascript', express.static(path.join(__dirname, '../client/javascript')));
+  app.use('/', express.static(path.join(__dirname, '../client/node_modules')));
 
   app.get('/', (req: Request, res: Response) => {
     res.render('index', {
       dev: process.env.DEV && process.env.DEBUG,
     });
+  });
+
+  app.get(REQUEST_JOIN_ROOM + ':room_id', (req: Request, res: Response, next: NextFunction) => {
+    if (req.params.room_id && hostMap.get(req.params.room_id)) {
+      res.send(true);
+    } else {
+      res.send(false);
+    }
   });
 
   app.get('/:room_id', (req: Request, res: Response, next: NextFunction) => {

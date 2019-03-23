@@ -32,6 +32,8 @@ export namespace Constants {
     // RTC client requests
     //**********************
 
+    export const REQUEST_JOIN_ROOM = '/request/room/';
+
     export const REQUEST_CLIENT = 'request-client';
     export const REQUEST_CLIENT_ACCEPTED = 'request-client-accepted';
     export interface RequestClientAcceptedModel {
