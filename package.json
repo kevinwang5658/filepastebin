@@ -15,6 +15,7 @@
     "dotenv": "^6.2.0",
     "ejs": "~2.5.7",
     "express": "~4.16.0",
+    "express-http-to-https": "^1.1.4",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
     "randomstring": "^1.1.5",
