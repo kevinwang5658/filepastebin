@@ -4,7 +4,7 @@ import * as rootPath from 'app-root-path';
 let options = {
     file: {
         level: 'info',
-        filename: `${rootPath}`,
+        filename: `${rootPath}/logs/apps.log`,
         handleExceptions: true,
         json: true,
         maxsize: 5242880,
