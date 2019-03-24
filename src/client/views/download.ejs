@@ -10,24 +10,6 @@
 </head>
 <body>
 
-<% if (dev) { %>
-
-<!-- Dev Layout -->
-
-<h1>FilePasteBin</h1>
-<h1 id="code"><%= code %></h1>
-<h1 id="file-name"><%= fileName %></h1>
-<h1 id="file-size"><%= fileSize%></h1>
-<h1 id="progress">0%</h1>
-<button id="download">Download</button>
-<div id="reveal"></div>
-<div id="text-wrapper"></div>
-<div id="center-wrapper"></div>
-
-<% } else { %>
-
-<!-- Actual Layout -->
-
 <div id="container">
     <div class="column ad side">
         <div class="line left"></div>
@@ -35,7 +17,7 @@
     <div class="column center">
         <div id="top-bar">
             <div id="mini-logo">
-                <span class="mini-title front">Kobe</span><span class="mini-title end">Transfer</span>
+                <span class="mini-title front">Kobe</span><span class="mini-title end">Transfere</span>
             </div>
         </div>
         <div class="center">
@@ -58,9 +40,6 @@
     </div>
 </div>
 <div id="code" style="display: none"><%= code%></div>
-
-
-<% }%>
 
 </body>
 

@@ -34,8 +34,7 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
   app.use('/', express.static(path.join(__dirname, '../client/node_modules')));
 
   app.get('/', (req: Request, res: Response) => {
-    res.render('index', {
-      dev: process.env.DEV && process.env.DEBUG,
+    res.render(!(process.env.DEV && process.env.DEBUG) ? 'index' : 'index-dev', {
     });
   });
 
@@ -53,8 +52,7 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
       let sessionId = req.params.room_id;
       let hostModel = hostMap.get(req.params.room_id);
 
-      res.render('download', {
-        dev: process.env.DEV && process.env.DEBUG,
+      res.render(!(process.env.DEV && process.env.DEBUG) ? 'download' : 'download-dev', {
         code: sessionId,
         fileName: hostModel.fileName,
         fileSize: hostModel.fileSize

@@ -17,28 +17,6 @@
 
 <body>
 
-<% if(dev) { %>
-
-<h1>FilePasteBin</h1>
-<div id="code"></div>
-<div id="share-url"></div>
-<input id="in" type="file">
-<button id="paste">Paste</button>
-<div style="margin-top:25px;">
-    FilePasteBin is a free file transfer tool. Choose a file then click paste. Use the link <br/>
-    displayed to download the file onto another device. Browsers supported include Firefox, Chrome, <br/>
-    and Safari on Windows, MacOS, and Android. Mostly works on iOS
-</div>
-<div id="file-name"></div>
-<div class="device-connected">
-    <div class="device-connected-text-wrapper">
-        <span id="device-connected-number">0</span> <span>Devices connected</span>
-    </div>
-</div>
-<div id="host-wrapper"></div>
-<div id="initial-wrapper"></div>
-
-<% } else { %>
 <div id="container">
     <div class="column ad side">
         <div class="line left"></div>
@@ -83,7 +61,6 @@
     <div id="dialog-manager"></div>
 </div>
 
-<% } %>
 </body>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
