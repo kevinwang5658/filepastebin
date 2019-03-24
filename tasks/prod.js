@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const del = require('del');
+const spawn = require('child_process').spawn;
 const exec = require('child_process').exec;
 
 gulp.task('clean-prod', () => {
@@ -32,10 +33,10 @@ gulp.task('copy-client-assets-prod', gulp.parallel(
     }));
 
 gulp.task('start-server-prod', (done) => {
-    exec('node dist/server/server.js', (err, stdout, stderr) => {
-        console.log(stdout);
-        console.log(stderr);
-        done(err);
+    let command = spawn('node', ['dist/server/server.js'], {stdio:'inherit'});
+    command.on('close', (code) => {
+        console.log('start-server-prod exited with code' + code);
+        done(code);
     })
 });
 

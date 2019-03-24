@@ -1,4 +1,4 @@
-import {Constants} from "../../../shared/constants.js";
+import {Constants} from "../../../shared/constants";
 import {ClientPeer} from "./clientpeer";
 import {Message} from "../connection/message";
 import NUMBER_WORKERS = Constants.NUMBER_WORKERS;
