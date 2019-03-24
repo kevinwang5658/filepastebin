@@ -33,18 +33,10 @@ gulp.task('copy-client-assets-prod', gulp.parallel(
             .pipe(gulp.dest('dist/client/views'))
     }));
 
-gulp.task('start-server-prod', (done) => {
-    return nodemon({
-        script: 'dist/server/server.js',
-        done: done
-    })
-});
-
-gulp.task('start', gulp.series(
+gulp.task('build-prod', gulp.series(
     'clean-prod',
     'compile-server-prod',
     gulp.parallel('copy-client-assets-prod', 'compile-client-prod'),
-    'start-server-prod'
 ));
 
 
