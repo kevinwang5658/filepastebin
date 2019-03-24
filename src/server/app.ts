@@ -10,7 +10,6 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const redirectToSecure = require('express-http-to-https').redirectToHTTPS;
 
 export const newInstance = (hostMap: Map<String, HostModel>) => {
   let app = express();
@@ -26,7 +25,6 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
       }
     }
   }));
-  app.use(redirectToSecure([/localhost:(\d{4})/]));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
