@@ -10,6 +10,7 @@ import {DialogManager} from "./components/dialogmanager";
 import {JoinManager} from "./joinmanager";
 import adapter from 'webrtc-adapter';
 
+const container = <HTMLDivElement> document.getElementById('container');
 const inp_element = <HTMLInputElement> document.getElementById('in');
 const join_room_button = <HTMLDivElement> document.getElementById('join-room-button');
 const code_element = document.getElementById('code');
@@ -27,7 +28,7 @@ const dialog_description = <HTMLParagraphElement> document.getElementById('dialo
 const dialog_loading_spinner = <HTMLDivElement> document.getElementById('dialog-loading-spinner');
 const dialog_back = <HTMLDivElement> document.getElementById('dialog-cancel');
 
-let file: File;
+let mFile: File;
 let socket: Socket;
 let socketManager: HostSocketManager;
 let joinManager = new JoinManager();
@@ -46,17 +47,13 @@ paste.addEventListener('click', (e) => {
     paste.style.background = "#62A4F0";
 
     socket = io.connect();
-    socketManager = new HostSocketManager(socket, file);
+    socketManager = new HostSocketManager(socket, mFile);
     socketManager.hostacceptedcallback = onRoomCreated
 });
 
 inp_element.addEventListener('change', () => {
     if (inp_element.files[0] && inp_element.files[0].name !== '') {
-        paste.disabled = false;
-
-        file = inp_element.files[0];
-        let filename = inp_element.files[0].name;
-        document.getElementById("in-label").innerHTML = filename.fontcolor("#4A4A4A");
+        fileAdded(inp_element.files[0])
     }
 });
 
@@ -66,6 +63,45 @@ join_room_button.addEventListener('click', (ev: Event) => {
     })
 });
 
+container.addEventListener('drop', (ev: DragEvent) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    container.style.background = '#FFFFFF';
+
+    if (ev.dataTransfer && ev.dataTransfer.files[0] && ev.dataTransfer.files[0].name !== '') {
+        fileAdded(ev.dataTransfer.files[0])
+    }
+});
+
+container.addEventListener('dragover', (ev: DragEvent) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    container.style.background = '#F4F4F4'
+});
+
+let drag_count = 0;
+
+container.addEventListener('dragenter', (ev: DragEvent) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    drag_count++;
+    container.style.background = '#F4F4F4'
+});
+
+container.addEventListener('dragleave', (ev: DragEvent) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    drag_count--;
+
+    if (drag_count == 0) {
+        container.style.background = '#FFFFFF';
+    }
+});
+
 function onRoomCreated(response: RequestHostAcceptedModel) {
     dialogManager.showHostDialog(response.roomId, () => {
         paste.disabled = false;
@@ -73,4 +109,12 @@ function onRoomCreated(response: RequestHostAcceptedModel) {
         paste.style.background = '#297FE2';
         socket.disconnect();
     })
+}
+
+function fileAdded(file: File) {
+    paste.disabled = false;
+
+    mFile = file;
+    let filename = file.name;
+    document.getElementById("in-label").innerHTML = filename.fontcolor("#4A4A4A");
 }
