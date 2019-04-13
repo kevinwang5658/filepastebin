@@ -1,4 +1,4 @@
-import {beforeEach, describe} from "selenium-webdriver/testing";
+import {beforeEach, describe} from "mocha";
 import * as TypeMoq from "typemoq"
 import {Client} from "../../../src/server/rtc/client";
 import {Socket} from "socket.io";
@@ -7,7 +7,6 @@ import {HostModel} from "../../../src/server/models/models";
 import {Constants} from "../../../src/shared/constants";
 import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;
 import { assert } from "chai";
-import {anyOfClass} from "ts-mockito";
 import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
 
 describe("Client", () => {

@@ -85,10 +85,11 @@ export class JoinDialog extends Component<IJoinDialogProps, IJoinDialogState> im
         return (
             <div className={style.dialog}
                  onClick={(e: Event) => { e.stopPropagation()}}>
-                <p className={style.roomtitle}>
+                <p className={style.roomtitle} id="roomtitle">
                     Enter the 6 digit room code:
                 </p>
                 <input className={style.roominput}
+                       id="roominput"
                        style={{borderColor: this.state.borderColor, outline: 'none'}}
                        type="tel"
                        pattern="\d*"
@@ -97,9 +98,13 @@ export class JoinDialog extends Component<IJoinDialogProps, IJoinDialogState> im
                        onKeyPress={this.onkeypressed}
                        value={this.state.value}
                        ref={ (input) => this.input = input } />
-                <div className={style.dialogbuttonwrapper}>
-                    <div className={style.dialogjoin} onClick={ () => this.onjoinclicked() }>JOIN</div>
-                    <div className={style.joindialogcancel} onClick={ this.props.oncancel }>CANCEL</div>
+                <div className={style.dialogbuttonwrapper} id="dialogbuttonwrapper">
+                    <div className={style.dialogjoin}
+                         id="dialogjoin"
+                         onClick={ () => this.onjoinclicked() }>JOIN</div>
+                    <div className={style.joindialogcancel}
+                         id="dialogcancel"
+                         onClick={ this.props.oncancel }>CANCEL</div>
                 </div>
             </div>
         )

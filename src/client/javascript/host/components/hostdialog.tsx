@@ -26,7 +26,7 @@ export class HostDialog extends Component <IHostDialogProps, IHostDialogState> i
     render() {
         return (
             <div className={style.dialog}>
-                <h1 id={style.dialogcode} className={style.dialogcode}>{this.props.roomId}</h1>
+                <h1 id="dialogcode" className={style.dialogcode}>{this.props.roomId}</h1>
                 <p className={style.dialogdescription}>
                     Use this code to receive files <br/>
                     (must keep dialog open)

@@ -1,4 +1,4 @@
-import {afterEach, beforeEach, describe} from "selenium-webdriver/testing";
+import {afterEach, beforeEach, describe} from "mocha";
 import * as App from '../../src/server/app'
 import {HostModel} from "../../src/server/models/models";
 import {Express} from "express";

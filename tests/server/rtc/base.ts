@@ -1,5 +1,5 @@
 import {Base} from "../../../src/server/rtc/base";
-import {beforeEach, describe} from "selenium-webdriver/testing";
+import {beforeEach, describe} from "mocha";
 import {Message, MessageAction, MessageType} from "../../../src/client/javascript/connection/message";
 import {Socket} from "socket.io";
 import * as TypeMoq from "typemoq";

@@ -1,4 +1,4 @@
-import {beforeEach, describe} from "selenium-webdriver/testing";
+import {beforeEach, describe} from "mocha";
 import {Host} from "../../../src/server/rtc/host";
 import * as TypeMoq from "typemoq"
 import {Socket} from "socket.io";
@@ -31,6 +31,7 @@ describe("Host", () => {
         instance = new Host(socketMock.object, ioMock.object, hostMap);
 
         socketMock.setup(x => x.id).returns(() => SOCKET_ID);
+
     });
 
     it("is able to create a host", () => {
