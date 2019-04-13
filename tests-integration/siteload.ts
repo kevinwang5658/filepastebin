@@ -6,6 +6,7 @@ import {FileDetector} from 'selenium-webdriver/remote';
 
 require('chromedriver');
 const fs = require('fs');
+const path = require('path');
 
 describe("site loads", () => {
    it("loads", async () => {
@@ -35,7 +36,7 @@ describe("site loads", () => {
          let text = await hdriver.findElement(By.id('paste')).getText();
          assert.equal(text, "Paste It");
 
-         await hdriver.findElement(By.id('in')).sendKeys('/home/kevinwang/.bashrc.swp');
+         await hdriver.findElement(By.id('in')).sendKeys(__filename);
          await hdriver.findElement(By.id('paste')).click();
          let code = await hdriver.findElement(By.id('dialogcode')).getText();
          console.log(code);
@@ -53,12 +54,12 @@ describe("site loads", () => {
 
          await cdriver.takeScreenshot().then(base64png => fs.writeFileSync('/home/kevinwang/screenshot.png', base64png, 'base64'));
 
-         var bufA = fs.readFileSync("/home/kevinwang/.bashrc.swp");
-         var bufB = fs.readFileSync("/home/kevinwang/Downloads/bashrc.swp");
+         var bufA = fs.readFileSync(__filename);
+         var bufB = fs.readFileSync("/home/kevinwang/Downloads/" + path.basename(__filename));
 
          assert.isTrue(bufA.equals(bufB));
 
-         fs.unlinkSync("/home/kevinwang/Downloads/bashrc.swp")
+         fs.unlinkSync("/home/kevinwang/Downloads/" + path.basename(__filename))
 
 
       } finally {
