@@ -57,14 +57,15 @@ describe("site loads", () => {
        hdriver.setFileDetector(new FileDetector());
 
        let complete = false;
+       let count = 0;
 
        while(!complete) {
-           await hdriver.get('http//localhost:3000');
-           try {
-               await hdriver.findElement(By.id('paste'));
-
+           await hdriver.get('http://localhost:3000');
+           await hdriver.findElement(By.id('paste')).catch((err) => {
+               console.log(err + " try " + count);
+           }).then(result => {
                complete = true;
-           } catch(e) {}
+           });
        }
    });
 
