@@ -27,7 +27,7 @@ gulp.task('run-end2end', done => {
             reporter: 'nyan',
             ui: 'bdd',
             require: 'ts-node/register',
-            timeout: 20000
+            timeout: 200000
         })))
 });
 
