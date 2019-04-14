@@ -5,6 +5,7 @@ import { assert } from "chai";
 import {FileDetector} from 'selenium-webdriver/remote';
 
 require('chromedriver');
+const homeDir = require('os').homedir();
 const fs = require('fs');
 const path = require('path');
 
@@ -21,7 +22,7 @@ describe("site loads", () => {
           .addArguments("--allow-insecure-localhost")
           .addArguments("--ignore-certificate-errors")
           .setUserPreferences({
-             "download.default_directory": "~/",
+             "download.default_directory": homeDir.toString() + "/",
              "download.prompt_for_download": "false",
              "profile.default_content_settings.popups": 0
           })
@@ -52,14 +53,12 @@ describe("site loads", () => {
             setTimeout(() => resolve(), 3000)
          });
 
-         await cdriver.takeScreenshot().then(base64png => fs.writeFileSync('/home/kevinwang/screenshot.png', base64png, 'base64'));
-
          var bufA = fs.readFileSync(__filename);
-         var bufB = fs.readFileSync("/home/kevinwang/Downloads/" + path.basename(__filename));
+         var bufB = fs.readFileSync(path.join(homeDir, path.basename(__filename)));
 
          assert.isTrue(bufA.equals(bufB));
 
-         fs.unlinkSync("/home/kevinwang/Downloads/" + path.basename(__filename))
+         fs.unlinkSync(path.join(homeDir, path.basename(__filename)));
 
 
       } finally {
