@@ -33,10 +33,16 @@ gulp.task('copy-client-assets-prod', gulp.parallel(
             .pipe(gulp.dest('dist/client/views'))
     }));
 
-gulp.task('build-prod', gulp.series(
+const buildProd = gulp.series(
     'clean-prod',
     'compile-server-prod',
     gulp.parallel('copy-client-assets-prod', 'compile-client-prod'),
-));
+);
 
+gulp.task('build-prod', buildProd);
+
+console.log(buildProd);
+
+
+module.exports = buildProd;
 
