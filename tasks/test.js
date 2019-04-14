@@ -32,7 +32,7 @@ gulp.task('run-end2end', done => {
 });
 
 gulp.task('start-server', done => {
-    exec('cd ../ && pm2 start dist/server/server.js', (err, stdout, stderr) => {
+    exec('pm2 start dist/server/server.js', (err, stdout, stderr) => {
         console.log(stdout);
         console.log(stderr);
         done(err);
