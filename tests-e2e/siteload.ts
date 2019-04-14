@@ -1,7 +1,7 @@
 import {describe, before, after} from "mocha";
 import {Builder, By, until, WebDriver} from "selenium-webdriver";
 import {Options} from "selenium-webdriver/chrome";
-import { assert } from "chai";
+import {assert} from "chai";
 import {FileDetector} from 'selenium-webdriver/remote/index';
 
 require('chromedriver');
@@ -13,6 +13,7 @@ let hdriver: WebDriver;
 let cdriver: WebDriver;
 
 describe("site loads", () => {
+
     before(async () => {
         hdriver = await new Builder().forBrowser('chrome').setChromeOptions(new Options()
             .addArguments("--window-size=1920,1080")
@@ -38,7 +39,7 @@ describe("site loads", () => {
         let complete = false;
         let count = 0;
 
-        while(!complete) {
+        while (!complete) {
             await hdriver.get('http://localhost:3000');
             await hdriver.findElement(By.id('paste'))
                 .catch((err) => {
@@ -80,5 +81,5 @@ describe("site loads", () => {
     after(() => {
         hdriver.close();
         cdriver.close();
-    })
+    });
 });
