@@ -45,4 +45,8 @@ gulp.task('stop-server', done => [
    })
 ]);
 
-gulp.task('test-end2end', gulp.series('start-server', 'run-end2end', 'stop-server'));
+gulp.task('test-end2end', gulp.series(
+    'start-server',
+    'run-end2end',
+    'stop-server')
+);

@@ -30,6 +30,9 @@ describe("site loads", () => {
             })
         ).build();
 
+        hdriver.manage().window().maximize();
+        cdriver.manage().window().maximize();
+
         hdriver.setFileDetector(new FileDetector());
 
         let complete = false;
@@ -50,28 +53,22 @@ describe("site loads", () => {
     });
 
     it("loads", async () => {
-        hdriver.manage().window().maximize();
-
         await hdriver.get('http://localhost:3000');
-
         await hdriver.findElement(By.id('in')).sendKeys(__filename);
         await hdriver.findElement(By.id('paste')).click();
-
         await hdriver.wait(until.elementLocated(By.id('dialogcode')));
         let code = await hdriver.findElement(By.id('dialogcode')).getText();
         console.log(code);
 
-        cdriver.manage().window().maximize();
         await cdriver.get('http://localhost:3000');
-
         await cdriver.findElement(By.id('join-room-button')).click();
         await cdriver.findElement(By.id("roominput")).sendKeys(code);
         await cdriver.findElement(By.id("dialogjoin")).click();
         await cdriver.findElement(By.id("download")).click();
+
         await new Promise(resolve => {
             setTimeout(() => resolve(), 3000)
         });
-
         var bufA = fs.readFileSync(__filename);
         var bufB = fs.readFileSync(path.join(homeDir, path.basename(__filename)));
 
