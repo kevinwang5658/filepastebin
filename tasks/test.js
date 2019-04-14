@@ -40,7 +40,7 @@ gulp.task('start-server', done => {
 });
 
 gulp.task('stop-server', done => [
-   exec('pm2 stop npm', (err, stdout, stderr) => {
+   exec('pm2 stop server', (err, stdout, stderr) => {
        console.log(stdout);
        console.log(stderr);
        done(err);
