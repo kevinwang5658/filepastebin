@@ -21,7 +21,7 @@ describe("site loads", () => {
           .addArguments("--allow-insecure-localhost")
           .addArguments("--ignore-certificate-errors")
           .setUserPreferences({
-             "download.default_directory": "/home/kevinwang/Downloads",
+             "download.default_directory": "~/",
              "download.prompt_for_download": "false",
              "profile.default_content_settings.popups": 0
           })
