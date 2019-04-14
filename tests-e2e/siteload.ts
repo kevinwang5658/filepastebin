@@ -1,4 +1,4 @@
-import {describe, beforeEach} from "mocha";
+import {describe, beforeEach, before} from "mocha";
 import {Builder, By, Capabilities, Key} from "selenium-webdriver";
 import {Options} from "selenium-webdriver/chrome";
 import { assert } from "chai";
@@ -7,6 +7,7 @@ import * as App from '../src/server/app'
 import * as http from 'http'
 import {SocketManager} from "../src/server/rtc/socketmanager";
 import {HostModel} from "../src/server/models/models";
+import {parseHttpResponse} from "selenium-webdriver/http";
 
 require('chromedriver');
 const homeDir = require('os').homedir();
@@ -33,25 +34,42 @@ describe("site loads", () => {
          done()
       });
    });*/
+   let hdriver;
+   let cdriver;
+
+   before(async () => {
+       hdriver = await new Builder().forBrowser('chrome').setChromeOptions(new Options()
+           .addArguments("--window-size=1920,1080")
+           .addArguments("--allow-insecure-localhost")
+           .addArguments("--ignore-certificate-errors")
+       ).build();
+       cdriver = await new Builder().forBrowser('chrome').setChromeOptions(new Options()
+           .addArguments("--window-size=1920,1080")
+           .addArguments("--allow-insecure-localhost")
+           .addArguments("--ignore-certificate-errors")
+           .setUserPreferences({
+               "download.default_directory": homeDir.toString() + "/",
+               "download.prompt_for_download": "false",
+               "profile.default_content_settings.popups": 0
+           })
+       ).build();
+
+       hdriver.setFileDetector(new FileDetector());
+
+       let complete = false;
+
+       while(!complete) {
+           await hdriver.get('http//localhost:3000');
+           try {
+               await hdriver.findElement(By.id('paste'));
+
+               complete = true;
+           } catch(e) {}
+       }
+   });
 
    it("loads", async () => {
-      let hdriver = await new Builder().forBrowser('chrome').setChromeOptions(new Options()
-          .addArguments("--window-size=1920,1080")
-          .addArguments("--allow-insecure-localhost")
-          .addArguments("--ignore-certificate-errors")
-      ).build();
-      let cdriver = await new Builder().forBrowser('chrome').setChromeOptions(new Options()
-          .addArguments("--window-size=1920,1080")
-          .addArguments("--allow-insecure-localhost")
-          .addArguments("--ignore-certificate-errors")
-          .setUserPreferences({
-             "download.default_directory": homeDir.toString() + "/",
-             "download.prompt_for_download": "false",
-             "profile.default_content_settings.popups": 0
-          })
-      ).build();
 
-      hdriver.setFileDetector(new FileDetector());
       try {
           hdriver.manage().window().maximize();
 
