@@ -1,7 +1,6 @@
 const gulp = require('gulp');
 const exec = require('child_process').exec;
 
-const buildProd = require('./prod.js');
 const gulpMocha = require('gulp-mocha');
 
 gulp.task('test-unit', done => {
