@@ -51,6 +51,5 @@ describe("Client", () => {
         socketMock.verify(x => x.emit("exception", TypeMoq.It.isAnyString()), TypeMoq.Times.once());
         socketMock.verify(x => x.join(TypeMoq.It.isAnyString()), TypeMoq.Times.never());
         socketMock.verify(x => x.emit(REQUEST_CLIENT_ACCEPTED, TypeMoq.It.isAny()), TypeMoq.Times.never());
-
     });
 });

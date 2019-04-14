@@ -31,7 +31,6 @@ describe("Host", () => {
         instance = new Host(socketMock.object, ioMock.object, hostMap);
 
         socketMock.setup(x => x.id).returns(() => SOCKET_ID);
-
     });
 
     it("is able to create a host", () => {
@@ -53,7 +52,6 @@ describe("Host", () => {
             assert.equal(r.fileType, HOST_MODEL.fileType);
             return true;
         })), TypeMoq.Times.once())
-
     });
 
     it('is able to destroy a host', () => {
@@ -65,5 +63,4 @@ describe("Host", () => {
         assert.equal(hostMap.size, 0);
         socketMock.verify(x => x.leave(id), TypeMoq.Times.once())
     });
-
 });
