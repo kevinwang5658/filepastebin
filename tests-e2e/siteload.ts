@@ -1,5 +1,5 @@
-import {describe, beforeEach, before, after} from "mocha";
-import {Builder, By, Capabilities, Key, ThenableWebDriver, WebDriver} from "selenium-webdriver";
+import {describe, before, after} from "mocha";
+import {Builder, By, until, WebDriver} from "selenium-webdriver";
 import {Options} from "selenium-webdriver/chrome";
 import { assert } from "chai";
 import {FileDetector} from 'selenium-webdriver/remote/index';
@@ -56,10 +56,8 @@ describe("site loads", () => {
 
         await hdriver.findElement(By.id('in')).sendKeys(__filename);
         await hdriver.findElement(By.id('paste')).click();
-        await new Promise(resolve => {
-            setTimeout(() => resolve(), 3000);
-        });
 
+        await hdriver.wait(until.elementLocated(By.id('dialogcode')));
         let code = await hdriver.findElement(By.id('dialogcode')).getText();
         console.log(code);
 

@@ -4,26 +4,25 @@ const exec = require('child_process').exec;
 const gulpMocha = require('gulp-mocha');
 
 gulp.task('test-unit', done => {
-    gulp.src('tests/**/*.ts', {read: false})
+    return gulp.src('tests/**/*.ts', {read: false})
         .pipe(gulpMocha({
-            reporter: 'nyan',
             ui: 'bdd',
             require: 'ts-node/register'
         }));
 });
 
 gulp.task('test-integration', done => {
-   exec('mocha --require ts-node/register --ui bdd tests-integration/**/*.ts', (err, stdout, stderr) => {
-       console.log(stdout);
-       console.log(stderr);
-       done(err);
-   })
+   return gulp.src('tests-integration/**/*.ts', {read:false})
+       .pipe(gulpMocha({
+           ui: 'bdd',
+           require: 'ts-node/register',
+           timeout: 100000
+       }))
 });
 
 gulp.task('run-end2end', () => {
     return gulp.src('tests-e2e/**/*.ts', {read:false})
         .pipe(gulpMocha(({
-            reporter: 'nyan',
             ui: 'bdd',
             require: 'ts-node/register',
             timeout: 200000
