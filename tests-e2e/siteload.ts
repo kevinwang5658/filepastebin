@@ -1,5 +1,5 @@
 import {describe, beforeEach, before} from "mocha";
-import {Builder, By, Capabilities, Key} from "selenium-webdriver";
+import {Builder, By, Capabilities, Key, ThenableWebDriver, WebDriver} from "selenium-webdriver";
 import {Options} from "selenium-webdriver/chrome";
 import { assert } from "chai";
 import {FileDetector} from 'selenium-webdriver/remote/index';
@@ -34,10 +34,10 @@ describe("site loads", () => {
          done()
       });
    });*/
-   let hdriver;
-   let cdriver;
+   let hdriver: WebDriver;
+   let cdriver: WebDriver;
 
-   before(async () => {
+   beforeEach(async () => {
        hdriver = await new Builder().forBrowser('chrome').setChromeOptions(new Options()
            .addArguments("--window-size=1920,1080")
            .addArguments("--allow-insecure-localhost")
@@ -61,10 +61,14 @@ describe("site loads", () => {
 
        while(!complete) {
            await hdriver.get('http://localhost:3000');
-           await hdriver.findElement(By.id('paste')).catch((err) => {
+           await hdriver.findElement(By.id('paste'))
+               .catch((err) => {
                console.log(err + " try " + count);
-           }).then(result => {
-               complete = true;
+               }).then(result => {
+               if (result) {
+                   console.log("hi");
+                   complete = true;
+               }
            });
        }
    });
@@ -75,9 +79,6 @@ describe("site loads", () => {
           hdriver.manage().window().maximize();
 
           await hdriver.get('http://localhost:3000');
-
-          let text = await hdriver.findElement(By.id('paste')).getText();
-          assert.equal(text, "Paste It");
 
           await hdriver.findElement(By.id('in')).sendKeys(__filename);
           await hdriver.findElement(By.id('paste')).click();
