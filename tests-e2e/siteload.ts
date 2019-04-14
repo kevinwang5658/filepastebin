@@ -83,7 +83,7 @@ describe("site loads", () => {
           await hdriver.findElement(By.id('in')).sendKeys(__filename);
           await hdriver.findElement(By.id('paste')).click();
           await new Promise(resolve => {
-              setTimeout(() => resolve(), 10000);
+              setTimeout(() => resolve(), 3000);
           });
 
           let code = await hdriver.findElement(By.id('dialogcode')).getText();
@@ -106,7 +106,6 @@ describe("site loads", () => {
           assert.isTrue(bufA.equals(bufB));
 
           fs.unlinkSync(path.join(homeDir, path.basename(__filename)));
-
 
       } finally {
           await hdriver.quit();

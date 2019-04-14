@@ -21,8 +21,8 @@ gulp.task('test-integration', done => {
    })
 });
 
-gulp.task('run-end2end', done => {
-    gulp.src('tests-e2e/**/*.ts', {read:false})
+gulp.task('run-end2end', () => {
+    return gulp.src('tests-e2e/**/*.ts', {read:false})
         .pipe(gulpMocha(({
             reporter: 'nyan',
             ui: 'bdd',
