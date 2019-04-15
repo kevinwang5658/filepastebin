@@ -8,16 +8,16 @@ cd /home/ubuntu/kobetransfer
 chown -R ubuntu:ubuntu .
 
 #switch to user Ubuntu
-su - ubuntu
+sudo -u ubuntu bash <<EOF
+    #need to load the bashrc for non-interactive shells
+    source /home/ubuntu/.bashrc
 
-#need to load the bashrc for non-interactive shells
-source /home/ubuntu/.bashrc
+    #load nvm to path
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-#load nvm to path
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-npm run clean
-npm install
-npm run build
+    npm run clean
+    npm install
+    npm run build
+EOF
