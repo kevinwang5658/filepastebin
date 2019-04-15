@@ -10,8 +10,6 @@ export NVM_DIR="$HOME/.nvm"
 
 cd /home/ubuntu/kobetransfer
 
-find . -type d -exec chmod 755 {} \;
-
 npm run clean
 npm install
 npm run build
