@@ -7,7 +7,8 @@
     "start-dev": "gulp start-dev",
     "build": "gulp build-prod",
     "start": "node dist/server/server.js",
-    "postinstall": "cd src/client && npm install"
+    "postinstall": "cd src/client && npm install",
+    "test": "gulp test-unit && gulp test-integration && gulp test-end2end"
   },
   "dependencies": {
     "app-root-path": "^2.1.0",
