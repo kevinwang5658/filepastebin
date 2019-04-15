@@ -10,6 +10,6 @@ export NVM_DIR="$HOME/.nvm"
 
 cd /home/ubuntu/kobetransfer
 
-npm run clean
-npm install
-npm run build
+/home/ubuntu/.nvm/versions/node/v11.12.0/bin/npm run clean
+/home/ubuntu/.nvm/versions/node/v11.12.0/bin/npm install
+/home/ubuntu/.nvm/versions/node/v11.12.0/bin/npm run build
