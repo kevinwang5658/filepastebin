@@ -1,9 +1,6 @@
 {
   "name": "client",
   "version": "1.0.0",
-  "scripts": {
-    "webpack": "webpack"
-  },
   "dependencies": {
     "preact": "^8.4.2",
     "webrtc-adapter": "^7.2.1"
