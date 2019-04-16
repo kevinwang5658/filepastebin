@@ -8,22 +8,3 @@ set -e
 
 cd /home/ubuntu/kobetransfer
 chown -R ubuntu:ubuntu /home/ubuntu/kobetransfer
-
-#switch to user Ubuntu
-su ubuntu <<'EOF'
-    set -e
-
-    #need to load the bashrc for non-interactive shells
-    source /home/ubuntu/.bashrc
-
-    #load nvm to path
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-    npm install -g rimraf
-
-    npm run clean
-    npm install
-    npm run build
-EOF
