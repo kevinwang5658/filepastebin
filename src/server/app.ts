@@ -10,6 +10,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const prettyBytes = require('pretty-bytes');
 
 export const newInstance = (hostMap: Map<String, HostModel>) => {
   let app = express();
@@ -21,10 +22,15 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
   app.use(logger('combined', {
     stream:<StreamOptions>{
       write(str: string): void {
-        Logger.info(str) //Using winston for production
+        if (!process.env.DEV) {
+          Logger.info(str) //Using winston for production
+        } else {
+          console.log(str);
+        }
       }
     }
   }));
+
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
@@ -57,7 +63,8 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
         dev: process.env.DEV && process.env.DEBUG,
         code: sessionId,
         fileName: hostModel.fileName,
-        fileSize: hostModel.fileSize
+        fileSize: prettyBytes(hostModel.fileSize)
+
       })
     } else {
       next()
