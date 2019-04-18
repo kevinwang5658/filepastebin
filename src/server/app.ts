@@ -19,13 +19,17 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
   app.set('views', path.join(__dirname, '../client/views'));
   app.set('view engine', 'ejs');
 
-  app.use(logger('combined'/*, {
+  app.use(logger('combined', {
     stream:<StreamOptions>{
       write(str: string): void {
-        Logger.info(str) //Using winston for production
+        if (!process.env.DEV) {
+          Logger.info(str) //Using winston for production
+        } else {
+          console.log(str);
+        }
       }
     }
-  }*/));
+  }));
 
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
