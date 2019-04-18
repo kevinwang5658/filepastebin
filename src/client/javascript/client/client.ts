@@ -38,5 +38,5 @@ client.addEventListener('click', () => {
 });
 
 socketManager.onprogresschanged = (num: number) => {
-  progress.innerText = `${num.toFixed(2)}%`
+  progress.innerText = `${Math.min(num, 100).toFixed(2)}%`
 };
