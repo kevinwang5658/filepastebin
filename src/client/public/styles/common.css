@@ -58,8 +58,10 @@ p {
 }
 
 #mini-logo {
-    margin: 30px;
+    padding: 15px;
+    margin: 15px;
     margin-left: 60px;
+    cursor: pointer;
 }
 
 .mini-title {

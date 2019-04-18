@@ -11,6 +11,7 @@ const slide_down = document.getElementById('text-wrapper');
 const download_speed = document.getElementById('download-speed');
 const file_name = document.getElementById('file-name');
 const file_size = document.getElementById('file-size');
+const logo = document.getElementById('mini-logo');
 
 const ROOM_ID = code.textContent;
 const FILE_NAME = file_name.textContent;
@@ -40,3 +41,7 @@ client.addEventListener('click', () => {
 socketManager.onprogresschanged = (num: number) => {
   progress.innerText = `${Math.min(num, 100).toFixed(2)}%`
 };
+
+logo.addEventListener('click', () => {
+  window.location.href = window.location.origin;
+});
