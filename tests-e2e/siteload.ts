@@ -82,6 +82,10 @@ describe("site loads", () => {
             "        if (items.every(e => e.state === \"COMPLETE\"))\n" +
             "            return items.map(e => e.fileUrl || e.file_url);"); //Checks chrome download page for status, kind of hacky
 
+        await new Promise(resolve => {
+            setTimeout(() => resolve(), 3000)
+        });
+
         var bufA = fs.readFileSync(__filename);
         var bufB = fs.readFileSync(path.join(homeDir, path.basename(__filename)));
 
