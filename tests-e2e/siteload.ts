@@ -1,8 +1,9 @@
 import {describe, before, after} from "mocha";
-import {Builder, By, until, WebDriver} from "selenium-webdriver";
+import {Builder, By, until, WebDriver, Key} from "selenium-webdriver";
 import {Options} from "selenium-webdriver/chrome";
 import {assert} from "chai";
 import {FileDetector} from 'selenium-webdriver/remote/index';
+import {resolve} from 'path'
 
 require('chromedriver');
 const homeDir = require('os').homedir();
@@ -67,19 +68,32 @@ describe("site loads", () => {
         await cdriver.findElement(By.id("dialogjoin")).click();
         await cdriver.findElement(By.id("download")).click();
 
-        await new Promise(resolve => {
-            setTimeout(() => resolve(), 3000)
-        });
+        await cdriver.wait(until.elementTextMatches(
+            cdriver.findElement(By.id("progress")),
+            RegExp("100"))
+        );
+        await cdriver.executeScript("window.open(\"newURL\")");
+
+        //Wait for download to complete
+        let tabs = await cdriver.getAllWindowHandles();
+        await cdriver.switchTo().window(tabs[1]);
+        await cdriver.get("chrome://downloads/");
+        await cdriver.executeScript(" var items = downloads.Manager.get().items_;\n" +
+            "        if (items.every(e => e.state === \"COMPLETE\"))\n" +
+            "            return items.map(e => e.fileUrl || e.file_url);"); //Checks chrome download page for status, kind of hacky
+
         var bufA = fs.readFileSync(__filename);
         var bufB = fs.readFileSync(path.join(homeDir, path.basename(__filename)));
 
         assert.isTrue(bufA.equals(bufB));
-
-        fs.unlinkSync(path.join(homeDir, path.basename(__filename)));
     });
 
     after(() => {
         hdriver.close();
         cdriver.close();
+
+        try {
+            fs.unlinkSync(path.join(homeDir, path.basename(__filename)));
+        } catch(e) {}
     });
 });

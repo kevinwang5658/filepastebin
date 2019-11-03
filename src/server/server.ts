@@ -17,15 +17,6 @@ require('dotenv').config();
 
 const debug = require('debug')('transferfirst:server');
 
-/**
- * Redis
- */
-
-const redis = require('redis');
-const redisClient = redis
-    .createClient({ host: 'redis-18102.c89.us-east-1-3.ec2.cloud.redislabs.com', port: '18102'});
-redisClient.auth('LQphEEdckP9eE62vKedKTLflcQ4J40Bm');
-
 //TODO: Switch from a map to redis in the future
 const hostMap = new Map<string, HostModel>();
 
