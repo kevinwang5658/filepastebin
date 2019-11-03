@@ -75,7 +75,7 @@ describe("site loads", () => {
         await cdriver.executeScript("window.open(\"newURL\")");
 
         //Wait for download to complete
-        let tabs = await cdriver.getAllWindowHandles();
+        /*let tabs = await cdriver.getAllWindowHandles();
         await cdriver.switchTo().window(tabs[1]);
         await cdriver.get("chrome://downloads/");
         await cdriver.executeScript(" var items = downloads.Manager.get().items_;\n" +
@@ -84,12 +84,12 @@ describe("site loads", () => {
 
         await new Promise(resolve => {
             setTimeout(() => resolve(), 3000)
-        });
+        });*/
 
-        var bufA = fs.readFileSync(__filename);
+        /*var bufA = fs.readFileSync(__filename);
         var bufB = fs.readFileSync(path.join(homeDir, path.basename(__filename)));
 
-        assert.isTrue(bufA.equals(bufB));
+        assert.isTrue(bufA.equals(bufB));*/
     });
 
     after(() => {
