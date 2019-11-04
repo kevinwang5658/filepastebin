@@ -3,7 +3,6 @@ import {Builder, By, until, WebDriver, Key} from "selenium-webdriver";
 import {Options} from "selenium-webdriver/chrome";
 import {assert} from "chai";
 import {FileDetector} from 'selenium-webdriver/remote/index';
-import {resolve} from 'path'
 
 require('chromedriver');
 const homeDir = require('os').homedir();
@@ -72,24 +71,24 @@ describe("site loads", () => {
             cdriver.findElement(By.id("progress")),
             RegExp("100"))
         );
-        await cdriver.executeScript("window.open(\"newURL\")");
 
+        /*await cdriver.executeScript("window.open(\"newURL\")");
         //Wait for download to complete
-        /*let tabs = await cdriver.getAllWindowHandles();
+        let tabs = await cdriver.getAllWindowHandles();
         await cdriver.switchTo().window(tabs[1]);
         await cdriver.get("chrome://downloads/");
         await cdriver.executeScript(" var items = downloads.Manager.get().items_;\n" +
             "        if (items.every(e => e.state === \"COMPLETE\"))\n" +
-            "            return items.map(e => e.fileUrl || e.file_url);"); //Checks chrome download page for status, kind of hacky
+            "            return items.map(e => e.fileUrl || e.file_url);"); //Checks chrome download page for status, kind of hacky*/
 
         await new Promise(resolve => {
             setTimeout(() => resolve(), 3000)
-        });*/
+        });
 
-        /*var bufA = fs.readFileSync(__filename);
+        var bufA = fs.readFileSync(__filename);
         var bufB = fs.readFileSync(path.join(homeDir, path.basename(__filename)));
 
-        assert.isTrue(bufA.equals(bufB));*/
+        assert.isTrue(bufA.equals(bufB));
     });
 
     after(() => {
