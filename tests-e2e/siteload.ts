@@ -72,15 +72,6 @@ describe("site loads", () => {
             RegExp("100"))
         );
 
-        /*await cdriver.executeScript("window.open(\"newURL\")");
-        //Wait for download to complete
-        let tabs = await cdriver.getAllWindowHandles();
-        await cdriver.switchTo().window(tabs[1]);
-        await cdriver.get("chrome://downloads/");
-        await cdriver.executeScript(" var items = downloads.Manager.get().items_;\n" +
-            "        if (items.every(e => e.state === \"COMPLETE\"))\n" +
-            "            return items.map(e => e.fileUrl || e.file_url);"); //Checks chrome download page for status, kind of hacky*/
-
         await new Promise(resolve => {
             setTimeout(() => resolve(), 3000)
         });
