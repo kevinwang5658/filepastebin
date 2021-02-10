@@ -1,17 +1,17 @@
 import { Socket } from "socket.io";
 import { Constants } from '../../shared/constants'
 import {RedisClient} from "redis";
-import {HostModel} from "../models/models";
+import {HostModel} from "../models/HostModel";
 import {Logger} from "../config/logger";
 
 import * as randomstring from 'randomstring'
-import {Base} from "./base";
+import {Base} from "./Base";
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 import RequestHostRequestModel = Constants.RequestHostRequestModel;
 
 export class Host extends Base {
 
-    private model: HostModel;
+    private host: HostModel;
 
     constructor(
         socket: Socket,
@@ -22,31 +22,26 @@ export class Host extends Base {
 
     public createHost(req: RequestHostRequestModel) {
         let roomId = this.generateSessionID();
-        this.model = {
+        this.host = {
             roomId: roomId,
             hostId: this.socket.id,
-            fileName: req.fileName,
-            fileSize: req.fileSize,
-            fileType: req.fileType
-
+            files: req.files
         };
-        this.hostMap.set(roomId, this.model);
+        this.hostMap.set(roomId, this.host);
 
         this.socket.join(roomId);
         this.socket.emit(Constants.REQUEST_HOST_ACCEPTED, <RequestHostAcceptedModel>{
             roomId: roomId,
-            fileName: req.fileName,
-            fileSize: req.fileSize,
-            fileType: req.fileType
+            files: req.files
         });
 
-        Logger.info(`Host created: ${this.model.roomId}`);
+        Logger.info(`Host created: ${this.host.roomId}`);
     }
 
     public destroyHost() {
-        this.socket.leave(this.model.roomId);
-        this.hostMap.delete(this.model.roomId);
-        Logger.info(`Host destroyed: ${this.model.roomId}`);
+        this.socket.leave(this.host.roomId);
+        this.hostMap.delete(this.host.roomId);
+        Logger.info(`Host destroyed: ${this.host.roomId}`);
     }
 
     private generateSessionID(): string {

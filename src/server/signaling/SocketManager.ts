@@ -1,14 +1,14 @@
 import {Socket} from "socket.io";
 import {Server} from "http";
 import {RedisClient} from "redis";
-import {Host} from "./host";
+import {Host} from "./Host";
 import * as redis from "redis";
 import * as randomstring from "randomstring";
 
-import {HostModel} from "../models/models";
+import {HostModel} from "../models/HostModel";
 import {Constants} from "../../shared/constants";
 import RequestHostRequestModel = Constants.RequestHostRequestModel;
-import {Client} from "./client";
+import {Client} from "./Client";
 import CONNECT = Constants.CONNECT;
 import DISCONNECT = Constants.DISCONNECT;
 

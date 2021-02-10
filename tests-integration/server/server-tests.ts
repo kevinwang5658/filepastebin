@@ -1,6 +1,6 @@
 import {afterEach, beforeEach, describe} from "mocha";
 import * as App from '../../src/server/app'
-import {HostModel} from "../../src/server/models/models";
+import {HostModel} from "../../src/server/models/HostModel";
 import {Express} from "express";
 import * as http from "http";
 import {Constants} from "../../src/shared/constants";

@@ -1,4 +1,4 @@
-import {HostModel} from "./models/models";
+import {HostModel} from "./models/HostModel";
 import {NextFunction, Request, Response} from "express";
 import {Logger} from "./config/logger";
 import {StreamOptions} from "morgan";
@@ -62,8 +62,8 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
       res.render('download', {
         dev: process.env.DEV && process.env.DEBUG,
         code: sessionId,
-        fileName: hostModel.fileName,
-        fileSize: prettyBytes(hostModel.fileSize)
+        fileName: hostModel.files[0].fileName,
+        fileSize: prettyBytes(hostModel.files[0].fileSize)
 
       })
     } else {

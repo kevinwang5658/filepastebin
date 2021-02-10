@@ -1,9 +1,9 @@
 import {beforeEach, describe} from "mocha";
-import {Host} from "../../../src/server/rtc/host";
+import {Host} from "../../../src/server/signaling/Host";
 import * as TypeMoq from "typemoq"
 import {Socket} from "socket.io";
 import * as SocketIO from "socket.io";
-import {HostModel} from "../../../src/server/models/models";
+import {HostModel} from "../../../src/server/models/HostModel";
 import { assert } from "chai";
 import {Constants} from "../../../src/shared/constants";
 import REQUEST_HOST_ACCEPTED = Constants.REQUEST_HOST_ACCEPTED;

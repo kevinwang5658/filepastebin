@@ -17,7 +17,7 @@ fuse
             source: "libs/adapter.js"
         }
     })
-    .instructions("> client/javascript/host/host.ts");
+    .instructions("> client/javascript/host/Host.ts");
 
 fuse
     .bundle("client")
@@ -26,6 +26,6 @@ fuse
             source: "libs/adapter.js"
         }
     })
-    .instructions("> client/javascript/client/client.ts");
+    .instructions("> client/javascript/client/Client.ts");
 
 fuse.run();

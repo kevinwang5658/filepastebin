@@ -8,6 +8,15 @@ export namespace Constants {
     export const ERROR = 'error';
     export const MESSAGE = 'message';
 
+    //**********************
+    // Files
+    //**********************
+    export interface File {
+        fileName: string,
+        fileSize: number,
+        fileType: string
+    }
+
     //********************
     // RTC host requests
     //*********************
@@ -15,17 +24,13 @@ export namespace Constants {
     export const REQUEST_HOST = 'request-host';
 
     export interface RequestHostRequestModel {
-        fileName: string,
-        fileSize: number,
-        fileType: string
+        files: File[]
     }
 
     export const REQUEST_HOST_ACCEPTED = 'request-host-accepted';
     export interface RequestHostAcceptedModel {
         roomId: string,
-        fileName: string,
-        fileSize: number,
-        fileType: string
+        files: File[]
     }
 
     //**********************
@@ -38,9 +43,7 @@ export namespace Constants {
     export const REQUEST_CLIENT_ACCEPTED = 'request-client-accepted';
     export interface RequestClientAcceptedModel {
         roomId: string,
-        fileName: string,
-        fileSize: number,
-        fileType: string
+        files: File[]
     }
 
     //************************
