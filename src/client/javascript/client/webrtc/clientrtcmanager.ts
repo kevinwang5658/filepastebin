@@ -1,7 +1,6 @@
 import {Constants} from "../../../../shared/constants";
 import {ClientPeer} from "./clientpeer";
 import {Message} from "../../webrtc-base/models/message";
-import NUMBER_WORKERS = Constants.NUMBER_WORKERS;
 import Socket = SocketIOClient.Socket;
 
 declare var download: any;
