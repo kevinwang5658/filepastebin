@@ -1,5 +1,5 @@
 import {Constants} from "../../shared/constants";
-import File = Constants.File;
+import File = Constants.FileDescription;
 
 export interface HostModel {
     roomId: string

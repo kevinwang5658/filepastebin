@@ -1,4 +1,4 @@
-import {FileChunkRequest, Message, MessageAction, MessageType} from "../../webrtc-base/models/message";
+import {FileRequest, Message, MessageAction, MessageType} from "../../webrtc-base/models/message";
 import {ClientPeerWrapper} from "../../webrtc-base/peerwrapper";
 import {PromiseWrapper} from "../../helpers/PromiseWrapper";
 import {Constants} from "../../../../shared/constants";
@@ -17,7 +17,7 @@ export class ClientPeer {
 
     private fileData: ArrayBuffer[] = [];
 
-    constructor(public id: string, private socket: Socket, private fileName: string, private chunkStart: number, private chunkEnd: number, private chunkSize: number){
+    constructor(public id: string, private socket: Socket, public file: Constants.FileDescription){
         this.rtcPeer = new RTCPeerConnection(Constants.PeerConfiguration);
         this.rtcWrapper = new ClientPeerWrapper(this.rtcPeer, id, socket);
 
@@ -42,7 +42,7 @@ export class ClientPeer {
             this.id,
             MessageType.Request,
             MessageAction.CreatePeer,
-            new FileChunkRequest(this.fileName, this.chunkStart, this.chunkEnd))
+            new FileRequest(this.file.fileName))
         );
 
     private init = () => {
@@ -60,7 +60,7 @@ export class ClientPeer {
     private onmessage = (message: any) => {
         if (message !== 'eof') {
             this.fileData.push(message);
-            this.progress = (this.fileData.length * BYTES_PER_CHUNK) / this.chunkSize
+            // this.progress = (this.fileData.length * BYTES_PER_CHUNK) / this.chunkSize
         } else {
             this.externalPromise.resolve(this.fileData);
             this.progress = 1;

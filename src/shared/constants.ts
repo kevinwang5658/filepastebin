@@ -11,10 +11,10 @@ export namespace Constants {
     //**********************
     // Files
     //**********************
-    export interface File {
+    export interface FileDescription {
         fileName: string,
         fileSize: number,
-        fileType: string
+        fileType: string,
     }
 
     //********************
@@ -24,13 +24,13 @@ export namespace Constants {
     export const REQUEST_HOST = 'request-host';
 
     export interface RequestHostRequestModel {
-        files: File[]
+        files: FileDescription[]
     }
 
     export const REQUEST_HOST_ACCEPTED = 'request-host-accepted';
     export interface RequestHostAcceptedModel {
         roomId: string,
-        files: File[]
+        files: FileDescription[]
     }
 
     //**********************
@@ -43,7 +43,7 @@ export namespace Constants {
     export const REQUEST_CLIENT_ACCEPTED = 'request-client-accepted';
     export interface RequestClientAcceptedModel {
         roomId: string,
-        files: File[]
+        files: FileDescription[]
     }
 
     //************************

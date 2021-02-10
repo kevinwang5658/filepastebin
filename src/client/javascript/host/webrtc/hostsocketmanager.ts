@@ -7,6 +7,7 @@ import ERROR = Constants.ERROR;
 import REQUEST_HOST_ACCEPTED = Constants.REQUEST_HOST_ACCEPTED;
 import {HostPeerManager} from "./hostpeermanager";
 import Socket = SocketIOClient.Socket;
+import FileDescription = Constants.FileDescription;
 
 export class HostSocketManager {
 
@@ -15,7 +16,7 @@ export class HostSocketManager {
 
     private peerManager: HostPeerManager;
 
-    constructor(private socket: Socket, private files: Constants.File[]){
+    constructor(private socket: Socket, private files: File[]){
         socket.on(DISCONNECT, (reason) => console.log(reason));
         socket.on(ERROR, (err) => console.log(err));
         socket.on(REQUEST_HOST_ACCEPTED, this.onhost);
@@ -25,9 +26,17 @@ export class HostSocketManager {
         this.requestHost(files);
     }
 
-    public requestHost = (files: Constants.File[]) => {
+    public requestHost = (files: File[]) => {
+        let fileDescriptions = files.map(u => (<FileDescription>{
+            fileName: u.name,
+            fileSize: u.size,
+            fileType: u.type
+        }));
+
+        console.log(fileDescriptions);
+
         this.socket.emit(Constants.REQUEST_HOST, {
-            files
+            files: fileDescriptions
         });
     };
 

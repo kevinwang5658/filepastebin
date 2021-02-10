@@ -7,7 +7,7 @@ import CONNECT = Constants.CONNECT;
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 import Socket = SocketIOClient.Socket;
 import {DialogManager} from "./components/dialogmanager";
-import {JoinManager} from "./joinmanager";
+import {requestJoinRoom} from "./JoinRoomRequest";
 import adapter from 'webrtc-adapter';
 
 const container = <HTMLDivElement> document.getElementById('container');
@@ -28,10 +28,9 @@ const dialog_description = <HTMLParagraphElement> document.getElementById('dialo
 const dialog_loading_spinner = <HTMLDivElement> document.getElementById('dialog-loading-spinner');
 const dialog_back = <HTMLDivElement> document.getElementById('dialog-cancel');
 
-let selectedFiles: Constants.File[] = []
+let selectedFiles: File[] = []
 let socket: Socket;
 let socketManager: HostSocketManager;
-let joinManager = new JoinManager();
 
 let dialogManager = new DialogManager();
 
@@ -54,12 +53,12 @@ paste.addEventListener('click', (e) => {
 file_input_element.addEventListener('change', () => {
     if (file_input_element.files.length != 0) {
         console.log(file_input_element.files)
-        fileAdded(file_input_element.files)
+        filesAdded(file_input_element.files)
     }
 });
 
 join_room_button.addEventListener('click', (ev: Event) => {
-    dialogManager.showJoinDialog(joinManager, (roomId: string) => {
+    dialogManager.showJoinDialog(requestJoinRoom, (roomId: string) => {
         window.location.href = window.location.href + roomId;
     })
 });
@@ -73,7 +72,7 @@ container.addEventListener('drop', (ev: DragEvent) => {
     container.style.background = '#FFFFFF';
 
     if (ev.dataTransfer && ev.dataTransfer.files[0] && ev.dataTransfer.files[0].name !== '') {
-        fileAdded(ev.dataTransfer.files)
+        filesAdded(ev.dataTransfer.files)
     }
 });
 
@@ -114,16 +113,10 @@ function onRoomCreated(response: RequestHostAcceptedModel) {
     })
 }
 
-function fileAdded(files: FileList) {
+function filesAdded(files: FileList) {
     paste.disabled = false;
 
-    selectedFiles.push(...Array
-        .from(files)
-        .map((u) => ({
-            fileName: u.name,
-            fileSize: u.size,
-            fileType: u.type
-        })));
+    selectedFiles.push(...Array.from(files));
 
     document.getElementById("in-label").innerHTML = files[0].name.fontcolor("#4A4A4A");
 }

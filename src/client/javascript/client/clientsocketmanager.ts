@@ -32,7 +32,7 @@ export class ClientSocketManager {
     };
 
     private requestClientAccepted = (res: RequestClientAcceptedModel) => {
-        this.rtcManager = new ClientRTCManager(this.socket, res.fileName, res.fileSize, res.fileType);
+        this.rtcManager = new ClientRTCManager(this.socket, res.files);
         this.rtcManager.onprogresschanged = this.handleProgressChanged;
     };
 

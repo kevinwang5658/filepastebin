@@ -1,11 +1,10 @@
 import {Component, h} from "preact";
 // @ts-ignore
 import style from "./index-dialog.module.css";
-import {JoinManager} from "../joinmanager";
 import {IDialog} from "./idialog";
 
 export interface IJoinDialogProps {
-    joinManager: JoinManager,
+    joinRoomRequest: Function,
     onsuccess: (roomId: string) => void,
     oncancel: () => void
 }
@@ -65,7 +64,7 @@ export class JoinDialog extends Component<IJoinDialogProps, IJoinDialogState> im
         }
 
 
-        this.props.joinManager.requestJoin(value)
+        this.props.joinRoomRequest(value)
             .then((successful: boolean) => {
                 if (successful) {
                     this.props.onsuccess(value);

@@ -9,34 +9,28 @@ declare var download: any;
 export class ClientRTCManager {
 
     private workers = new Map<string, ClientPeer>();
-    private workerFileSize: number;
+    private files: Constants.FileDescription[];
 
-    constructor(private socket: Socket, private fileName: string, private fileSize: number, private fileType: string) {
-        this.workerFileSize = Math.ceil(fileSize / NUMBER_WORKERS);
+    constructor(private socket: Socket, files: Constants.FileDescription[]) {
+        this.files = files;
     }
 
     public initializeWorkers = () => {
-        let chunkStart = 0;
-        while (chunkStart < this.fileSize) {
-            let id = this.fileName + chunkStart;
+        for (const file of this.files) {
+            let id = file.fileName;
 
             this.workers.set(
                 id,
                 new ClientPeer(
                     id,
                     this.socket,
-                    this.fileName,
-                    chunkStart,
-                    Math.min(this.fileSize, chunkStart + this.workerFileSize),
-                    this.workerFileSize));
-
-            chunkStart += this.workerFileSize;
+                    file));
         }
 
-        Promise.all([ ...this.workers.values() ].map((peer: ClientPeer) => peer.getCompleteListener()))
-            .then((value: ArrayBuffer[][]) => {
-                this.onDataLoaded(value)
-            });
+        Promise.all([ ...this.workers.values() ].map((peer: ClientPeer) => peer.getCompleteListener()
+                .then((value: ArrayBuffer[]) => {
+                this.onDataLoaded(value, peer.file)
+            })));
 
         [ ...this.workers.values() ].forEach((peer: ClientPeer) => peer.onprogresschanged = this.handleprogresschanged)
     };
@@ -50,19 +44,19 @@ export class ClientRTCManager {
     private handleprogresschanged = () => {
         let progress = [ ...this.workers.values() ]
             .map((peer: ClientPeer) => peer.progress)
-            .map((progress) => progress * (this.workerFileSize / this.fileSize) * 100)
+            // .map((progress) => progress * (this.workerFileSize / this.fileSize) * 100)
             .reduce((previousValue, currentValue) => previousValue + currentValue);
 
         this.onprogresschanged(progress);
     };
 
-    private onDataLoaded = (value: ArrayBuffer[][]) => {
+    private onDataLoaded = (value: ArrayBuffer[], file: Constants.FileDescription) => {
         download(
-            new Blob([].concat(...value), {
-                type: this.fileType
+            new Blob(value, {
+                type: file.fileType
             }),
-            this.fileName,
-            this.fileType
+            file.fileName,
+            file.fileSize
         )
     }
 }

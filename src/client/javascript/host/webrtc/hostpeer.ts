@@ -1,7 +1,7 @@
 import {Message} from "../../webrtc-base/models/message";
 import {HostPeerWrapper} from "../../webrtc-base/peerwrapper";
 import {RtcFileSender} from "../../webrtc-base/rtcfilesender";
-import {IFileSender} from "../../webrtc-base/models/ifilesender";
+import {BaseFileSender} from "../../webrtc-base/BaseFileSender";
 import {Constants} from "../../../../shared/constants";
 import RTC_INIT_TIMEOUT = Constants.RTC_INIT_TIMEOUT;
 import {SocketFileSender} from "../../webrtc-base/socketfilesender";
@@ -11,7 +11,7 @@ export class HostPeer {
 
     private rtcPeer: RTCPeerConnection;
     private rtcWrapper: HostPeerWrapper;
-    private fileSender: IFileSender;
+    private fileSender: BaseFileSender;
 
     private progress: number = 0;
 
@@ -46,12 +46,12 @@ export class HostPeer {
                     resolve(new SocketFileSender(this.fileSlice, this.socket, this.id))
                 }
             })
-        ]).then((fileSender: IFileSender) => {
+        ]).then((fileSender: BaseFileSender) => {
             this.onopen(fileSender);
         })
     }
 
-    private onopen = (fileSender: IFileSender) => {
+    private onopen = (fileSender: BaseFileSender) => {
         console.log(`onopen: ${this.id}`);
         this.fileSender = fileSender;
         this.fileSender.onprogresschanged = this.onprogresschanged;

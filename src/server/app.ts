@@ -56,6 +56,8 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
   app.get('/:room_id', (req: Request, res: Response, next: NextFunction) => {
     if (req.params.room_id && hostMap.get(req.params.room_id)) {
 
+      console.log(hostMap);
+
       let sessionId = req.params.room_id;
       let hostModel = hostMap.get(req.params.room_id);
 
