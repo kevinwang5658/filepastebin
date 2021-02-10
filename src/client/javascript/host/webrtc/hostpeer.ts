@@ -1,10 +1,10 @@
-import {Message} from "../connection/message";
-import {HostPeerWrapper} from "../connection/peerwrapper";
-import {RtcFileSender} from "../connection/rtcfilesender";
-import {IFileSender} from "../connection/ifilesender";
-import {Constants} from "../../../shared/constants";
+import {Message} from "../../webrtc-base/models/message";
+import {HostPeerWrapper} from "../../webrtc-base/peerwrapper";
+import {RtcFileSender} from "../../webrtc-base/rtcfilesender";
+import {IFileSender} from "../../webrtc-base/models/ifilesender";
+import {Constants} from "../../../../shared/constants";
 import RTC_INIT_TIMEOUT = Constants.RTC_INIT_TIMEOUT;
-import {SocketFileSender} from "../connection/socketfilesender";
+import {SocketFileSender} from "../../webrtc-base/socketfilesender";
 import Socket = SocketIOClient.Socket;
 
 export class HostPeer {

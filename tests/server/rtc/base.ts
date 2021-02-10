@@ -1,6 +1,6 @@
 import {Base} from "../../../src/server/signaling/Base";
 import {beforeEach, describe} from "mocha";
-import {Message, MessageAction, MessageType} from "../../../src/client/javascript/connection/message";
+import {Message, MessageAction, MessageType} from "../../../src/client/javascript/webrtc-base/models/message";
 import {Socket} from "socket.io";
 import * as TypeMoq from "typemoq";
 

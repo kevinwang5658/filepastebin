@@ -1,4 +1,4 @@
-export class ExternalPromise<T> {
+export class PromiseWrapper<T> {
 
     public resolve;
     public reject;

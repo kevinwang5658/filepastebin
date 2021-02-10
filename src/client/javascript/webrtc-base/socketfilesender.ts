@@ -1,6 +1,6 @@
 import {Constants} from "../../../shared/constants";
-import {IFileSender} from "./ifilesender";
-import {Message, MessageType} from "./message";
+import {IFileSender} from "./models/ifilesender";
+import {Message, MessageType} from "./models/message";
 import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
 import EOF = Constants.EOF;
 import Socket = SocketIOClient.Socket;

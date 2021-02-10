@@ -1,7 +1,7 @@
 import {Constants} from "../../../shared/constants";
 import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
 import MAX_BUFFER = Constants.MAX_BUFFER;
-import {IFileSender} from "./ifilesender";
+import {IFileSender} from "./models/ifilesender";
 import EOF = Constants.EOF;
 
 export class RtcFileSender implements IFileSender{

@@ -827,7 +827,7 @@
         }
         var isLocal = sender._pc === this;
         if (!isLocal) {
-          throw new DOMException('Sender was not created by this connection.', 'InvalidAccessError');
+          throw new DOMException('Sender was not created by this webrtc-base.', 'InvalidAccessError');
         }
 
         // Search for the native stream the senders track belongs to.
@@ -3118,7 +3118,7 @@
 
         if (!transceiver) {
           throw makeError('InvalidAccessError',
-            'Sender was not created by this connection.');
+            'Sender was not created by this webrtc-base.');
         }
         var stream = transceiver.stream;
 
@@ -3895,7 +3895,7 @@
         }, 0);
       };
 
-      // Update the ice connection state.
+      // Update the ice webrtc-base state.
       RTCPeerConnection.prototype._updateIceConnectionState = function() {
         var newState;
         var states = {
@@ -3935,7 +3935,7 @@
         }
       };
 
-      // Update the connection state.
+      // Update the webrtc-base state.
       RTCPeerConnection.prototype._updateConnectionState = function() {
         var newState;
         var states = {
@@ -4191,7 +4191,7 @@
                 sdp += 'm=application 0 DTLS/SCTP 5000\r\n';
               } else {
                 sdp += 'm=application 0 ' + transceiver.protocol +
-                  ' webrtc-datachannel\r\n';
+                  ' webrtc-base-datachannel\r\n';
               }
             } else if (transceiver.kind === 'audio') {
               sdp += 'm=audio 0 UDP/TLS/RTP/SAVPF 0\r\n' +

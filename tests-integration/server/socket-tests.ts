@@ -5,7 +5,7 @@ import * as http from 'http';
 import * as io from 'socket.io-client';
 import {Constants} from "../../src/shared/constants";
 import {assert} from 'chai';
-import {Message, MessageAction, MessageType} from "../../src/client/javascript/connection/message";
+import {Message, MessageAction, MessageType} from "../../src/client/javascript/webrtc-base/models/message";
 import REQUEST_HOST = Constants.REQUEST_HOST;
 import RequestHostRequestModel = Constants.RequestHostRequestModel;
 import REQUEST_HOST_ACCEPTED = Constants.REQUEST_HOST_ACCEPTED;

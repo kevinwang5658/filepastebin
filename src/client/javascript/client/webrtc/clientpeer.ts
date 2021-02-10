@@ -1,7 +1,7 @@
-import {FileChunkRequest, Message, MessageAction, MessageType} from "../connection/message";
-import {ClientPeerWrapper} from "../connection/peerwrapper";
-import {ExternalPromise} from "../connection/externalpromise";
-import {Constants} from "../../../shared/constants";
+import {FileChunkRequest, Message, MessageAction, MessageType} from "../../webrtc-base/models/message";
+import {ClientPeerWrapper} from "../../webrtc-base/peerwrapper";
+import {PromiseWrapper} from "../../helpers/PromiseWrapper";
+import {Constants} from "../../../../shared/constants";
 import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
 import Socket = SocketIOClient.Socket;
 
@@ -13,7 +13,7 @@ export class ClientPeer {
     private rtcWrapper: ClientPeerWrapper;
     private dataChannel: RTCDataChannel;
 
-    private externalPromise: ExternalPromise<ArrayBuffer[]> = new ExternalPromise();
+    private externalPromise: PromiseWrapper<ArrayBuffer[]> = new PromiseWrapper();
 
     private fileData: ArrayBuffer[] = [];
 

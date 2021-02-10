@@ -1,7 +1,7 @@
-import {Message, MessageAction, MessageType} from "./message";
+import {Message, MessageAction, MessageType} from "./models/message";
 import {Constants} from "../../../shared/constants";
 import RTC_OPEN = Constants.RTC_OPEN;
-import {ExternalPromise} from "./externalpromise";
+import {PromiseWrapper} from "../helpers/PromiseWrapper";
 import READY = Constants.READY;
 import Socket = SocketIOClient.Socket;
 
@@ -104,7 +104,7 @@ export class HostPeerWrapper extends BasePeerWrapper {
 
     private isNegotiating = false;
     private dataChannel: RTCDataChannel;
-    private externalPromise: ExternalPromise<RTCDataChannel> = new ExternalPromise();
+    private externalPromise: PromiseWrapper<RTCDataChannel> = new PromiseWrapper();
 
     public initDataChannel(): Promise<RTCDataChannel> {
         this.peer.onnegotiationneeded = this.onnegotiationneeded;
@@ -145,7 +145,7 @@ export class HostPeerWrapper extends BasePeerWrapper {
 export class ClientPeerWrapper extends BasePeerWrapper {
 
     private dataChannel: RTCDataChannel;
-    private externalPromise: ExternalPromise<RTCDataChannel> = new ExternalPromise();
+    private externalPromise: PromiseWrapper<RTCDataChannel> = new PromiseWrapper();
 
     initDataChannel(): Promise<RTCDataChannel> {
         this.peer.ondatachannel = this.ondatachannel;

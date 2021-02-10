@@ -1,7 +1,7 @@
-import {Constants} from "../../../shared/constants";
+import {Constants} from "../../../../shared/constants";
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 import MESSAGE = Constants.MESSAGE;
-import {Message} from "../connection/message";
+import {Message} from "../../webrtc-base/models/message";
 import DISCONNECT = Constants.DISCONNECT;
 import ERROR = Constants.ERROR;
 import REQUEST_HOST_ACCEPTED = Constants.REQUEST_HOST_ACCEPTED;
@@ -15,21 +15,19 @@ export class HostSocketManager {
 
     private peerManager: HostPeerManager;
 
-    constructor(private socket: Socket, private file: File){
+    constructor(private socket: Socket, private files: Constants.File[]){
         socket.on(DISCONNECT, (reason) => console.log(reason));
         socket.on(ERROR, (err) => console.log(err));
         socket.on(REQUEST_HOST_ACCEPTED, this.onhost);
         socket.on(MESSAGE, this.onmessage);
 
-        this.peerManager = new HostPeerManager(socket, file);
-        this.requestHost();
+        this.peerManager = new HostPeerManager(socket, files);
+        this.requestHost(files);
     }
 
-    public requestHost = () => {
-        this.socket.emit(Constants.REQUEST_HOST, <Constants.RequestHostRequestModel>{
-            fileName: this.file.name,
-            fileSize: this.file.size,
-            fileType: this.file.type
+    public requestHost = (files: Constants.File[]) => {
+        this.socket.emit(Constants.REQUEST_HOST, {
+            files
         });
     };
 

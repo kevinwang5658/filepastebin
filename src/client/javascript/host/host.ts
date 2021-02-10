@@ -1,6 +1,6 @@
 'use strict';
 
-import {HostSocketManager} from "./hostsocketmanager";
+import {HostSocketManager} from "./webrtc/hostsocketmanager";
 import {Constants} from "../../../shared/constants";
 import * as io from "socket.io-client";
 import CONNECT = Constants.CONNECT;
@@ -11,7 +11,7 @@ import {JoinManager} from "./joinmanager";
 import adapter from 'webrtc-adapter';
 
 const container = <HTMLDivElement> document.getElementById('container');
-const inp_element = <HTMLInputElement> document.getElementById('in');
+const file_input_element = <HTMLInputElement> document.getElementById('in');
 const join_room_button = <HTMLDivElement> document.getElementById('join-room-button');
 const code_element = document.getElementById('code');
 const paste = <HTMLInputElement>document.getElementById('paste');
@@ -28,7 +28,7 @@ const dialog_description = <HTMLParagraphElement> document.getElementById('dialo
 const dialog_loading_spinner = <HTMLDivElement> document.getElementById('dialog-loading-spinner');
 const dialog_back = <HTMLDivElement> document.getElementById('dialog-cancel');
 
-let mFile: File;
+let selectedFiles: Constants.File[] = []
 let socket: Socket;
 let socketManager: HostSocketManager;
 let joinManager = new JoinManager();
@@ -47,13 +47,14 @@ paste.addEventListener('click', (e) => {
     paste.style.background = "#62A4F0";
 
     socket = io.connect();
-    socketManager = new HostSocketManager(socket, mFile);
+    socketManager = new HostSocketManager(socket, selectedFiles);
     socketManager.hostacceptedcallback = onRoomCreated
 });
 
-inp_element.addEventListener('change', () => {
-    if (inp_element.files[0] && inp_element.files[0].name !== '') {
-        fileAdded(inp_element.files[0])
+file_input_element.addEventListener('change', () => {
+    if (file_input_element.files.length != 0) {
+        console.log(file_input_element.files)
+        fileAdded(file_input_element.files)
     }
 });
 
@@ -63,6 +64,8 @@ join_room_button.addEventListener('click', (ev: Event) => {
     })
 });
 
+// Drag and Drop
+
 container.addEventListener('drop', (ev: DragEvent) => {
     ev.preventDefault();
     ev.stopPropagation();
@@ -70,7 +73,7 @@ container.addEventListener('drop', (ev: DragEvent) => {
     container.style.background = '#FFFFFF';
 
     if (ev.dataTransfer && ev.dataTransfer.files[0] && ev.dataTransfer.files[0].name !== '') {
-        fileAdded(ev.dataTransfer.files[0])
+        fileAdded(ev.dataTransfer.files)
     }
 });
 
@@ -111,10 +114,16 @@ function onRoomCreated(response: RequestHostAcceptedModel) {
     })
 }
 
-function fileAdded(file: File) {
+function fileAdded(files: FileList) {
     paste.disabled = false;
 
-    mFile = file;
-    let filename = file.name;
-    document.getElementById("in-label").innerHTML = filename.fontcolor("#4A4A4A");
+    selectedFiles.push(...Array
+        .from(files)
+        .map((u) => ({
+            fileName: u.name,
+            fileSize: u.size,
+            fileType: u.type
+        })));
+
+    document.getElementById("in-label").innerHTML = files[0].name.fontcolor("#4A4A4A");
 }
