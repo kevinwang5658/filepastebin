@@ -39,17 +39,17 @@ gulp.task('build', gulp.series(
 ));
 
 gulp.task('watch-public', () => {
-    watch('src/client/public/**/*', { ignoreInitial: true })
+    watch('src/client/public/**/*', { ignoreInitial: true, usePolling: true, pollingInterval: 100 }) // Must use polling because WSL bug
         .pipe(gulp.dest('dist/client/public/'))
 });
 
 gulp.task('watch-views', () => {
-    watch('src/client/views/**/*', { ignoreInitial: true })
+    watch('src/client/views/**/*', { ignoreInitial: true, usePolling: true, pollingInterval: 100 }) // Must use polling because WSL bug
         .pipe(gulp.dest('dist/client/views'))
 });
 
 gulp.task('watch-client', () => {
-    gulp.watch('src/client/javascript/**/*', { ignoreInitial: true},
+    gulp.watch('src/client/javascript/**/*', { ignoreInitial: true, usePolling: true, pollingInterval: 100 }, // Must use polling because WSL bug
         (done)=> {exec('cd src/client && node fuse-dev', (err, stdout, stderr) => {
             console.log(stdout);
             console.log(stderr);

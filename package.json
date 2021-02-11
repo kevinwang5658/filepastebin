@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "clean": "rimraf dist && rimraf node_modules && rimraf src/client/node_modules",
+    "clean": "rimraf dist && rimraf src/client/node_modules && rimraf node_modules",
     "start-dev": "gulp start-dev",
     "build": "gulp build-prod",
     "start": "node dist/server/server.js",
