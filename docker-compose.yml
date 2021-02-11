@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  web:
+    image: public.ecr.aws/t9u2b2i6/filepastebin:latest
+    build: .
+    ports:
+      - :3000
+
