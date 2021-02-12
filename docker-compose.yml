@@ -5,4 +5,8 @@ services:
     build: .
     ports:
       - :3000
+  webserver:
+    image: mbentley/nginx-https-redirect
+    ports:
+      - :80
 
