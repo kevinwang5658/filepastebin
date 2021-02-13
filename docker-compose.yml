@@ -9,8 +9,14 @@ services:
     image: mbentley/nginx-https-redirect
     ports:
       - :80
+
+# Cloud formation overrides
 x-aws-cloudformation:
   Resources:
+    Cluster:
+      Properties:
+        CapacityProviders:
+          - FARGATE_SPOT
     WebserverTCP80TargetGroup:
       Properties:
         TargetGroupAttributes:
