@@ -5,7 +5,7 @@ import {PromiseWrapper} from "../helpers/PromiseWrapper";
 import READY = Constants.READY;
 import Socket = SocketIOClient.Socket;
 
-export abstract class BasePeerWrapper {
+export abstract class BaseRTCPeerConnectionWrapper {
 
     abstract initDataChannel(): Promise<RTCDataChannel>
 
@@ -92,81 +92,4 @@ export abstract class BasePeerWrapper {
 
     private onconnectionstatechange = () => console.log('Conenction state changed to: ' + this.peer.connectionState);
 
-}
-
-
-//***************************************
-// Host Wrapper
-//***************************************
-
-
-export class HostPeerWrapper extends BasePeerWrapper {
-
-    private isNegotiating = false;
-    private dataChannel: RTCDataChannel;
-    private externalPromise: PromiseWrapper<RTCDataChannel> = new PromiseWrapper();
-
-    public initDataChannel(): Promise<RTCDataChannel> {
-        this.peer.onnegotiationneeded = this.onnegotiationneeded;
-        this.peer.onsignalingstatechange = this.onsignalingstatechange;
-        this.dataChannel = this.peer.createDataChannel(this.id);
-        this.dataChannel.onmessage = this.ondatachannelready;
-
-        return this.externalPromise.promise;
-    }
-
-    private onnegotiationneeded = () => {
-        console.log('Negotiation');
-
-        if (this.isNegotiating) return;
-
-        this.isNegotiating = true;
-        this.createOffer();
-    };
-
-    private onsignalingstatechange = () => {
-        console.log('Signaling state changed: ' + this.peer.signalingState);
-
-        this.isNegotiating = (this.peer.signalingState !== 'stable');
-    };
-
-    private ondatachannelready = (message: MessageEvent) => {
-        if (message.data === READY) {
-            this.externalPromise.resolve(this.dataChannel)
-        }
-    };
-
-}
-
-//*************************************
-// Client
-//*************************************
-
-export class ClientPeerWrapper extends BasePeerWrapper {
-
-    private dataChannel: RTCDataChannel;
-    private externalPromise: PromiseWrapper<RTCDataChannel> = new PromiseWrapper();
-
-    initDataChannel(): Promise<RTCDataChannel> {
-        this.peer.ondatachannel = this.ondatachannel;
-
-        return this.externalPromise.promise
-    }
-
-    private ondatachannel = (event: RTCDataChannelEvent) => {
-        this.dataChannel = event.channel;
-        this.dataChannel.binaryType = 'arraybuffer';
-        if (this.dataChannel.readyState === RTC_OPEN) {
-            this.ondatachannelready()
-        } else {
-            this.dataChannel.onopen = () => {
-                this.ondatachannelready()
-            }
-        }
-    };
-
-    private ondatachannelready = () => {
-        this.externalPromise.resolve(this.dataChannel);
-        this.dataChannel.send(READY);
-    }
 }

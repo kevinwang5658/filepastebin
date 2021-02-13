@@ -1,10 +1,10 @@
 import {Constants} from "../../../shared/constants";
 import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
 import MAX_BUFFER = Constants.MAX_BUFFER;
-import {BaseFileSender} from "./BaseFileSender";
+import {BaseFileSender} from "./baseFileSender";
 import EOF = Constants.EOF;
 
-export class RtcFileSender implements BaseFileSender{
+export class RtcFileSender implements BaseFileSender {
     public currentChunk = 0;
     private fileReader = new FileReader();
 

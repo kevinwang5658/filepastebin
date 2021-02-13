@@ -1,11 +1,11 @@
 import {Constants} from "../../../shared/constants";
-import {BaseFileSender} from "./BaseFileSender";
+import {BaseFileSender} from "./baseFileSender";
 import {Message, MessageType} from "./models/message";
 import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
 import EOF = Constants.EOF;
 import Socket = SocketIOClient.Socket;
 
-export class SocketFileSender implements BaseFileSender{
+export class SocketFileSender implements BaseFileSender {
 
     public currentChunk = 0;
     private fileReader = new FileReader();

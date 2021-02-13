@@ -1,9 +1,9 @@
 import {Socket} from "socket.io";
-import {BasePeerWrapper} from "./peerwrapper";
+import {BaseRTCPeerConnectionWrapper} from "./baseRTCPeerConnectionWrapper";
 
 export class BaseManager {
 
-    protected peerList: BasePeerWrapper[];
+    protected peerList: BaseRTCPeerConnectionWrapper[];
 
     constructor(protected socket: Socket) {
         this.peerList = []

@@ -1,16 +1,16 @@
 import {FileRequest, Message, MessageAction, MessageType} from "../../webrtc-base/models/message";
-import {ClientPeerWrapper} from "../../webrtc-base/peerwrapper";
 import {PromiseWrapper} from "../../helpers/PromiseWrapper";
 import {Constants} from "../../../../shared/constants";
 import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
 import Socket = SocketIOClient.Socket;
+import {ClientRTCPeerConnectionWrapper} from "./clientRTCPeerConnectionWrapper";
 
 export class ClientPeer {
 
     public progress = 0;
 
     private rtcPeer: RTCPeerConnection;
-    private rtcWrapper: ClientPeerWrapper;
+    private rtcWrapper: ClientRTCPeerConnectionWrapper
     private dataChannel: RTCDataChannel;
 
     private externalPromise: PromiseWrapper<ArrayBuffer[]> = new PromiseWrapper();
@@ -19,7 +19,7 @@ export class ClientPeer {
 
     constructor(public id: string, private socket: Socket, public file: Constants.FileDescription){
         this.rtcPeer = new RTCPeerConnection(Constants.PeerConfiguration);
-        this.rtcWrapper = new ClientPeerWrapper(this.rtcPeer, id, socket);
+        this.rtcWrapper = new ClientRTCPeerConnectionWrapper(this.rtcPeer, id, socket);
 
         this.init();
     }

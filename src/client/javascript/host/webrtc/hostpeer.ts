@@ -1,23 +1,23 @@
 import {Message} from "../../webrtc-base/models/message";
-import {HostPeerWrapper} from "../../webrtc-base/peerwrapper";
-import {RtcFileSender} from "../../webrtc-base/rtcfilesender";
-import {BaseFileSender} from "../../webrtc-base/BaseFileSender";
+import {RtcFileSender} from "../../webrtc-base/rtcFileSender";
+import {BaseFileSender} from "../../webrtc-base/baseFileSender";
 import {Constants} from "../../../../shared/constants";
 import RTC_INIT_TIMEOUT = Constants.RTC_INIT_TIMEOUT;
-import {SocketFileSender} from "../../webrtc-base/socketfilesender";
+import {SocketFileSender} from "../../webrtc-base/socketFileSender";
 import Socket = SocketIOClient.Socket;
+import {HostRTCPeerConnectionWrapper} from "./hostRTCPeerConnectionWrapper";
 
 export class HostPeer {
 
     private rtcPeer: RTCPeerConnection;
-    private rtcWrapper: HostPeerWrapper;
+    private rtcWrapper: HostRTCPeerConnectionWrapper;
     private fileSender: BaseFileSender;
 
     private progress: number = 0;
 
     constructor(private id: string, private socket: Socket, private fileSlice: Blob){
         this.rtcPeer = new RTCPeerConnection(Constants.PeerConfiguration);
-        this.rtcWrapper = new HostPeerWrapper(this.rtcPeer, this.id, this.socket);
+        this.rtcWrapper = new HostRTCPeerConnectionWrapper(this.rtcPeer, this.id, this.socket);
 
         this.init();
     }
