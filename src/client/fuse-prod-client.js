@@ -17,6 +17,6 @@ const fuse = FuseBox.init({
 
 fuse
     .bundle('client')
-    .instructions("> client/javascript/client/Client.ts");
+    .instructions("> client/javascript/client/client.ts");
 
 fuse.run();

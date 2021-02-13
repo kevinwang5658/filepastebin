@@ -28,6 +28,7 @@ export class ClientRTCPeerConnectionWrapper extends BaseRTCPeerConnectionWrapper
     };
 
     private onDataChannelReady = () => {
+        console.log('onDataChannelOpen')
         this.externalPromise.resolve(this.dataChannel);
         this.dataChannel.send(READY);
     }

@@ -20,6 +20,8 @@ export class RtcFileSender implements BaseFileSender {
     public initDataChannel = async () => {
         return this.rtcWrapper.initDataChannel()
             .then((dataChannel) => {
+                console.log("Configuring data channel");
+
                 dataChannel.bufferedAmountLowThreshold = BYTES_PER_CHUNK
                 dataChannel.onerror = this.onRTCError;
                 this.dataChannel = dataChannel
@@ -38,6 +40,8 @@ export class RtcFileSender implements BaseFileSender {
 
             let start = BYTES_PER_CHUNK * this.currentChunk;
             let end = Math.min(this.file.size, start + BYTES_PER_CHUNK);
+
+            console.log("Sending chunk: " + start);
 
             await this.readAsArrayBuffer(this.file.slice(start, end));
             this.dataChannel.send(<ArrayBuffer> this.fileReader.result);

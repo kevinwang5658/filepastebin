@@ -9,7 +9,7 @@ export class HostRTCPeerConnectionWrapper extends BaseRTCPeerConnectionWrapper {
 
     private isNegotiating = false;
     private dataChannel: RTCDataChannel;
-    private externalPromise: PromiseWrapper<RTCDataChannel> = new PromiseWrapper();
+    private resolve;
 
     public initDataChannel(): Promise<RTCDataChannel> {
         this.peer.onnegotiationneeded = this.onNegotiationNeeded;
@@ -18,13 +18,15 @@ export class HostRTCPeerConnectionWrapper extends BaseRTCPeerConnectionWrapper {
         this.dataChannel.onmessage = this.onDataChannelReady;
         this.socket.on(MESSAGE, this.onMessage);
 
-        return this.externalPromise.promise;
+        return new Promise(resolve => {
+            this.resolve = resolve;
+        });
     }
 
     private onNegotiationNeeded = () => {
         console.log('Negotiation');
 
-        if (this.isNegotiating) return;
+        //if (this.isNegotiating) return;
 
         this.isNegotiating = true;
         this.createOffer();
@@ -33,14 +35,14 @@ export class HostRTCPeerConnectionWrapper extends BaseRTCPeerConnectionWrapper {
     private onSignalingStateChange = () => {
         console.log('Signaling state changed: ' + this.peer.signalingState);
 
-        this.isNegotiating = (this.peer.signalingState !== 'stable');
+        //this.isNegotiating = (this.peer.signalingState !== 'stable');
     };
 
     private onDataChannelReady = (message: MessageEvent) => {
         if (message.data === READY) {
             console.log('Data channel ready');
 
-            this.externalPromise.resolve(this.dataChannel)
+            this.resolve(this.dataChannel)
         }
     };
 

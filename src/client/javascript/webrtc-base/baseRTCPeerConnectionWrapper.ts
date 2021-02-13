@@ -54,6 +54,7 @@ export abstract class BaseRTCPeerConnectionWrapper {
 
     protected createOffer = () => this.peer.createOffer()
         .then((desc) => {
+            console.log("createOffer")
             return this.peer.setLocalDescription(desc)
         }).then((desc)=> {
             this.sendOffer(this.peer.localDescription.toJSON())
@@ -61,6 +62,7 @@ export abstract class BaseRTCPeerConnectionWrapper {
 
     protected createAnswer = () => this.peer.createAnswer()
         .then((desc) => {
+            console.log("createAnswer")
             return this.peer.setLocalDescription(desc);
         }).then((desc) => {
             this.sendAnswer(this.peer.localDescription.toJSON())
@@ -79,9 +81,9 @@ export abstract class BaseRTCPeerConnectionWrapper {
     private onicecandidateerror = (err: RTCPeerConnectionIceErrorEvent) => console.log('Ice candidate error: ' + JSON.stringify(err));
 
     private onicecandidate = (event: RTCPeerConnectionIceEvent) => {
-        if (event.hasOwnProperty('candidate')) {
+        //if (event.hasOwnProperty('candidate')) {
             this.sendIceCandidate(event.candidate);
-        }
+        //}
 
         console.log('Ice Candidate: ' + JSON.stringify(event));
     };

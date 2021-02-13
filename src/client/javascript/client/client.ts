@@ -2,6 +2,7 @@
 
 import * as io from "socket.io-client";
 import {ClientNetworkManager} from "./clientNetworkManager";
+import adapter from 'webrtc-adapter';
 
 const client = <HTMLInputElement>document.getElementById('download');
 const progress = document.getElementById('progress');
@@ -20,6 +21,8 @@ const FILE_SIZE = Number(file_size.textContent);
 const socket = io.connect();
 
 const socketManager = new ClientNetworkManager(socket, ROOM_ID);
+
+console.log(adapter.browserDetails.browser);
 
 //******************************
 // Document events

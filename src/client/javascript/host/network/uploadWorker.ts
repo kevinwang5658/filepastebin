@@ -17,26 +17,26 @@ export class UploadWorker {
     }
 
     private async init() {
+        const rtcFileSender = new RtcFileSender(this.id, this.file, this.socket)
         Promise.race([
-            new Promise(resolve => {
-                const rtcFileSender = new RtcFileSender(this.id, this.file, this.socket)
-                rtcFileSender.initDataChannel()
+            rtcFileSender.initDataChannel()
                     .then((dataChannel) => {
+                        console.log("dataChannel is open in uploadWorker")
+
                         dataChannel.onclose = this.onRTCClose;
                         return rtcFileSender;
-                    })
-            }),
-            new Promise(resolve => {
-                setTimeout(() => {
-                    resolve(new SocketFileSender(this.file, this.socket, this.id))
-                }, RTC_INIT_TIMEOUT)
-            }),
-            new Promise(resolve => {
-                let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
-                if (iOS) {
-                    resolve(new SocketFileSender(this.file, this.socket, this.id))
-                }
-            })
+                    }),
+            // new Promise(resolve => {
+            //     setTimeout(() => {
+            //         resolve(new SocketFileSender(this.file, this.socket, this.id))
+            //     }, RTC_INIT_TIMEOUT)
+            // }),
+            // new Promise(resolve => {
+            //     let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+            //     if (iOS) {
+            //         resolve(new SocketFileSender(this.file, this.socket, this.id))
+            //     }
+            // })
         ]).then((fileSender: BaseFileSender) => {
             this.onOpen(fileSender);
         })

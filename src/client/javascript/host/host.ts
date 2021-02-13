@@ -34,6 +34,8 @@ let socketManager: HostNetworkManager;
 
 let dialogManager = new DialogManager();
 
+console.log(adapter.browserDetails.browser);
+
 //******************************************
 // Page Events
 //*******************************************
