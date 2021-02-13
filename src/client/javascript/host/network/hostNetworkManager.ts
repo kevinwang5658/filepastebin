@@ -50,8 +50,6 @@ export class HostNetworkManager {
             let file = this.files.find(u => u.name === request.fileName)
 
             this.workers.set(message.senderId, new UploadWorker(message.senderId, this.socket, file));
-        } else if (message.type === MessageType.Signal) {
-            this.workers.get(message.senderId).handleMessage(message)
         }
     }
 

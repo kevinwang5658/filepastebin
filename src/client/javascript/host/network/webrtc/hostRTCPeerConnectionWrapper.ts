@@ -2,6 +2,8 @@ import {PromiseWrapper} from "../../../helpers/PromiseWrapper";
 import {BaseRTCPeerConnectionWrapper} from "../../../webrtc-base/baseRTCPeerConnectionWrapper";
 import {Constants} from "../../../../../shared/constants";
 import READY = Constants.READY;
+import {Message, MessageType} from "../../../webrtc-base/models/message";
+import MESSAGE = Constants.MESSAGE;
 
 export class HostRTCPeerConnectionWrapper extends BaseRTCPeerConnectionWrapper {
 
@@ -14,6 +16,7 @@ export class HostRTCPeerConnectionWrapper extends BaseRTCPeerConnectionWrapper {
         this.peer.onsignalingstatechange = this.onSignalingStateChange;
         this.dataChannel = this.peer.createDataChannel(this.id);
         this.dataChannel.onmessage = this.onDataChannelReady;
+        this.socket.on(MESSAGE, this.onMessage);
 
         return this.externalPromise.promise;
     }
@@ -40,5 +43,11 @@ export class HostRTCPeerConnectionWrapper extends BaseRTCPeerConnectionWrapper {
             this.externalPromise.resolve(this.dataChannel)
         }
     };
+
+    public onMessage = (message: Message) => {
+        if (message.type === MessageType.Signal && message.senderId == this.id) {
+            this.handleMessage(message)
+        }
+    }
 
 }

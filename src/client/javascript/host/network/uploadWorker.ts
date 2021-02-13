@@ -5,34 +5,26 @@ import {Constants} from "../../../../shared/constants";
 import RTC_INIT_TIMEOUT = Constants.RTC_INIT_TIMEOUT;
 import {SocketFileSender} from "./webrtc/socketFileSender";
 import Socket = SocketIOClient.Socket;
-import {HostRTCPeerConnectionWrapper} from "./webrtc/hostRTCPeerConnectionWrapper";
 
 export class UploadWorker {
 
-    private rtcWrapper: HostRTCPeerConnectionWrapper;
     private fileSender: BaseFileSender;
 
     private progress: number = 0;
 
     constructor(private id: string, private socket: Socket, private file: Blob){
-        const rtcPeerConnection = new RTCPeerConnection(Constants.PeerConfiguration);
-        this.rtcWrapper = new HostRTCPeerConnectionWrapper(rtcPeerConnection, this.id, this.socket);
-
         this.init();
     }
 
-    handleMessage = (message: Message) => {
-        this.rtcWrapper.handleMessage(message)
-    };
-
     private async init() {
         Promise.race([
-            this.rtcWrapper.initDataChannel()
-                .then((dataChannel) => {
-                    dataChannel.onclose = this.onRTCClose;
-                    dataChannel.onerror = this.onRTCError;
-
-                    return new RtcFileSender(this.file, dataChannel);
+            new Promise(resolve => {
+                const rtcFileSender = new RtcFileSender(this.id, this.file, this.socket)
+                rtcFileSender.initDataChannel()
+                    .then((dataChannel) => {
+                        dataChannel.onclose = this.onRTCClose;
+                        return rtcFileSender;
+                    })
             }),
             new Promise(resolve => {
                 setTimeout(() => {
@@ -53,11 +45,9 @@ export class UploadWorker {
     private onOpen = (fileSender: BaseFileSender) => {
         console.log(`onopen: ${this.id}`);
         this.fileSender = fileSender;
-        this.fileSender.onprogresschanged = this.onProgressChanged;
+        this.fileSender.onProgressChanged = this.onProgressChanged;
         this.fileSender.sendFiles()
     };
-
-    private onRTCError = (err: Event) => console.log(`onerror${err}`);
 
     private onRTCClose = () => {
         console.log('onclosed');

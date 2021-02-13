@@ -25,13 +25,13 @@ export class SocketFileSender implements BaseFileSender {
             this.socket.send(new Message(this.senderId, MessageType.Data, null, this.fileReader.result));
 
             this.currentChunk++;
-            this.onprogresschanged(this.currentChunk * BYTES_PER_CHUNK);
+            this.onProgressChanged(this.currentChunk * BYTES_PER_CHUNK);
         }
 
         this.socket.send(new Message(this.senderId, MessageType.Data, null, EOF))
     };
 
-    public onprogresschanged: (progress: number) => void = progress => {};
+    public onProgressChanged: (progress: number) => void = progress => {};
 
     private readAsArrayBuffer = (file: Blob) => {
         return new Promise((resolve, reject) => {
