@@ -9,4 +9,15 @@ services:
     image: mbentley/nginx-https-redirect
     ports:
       - :80
-
+x-aws-cloudformation:
+  Resources:
+    WebserverTCP80TargetGroup:
+      Properties:
+        TargetGroupAttributes:
+          - Key: deregistration_delay.timeout_seconds
+            Value: 10
+    WebTCP3000TargetGroup:
+      Properties:
+        TargetGroupAttributes:
+          - Key: deregistration_delay.timeout_seconds
+            Value: 10

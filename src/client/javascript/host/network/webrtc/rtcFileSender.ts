@@ -1,20 +1,22 @@
 import {Constants} from "../../../../../shared/constants";
-import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
 import MAX_BUFFER = Constants.MAX_BUFFER;
 import {BaseFileSender} from "../../../webrtc-base/baseFileSender";
 import EOF = Constants.EOF;
 import {HostRTCPeerConnectionWrapper} from "./hostRTCPeerConnectionWrapper";
 import Socket = SocketIOClient.Socket;
 
+
 export class RtcFileSender implements BaseFileSender {
     public currentChunk = 0;
     private fileReader = new FileReader();
     private rtcWrapper: HostRTCPeerConnectionWrapper
+    private rtcPeerConnection = new RTCPeerConnection(Constants.PeerConfiguration);
     private dataChannel: RTCDataChannel
+    private bytesPerChunk = 0;
+
 
     constructor(private id: string, private file: Blob, socket: Socket) {
-        const rtcPeerConnection = new RTCPeerConnection(Constants.PeerConfiguration);
-        this.rtcWrapper = new HostRTCPeerConnectionWrapper(rtcPeerConnection, id, socket);
+        this.rtcWrapper = new HostRTCPeerConnectionWrapper(this.rtcPeerConnection, id, socket);
     }
 
     public initDataChannel = async () => {
@@ -22,7 +24,10 @@ export class RtcFileSender implements BaseFileSender {
             .then((dataChannel) => {
                 console.log("Configuring data channel");
 
-                dataChannel.bufferedAmountLowThreshold = BYTES_PER_CHUNK
+                this.bytesPerChunk = this.rtcPeerConnection.sctp.maxMessageSize
+                console.log(this.rtcPeerConnection.sctp.maxMessageSize);
+
+                dataChannel.bufferedAmountLowThreshold = this.bytesPerChunk
                 dataChannel.onerror = this.onRTCError;
                 this.dataChannel = dataChannel
 
@@ -31,15 +36,15 @@ export class RtcFileSender implements BaseFileSender {
     }
 
     public sendFiles = async (progress: number = 0) => {
-        this.currentChunk = progress / BYTES_PER_CHUNK;
+        this.currentChunk = progress / this.bytesPerChunk;
 
-        while(this.currentChunk * BYTES_PER_CHUNK < this.file.size) {
+        while(this.currentChunk * this.bytesPerChunk < this.file.size) {
             if (this.dataChannel.bufferedAmount > MAX_BUFFER) {
                 await this.bufferedAmountLow()
             }
 
-            let start = BYTES_PER_CHUNK * this.currentChunk;
-            let end = Math.min(this.file.size, start + BYTES_PER_CHUNK);
+            let start = this.bytesPerChunk * this.currentChunk;
+            let end = Math.min(this.file.size, start + this.bytesPerChunk);
 
             console.log("Sending chunk: " + start);
 
@@ -48,7 +53,7 @@ export class RtcFileSender implements BaseFileSender {
 
             this.currentChunk++;
 
-            this.onProgressChanged(this.currentChunk * BYTES_PER_CHUNK);
+            this.onProgressChanged(this.currentChunk * this.bytesPerChunk);
         }
 
         this.dataChannel.send(EOF);
@@ -80,7 +85,7 @@ export class RtcFileSender implements BaseFileSender {
 
     private bufferAmountLowTimer = (resolve) => {
         setTimeout(() => {
-            if (this.dataChannel.bufferedAmount > BYTES_PER_CHUNK) {
+            if (this.dataChannel.bufferedAmount > this.bytesPerChunk) {
                 this.bufferedAmountLow()
             }  else {
                 resolve()
