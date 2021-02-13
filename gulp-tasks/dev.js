@@ -50,7 +50,7 @@ gulp.task('watch-views', () => {
 
 gulp.task('watch-client', () => {
     gulp.watch('src/client/javascript/**/*',
-        (done)=> {exec('cd src/client && node fuse-dev', (err, stdout, stderr) => {
+        (done)=> {exec('cd src/client && tsc', (err, stdout, stderr) => {
             console.log(stdout);
             console.log(stderr);
             done(err);

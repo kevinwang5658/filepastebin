@@ -5,6 +5,7 @@ const fuse = FuseBox.init({
     output: "../../dist/client/javascript/$name.js",
     tsConfig: "./tsconfig.json",
     ensureTsConfig: true,
+    sourceMaps: true,
     plugins: [
         [CSSModules(), CSSPlugin()]
     ]
