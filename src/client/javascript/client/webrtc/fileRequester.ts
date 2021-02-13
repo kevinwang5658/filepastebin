@@ -5,16 +5,14 @@ import Socket = SocketIOClient.Socket;
 import {ClientRTCPeerConnectionWrapper} from "./clientRTCPeerConnectionWrapper";
 import {FileRequest, Message, MessageAction, MessageType} from "../../webrtc-base/models/message";
 
-export class ClientPeer {
+export class fileRequester {
 
     public progress = 0;
 
     private rtcPeer: RTCPeerConnection;
     private rtcWrapper: ClientRTCPeerConnectionWrapper
     private dataChannel: RTCDataChannel;
-
     private externalPromise: PromiseWrapper<ArrayBuffer[]> = new PromiseWrapper();
-
     private fileData: ArrayBuffer[] = [];
 
     constructor(public id: string, private socket: Socket, public file: Constants.FileDescription){
@@ -27,7 +25,7 @@ export class ClientPeer {
     public handleMessage = (message: Message) => {
         this.rtcWrapper.handleMessage(message);
         if (message.type === MessageType.Data) {
-            this.onmessage(message.content)
+            this.onRTCMessage(message.content)
         }
     };
 
@@ -35,9 +33,9 @@ export class ClientPeer {
         return this.externalPromise.promise;
     }
 
-    public onprogresschanged: (number: number) => void = (number) => {};
+    public onProgressChangedCallback: (number: number) => void = (number) => {};
 
-    private requestFileChunk = () => this.socket.send(
+    private requestFile = () => this.socket.send(
         new Message(
             this.id,
             MessageType.Request,
@@ -51,13 +49,13 @@ export class ClientPeer {
                 console.log(`onopen: ${this.id}`);
 
                 this.dataChannel = dataChannel;
-                this.dataChannel.onmessage = (ev: MessageEvent) => this.onmessage(ev.data);
+                this.dataChannel.onmessage = (ev: MessageEvent) => this.onRTCMessage(ev.data);
             });
 
-        this.requestFileChunk();
+        this.requestFile();
     };
 
-    private onmessage = (message: any) => {
+    private onRTCMessage = (message: any) => {
         if (message !== 'eof') {
             this.fileData.push(message);
             // this.progress = (this.fileData.length * BYTES_PER_CHUNK) / this.chunkSize
@@ -71,6 +69,6 @@ export class ClientPeer {
             }
         }
 
-        this.onprogresschanged(this.progress);
+        this.onProgressChangedCallback(this.progress);
     }
 }

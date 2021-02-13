@@ -10,24 +10,24 @@ export class ClientRTCPeerConnectionWrapper extends BaseRTCPeerConnectionWrapper
     private externalPromise: PromiseWrapper<RTCDataChannel> = new PromiseWrapper();
 
     initDataChannel(): Promise<RTCDataChannel> {
-        this.peer.ondatachannel = this.ondatachannel;
+        this.peer.ondatachannel = this.onDataChannel;
 
         return this.externalPromise.promise
     }
 
-    private ondatachannel = (event: RTCDataChannelEvent) => {
+    private onDataChannel = (event: RTCDataChannelEvent) => {
         this.dataChannel = event.channel;
         this.dataChannel.binaryType = 'arraybuffer';
         if (this.dataChannel.readyState === RTC_OPEN) {
-            this.ondatachannelready()
+            this.onDataChannelReady()
         } else {
             this.dataChannel.onopen = () => {
-                this.ondatachannelready()
+                this.onDataChannelReady()
             }
         }
     };
 
-    private ondatachannelready = () => {
+    private onDataChannelReady = () => {
         this.externalPromise.resolve(this.dataChannel);
         this.dataChannel.send(READY);
     }
