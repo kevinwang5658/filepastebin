@@ -26,16 +26,12 @@ export class HostRTCPeerConnectionWrapper extends BaseRTCPeerConnectionWrapper {
     private onNegotiationNeeded = () => {
         console.log('Negotiation');
 
-        //if (this.isNegotiating) return;
-
         this.isNegotiating = true;
         this.createOffer();
     };
 
     private onSignalingStateChange = () => {
         console.log('Signaling state changed: ' + this.peer.signalingState);
-
-        //this.isNegotiating = (this.peer.signalingState !== 'stable');
     };
 
     private onDataChannelReady = (message: MessageEvent) => {

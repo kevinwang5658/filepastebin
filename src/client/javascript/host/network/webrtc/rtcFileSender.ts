@@ -52,7 +52,6 @@ export class RtcFileSender implements BaseFileSender {
             this.dataChannel.send(<ArrayBuffer> this.fileReader.result);
 
             this.currentChunk++;
-
             this.onProgressChanged(this.currentChunk * this.bytesPerChunk);
         }
 

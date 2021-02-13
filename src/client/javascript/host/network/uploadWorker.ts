@@ -26,17 +26,12 @@ export class UploadWorker {
                         dataChannel.onclose = this.onRTCClose;
                         return rtcFileSender;
                     }),
-            // new Promise(resolve => {
-            //     setTimeout(() => {
-            //         resolve(new SocketFileSender(this.file, this.socket, this.id))
-            //     }, RTC_INIT_TIMEOUT)
-            // }),
-            // new Promise(resolve => {
-            //     let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
-            //     if (iOS) {
-            //         resolve(new SocketFileSender(this.file, this.socket, this.id))
-            //     }
-            // })
+            //fallback to socketIO
+            new Promise(resolve => {
+                setTimeout(() => {
+                    resolve(new SocketFileSender(this.file, this.socket, this.id))
+                }, RTC_INIT_TIMEOUT)
+            }),
         ]).then((fileSender: BaseFileSender) => {
             this.onOpen(fileSender);
         })
