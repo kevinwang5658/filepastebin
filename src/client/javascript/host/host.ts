@@ -1,6 +1,6 @@
 'use strict';
 
-import {HostSocketManager} from "./webrtc/hostsocketmanager";
+import {HostNetworkManager} from "./webrtc/hostNetworkManager";
 import {Constants} from "../../../shared/constants";
 import * as io from "socket.io-client";
 import CONNECT = Constants.CONNECT;
@@ -30,7 +30,7 @@ const dialog_back = <HTMLDivElement> document.getElementById('dialog-cancel');
 
 let selectedFiles: File[] = []
 let socket: Socket;
-let socketManager: HostSocketManager;
+let socketManager: HostNetworkManager;
 
 let dialogManager = new DialogManager();
 
@@ -46,8 +46,8 @@ paste.addEventListener('click', (e) => {
     paste.style.background = "#62A4F0";
 
     socket = io.connect();
-    socketManager = new HostSocketManager(socket, selectedFiles);
-    socketManager.hostacceptedcallback = onRoomCreated
+    socketManager = new HostNetworkManager(socket, selectedFiles);
+    socketManager.onRoomCreatedCallback = onRoomCreated
 });
 
 file_input_element.addEventListener('change', () => {

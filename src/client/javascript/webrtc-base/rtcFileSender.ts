@@ -20,7 +20,6 @@ export class RtcFileSender implements BaseFileSender {
                 await this.bufferedAmountLow()
             }
 
-
             let start = BYTES_PER_CHUNK * this.currentChunk;
             let end = Math.min(this.file.size, start + BYTES_PER_CHUNK);
 
