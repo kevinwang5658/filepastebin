@@ -1,6 +1,6 @@
-import {Constants} from "../../../shared/constants";
-import {BaseFileSender} from "./baseFileSender";
-import {Message, MessageType} from "./models/message";
+import {Constants} from "../../../../../shared/constants";
+import {BaseFileSender} from "../../../webrtc-base/baseFileSender";
+import {Message, MessageType} from "../../../webrtc-base/models/message";
 import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
 import EOF = Constants.EOF;
 import Socket = SocketIOClient.Socket;

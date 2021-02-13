@@ -1,23 +1,22 @@
 import {Message} from "../../webrtc-base/models/message";
-import {RtcFileSender} from "../../webrtc-base/rtcFileSender";
+import {RtcFileSender} from "./webrtc/rtcFileSender";
 import {BaseFileSender} from "../../webrtc-base/baseFileSender";
 import {Constants} from "../../../../shared/constants";
 import RTC_INIT_TIMEOUT = Constants.RTC_INIT_TIMEOUT;
-import {SocketFileSender} from "../../webrtc-base/socketFileSender";
+import {SocketFileSender} from "./webrtc/socketFileSender";
 import Socket = SocketIOClient.Socket;
-import {HostRTCPeerConnectionWrapper} from "./hostRTCPeerConnectionWrapper";
+import {HostRTCPeerConnectionWrapper} from "./webrtc/hostRTCPeerConnectionWrapper";
 
-export class HostPeer {
+export class UploadWorker {
 
-    private rtcPeer: RTCPeerConnection;
     private rtcWrapper: HostRTCPeerConnectionWrapper;
     private fileSender: BaseFileSender;
 
     private progress: number = 0;
 
-    constructor(private id: string, private socket: Socket, private fileSlice: Blob){
-        this.rtcPeer = new RTCPeerConnection(Constants.PeerConfiguration);
-        this.rtcWrapper = new HostRTCPeerConnectionWrapper(this.rtcPeer, this.id, this.socket);
+    constructor(private id: string, private socket: Socket, private file: Blob){
+        const rtcPeerConnection = new RTCPeerConnection(Constants.PeerConfiguration);
+        this.rtcWrapper = new HostRTCPeerConnectionWrapper(rtcPeerConnection, this.id, this.socket);
 
         this.init();
     }
@@ -30,44 +29,44 @@ export class HostPeer {
         Promise.race([
             this.rtcWrapper.initDataChannel()
                 .then((dataChannel) => {
-                    dataChannel.onclose = this.onrtcclose;
-                    dataChannel.onerror = this.onrtcerror;
+                    dataChannel.onclose = this.onRTCClose;
+                    dataChannel.onerror = this.onRTCError;
 
-                    return new RtcFileSender(this.fileSlice, dataChannel);
+                    return new RtcFileSender(this.file, dataChannel);
             }),
             new Promise(resolve => {
                 setTimeout(() => {
-                    resolve(new SocketFileSender(this.fileSlice, this.socket, this.id))
+                    resolve(new SocketFileSender(this.file, this.socket, this.id))
                 }, RTC_INIT_TIMEOUT)
             }),
             new Promise(resolve => {
                 let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
                 if (iOS) {
-                    resolve(new SocketFileSender(this.fileSlice, this.socket, this.id))
+                    resolve(new SocketFileSender(this.file, this.socket, this.id))
                 }
             })
         ]).then((fileSender: BaseFileSender) => {
-            this.onopen(fileSender);
+            this.onOpen(fileSender);
         })
     }
 
-    private onopen = (fileSender: BaseFileSender) => {
+    private onOpen = (fileSender: BaseFileSender) => {
         console.log(`onopen: ${this.id}`);
         this.fileSender = fileSender;
-        this.fileSender.onprogresschanged = this.onprogresschanged;
+        this.fileSender.onprogresschanged = this.onProgressChanged;
         this.fileSender.sendFiles()
     };
 
-    private onrtcerror = (err: Event) => console.log(`onerror${err}`);
+    private onRTCError = (err: Event) => console.log(`onerror${err}`);
 
-    private onrtcclose = () => {
+    private onRTCClose = () => {
         console.log('onclosed');
-        this.fileSender = new SocketFileSender(this.fileSlice, this.socket, this.id);
+        this.fileSender = new SocketFileSender(this.file, this.socket, this.id);
         this.fileSender.sendFiles(this.progress);
 
     };
 
-    private onprogresschanged = (progress: number) => {
+    private onProgressChanged = (progress: number) => {
         this.progress = progress;
 
         //console.log(this.progress);

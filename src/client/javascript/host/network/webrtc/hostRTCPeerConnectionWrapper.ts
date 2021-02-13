@@ -1,6 +1,6 @@
-import {PromiseWrapper} from "../../helpers/PromiseWrapper";
-import {BaseRTCPeerConnectionWrapper} from "../../webrtc-base/baseRTCPeerConnectionWrapper";
-import {Constants} from "../../../../shared/constants";
+import {PromiseWrapper} from "../../../helpers/PromiseWrapper";
+import {BaseRTCPeerConnectionWrapper} from "../../../webrtc-base/baseRTCPeerConnectionWrapper";
+import {Constants} from "../../../../../shared/constants";
 import READY = Constants.READY;
 
 export class HostRTCPeerConnectionWrapper extends BaseRTCPeerConnectionWrapper {
@@ -10,15 +10,15 @@ export class HostRTCPeerConnectionWrapper extends BaseRTCPeerConnectionWrapper {
     private externalPromise: PromiseWrapper<RTCDataChannel> = new PromiseWrapper();
 
     public initDataChannel(): Promise<RTCDataChannel> {
-        this.peer.onnegotiationneeded = this.onnegotiationneeded;
-        this.peer.onsignalingstatechange = this.onsignalingstatechange;
+        this.peer.onnegotiationneeded = this.onNegotiationNeeded;
+        this.peer.onsignalingstatechange = this.onSignalingStateChange;
         this.dataChannel = this.peer.createDataChannel(this.id);
-        this.dataChannel.onmessage = this.ondatachannelready;
+        this.dataChannel.onmessage = this.onDataChannelReady;
 
         return this.externalPromise.promise;
     }
 
-    private onnegotiationneeded = () => {
+    private onNegotiationNeeded = () => {
         console.log('Negotiation');
 
         if (this.isNegotiating) return;
@@ -27,14 +27,16 @@ export class HostRTCPeerConnectionWrapper extends BaseRTCPeerConnectionWrapper {
         this.createOffer();
     };
 
-    private onsignalingstatechange = () => {
+    private onSignalingStateChange = () => {
         console.log('Signaling state changed: ' + this.peer.signalingState);
 
         this.isNegotiating = (this.peer.signalingState !== 'stable');
     };
 
-    private ondatachannelready = (message: MessageEvent) => {
+    private onDataChannelReady = (message: MessageEvent) => {
         if (message.data === READY) {
+            console.log('Data channel ready');
+
             this.externalPromise.resolve(this.dataChannel)
         }
     };

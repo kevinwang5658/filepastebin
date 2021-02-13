@@ -1,8 +1,8 @@
 import {PromiseWrapper} from "../../helpers/PromiseWrapper";
-import {BaseRTCPeerConnectionWrapper} from "../../webrtc-base/baseRTCPeerConnectionWrapper";
 import {Constants} from "../../../../shared/constants";
 import READY = Constants.READY;
 import RTC_OPEN = Constants.RTC_OPEN;
+import {BaseRTCPeerConnectionWrapper} from "../../webrtc-base/baseRTCPeerConnectionWrapper";
 
 export class ClientRTCPeerConnectionWrapper extends BaseRTCPeerConnectionWrapper {
 

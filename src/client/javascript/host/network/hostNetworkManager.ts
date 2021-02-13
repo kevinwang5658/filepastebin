@@ -7,11 +7,11 @@ import ERROR = Constants.ERROR;
 import REQUEST_HOST_ACCEPTED = Constants.REQUEST_HOST_ACCEPTED;
 import Socket = SocketIOClient.Socket;
 import FileDescription = Constants.FileDescription;
-import {HostPeer} from "./hostpeer";
+import {UploadWorker} from "./uploadWorker";
 
 export class HostNetworkManager {
 
-    private workers = new Map<string, HostPeer>();
+    private workers = new Map<string, UploadWorker>();
 
     //Override outside to listen
     public onRoomCreatedCallback: (response: RequestHostAcceptedModel) => void;
@@ -49,7 +49,7 @@ export class HostNetworkManager {
 
             let file = this.files.find(u => u.name === request.fileName)
 
-            this.workers.set(message.senderId, new HostPeer(message.senderId, this.socket, file));
+            this.workers.set(message.senderId, new UploadWorker(message.senderId, this.socket, file));
         } else if (message.type === MessageType.Signal) {
             this.workers.get(message.senderId).handleMessage(message)
         }

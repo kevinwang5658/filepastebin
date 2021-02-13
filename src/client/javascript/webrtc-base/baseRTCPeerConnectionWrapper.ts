@@ -1,8 +1,4 @@
 import {Message, MessageAction, MessageType} from "./models/message";
-import {Constants} from "../../../shared/constants";
-import RTC_OPEN = Constants.RTC_OPEN;
-import {PromiseWrapper} from "../helpers/PromiseWrapper";
-import READY = Constants.READY;
 import Socket = SocketIOClient.Socket;
 
 export abstract class BaseRTCPeerConnectionWrapper {

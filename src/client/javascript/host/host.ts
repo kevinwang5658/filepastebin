@@ -1,6 +1,6 @@
 'use strict';
 
-import {HostNetworkManager} from "./webrtc/hostNetworkManager";
+import {HostNetworkManager} from "./network/hostNetworkManager";
 import {Constants} from "../../../shared/constants";
 import * as io from "socket.io-client";
 import CONNECT = Constants.CONNECT;

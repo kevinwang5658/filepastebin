@@ -1,9 +1,9 @@
-import {FileRequest, Message, MessageAction, MessageType} from "../../webrtc-base/models/message";
 import {PromiseWrapper} from "../../helpers/PromiseWrapper";
 import {Constants} from "../../../../shared/constants";
 import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
 import Socket = SocketIOClient.Socket;
 import {ClientRTCPeerConnectionWrapper} from "./clientRTCPeerConnectionWrapper";
+import {FileRequest, Message, MessageAction, MessageType} from "../../webrtc-base/models/message";
 
 export class ClientPeer {
 

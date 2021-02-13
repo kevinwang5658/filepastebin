@@ -1,7 +1,7 @@
-import {Constants} from "../../../shared/constants";
+import {Constants} from "../../../../../shared/constants";
 import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
 import MAX_BUFFER = Constants.MAX_BUFFER;
-import {BaseFileSender} from "./baseFileSender";
+import {BaseFileSender} from "../../../webrtc-base/baseFileSender";
 import EOF = Constants.EOF;
 
 export class RtcFileSender implements BaseFileSender {

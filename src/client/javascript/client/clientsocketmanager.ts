@@ -1,11 +1,11 @@
 import {Constants} from "../../../shared/constants";
 import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
 import REQUEST_CLIENT = Constants.REQUEST_CLIENT;
-import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;
-import {ClientRTCManager} from "./webrtc/clientrtcmanager";
+import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;;
 import {Message} from "../webrtc-base/models/message";
 import MESSAGE = Constants.MESSAGE;
 import Socket = SocketIOClient.Socket;
+import {ClientRTCManager} from "./webrtc/clientrtcmanager";
 
 export class ClientSocketManager {
 
