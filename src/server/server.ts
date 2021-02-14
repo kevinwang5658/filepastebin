@@ -2,8 +2,8 @@
 
 import * as http from "http";
 import * as App from "./app";
-import {SocketManager} from "./rtc/socketmanager";
-import {HostModel} from "./models/models";
+import {SocketManager} from "./signaling/SocketManager";
+import {HostModel} from "./models/HostModel";
 
 /**
  * Environment variables

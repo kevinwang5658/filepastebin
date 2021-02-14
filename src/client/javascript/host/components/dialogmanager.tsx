@@ -3,7 +3,6 @@ import {JoinDialog} from "./joindialog";
 // @ts-ignore
 import style from './index-dialog.module.css';
 import * as preact from "preact";
-import {JoinManager} from "../joinmanager";
 import {HostDialog} from "./hostdialog";
 import {IDialog} from "./idialog";
 
@@ -16,9 +15,9 @@ export class DialogManager {
             document.getElementById("dialog-manager"))
     }
 
-    showJoinDialog = (joinManager: JoinManager, onsuccess: (roomId: string) => void) => {
+    showJoinDialog = (joinRoomRequest: Function, onsuccess: (roomId: string) => void) => {
         this.showDialog(<JoinDialog
-            joinManager={joinManager}
+            joinRoomRequest={joinRoomRequest}
             onsuccess={onsuccess}
             oncancel={this.hideDialog}
             ref={(dialog: IDialog) => {

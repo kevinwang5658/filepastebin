@@ -1,7 +1,8 @@
 'use strict';
 
-import {ClientSocketManager} from "./clientsocketmanager";
 import * as io from "socket.io-client";
+import {ClientNetworkManager} from "./clientNetworkManager";
+import adapter from 'webrtc-adapter';
 
 const client = <HTMLInputElement>document.getElementById('download');
 const progress = document.getElementById('progress');
@@ -19,7 +20,9 @@ const FILE_SIZE = Number(file_size.textContent);
 
 const socket = io.connect();
 
-const socketManager = new ClientSocketManager(socket, ROOM_ID);
+const socketManager = new ClientNetworkManager(socket, ROOM_ID);
+
+console.log(adapter.browserDetails.browser);
 
 //******************************
 // Document events
@@ -38,7 +41,7 @@ client.addEventListener('click', () => {
   socketManager.requestDownload()
 });
 
-socketManager.onprogresschanged = (num: number) => {
+socketManager.onProgressChangedCallback = (num: number) => {
   progress.innerText = `${Math.min(num, 100).toFixed(2)}%`
 };
 

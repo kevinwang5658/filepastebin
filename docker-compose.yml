@@ -10,3 +10,20 @@ services:
     ports:
       - :80
 
+# Cloud formation overrides
+x-aws-cloudformation:
+  Resources:
+    Cluster:
+      Properties:
+        CapacityProviders:
+          - FARGATE_SPOT
+    WebserverTCP80TargetGroup:
+      Properties:
+        TargetGroupAttributes:
+          - Key: deregistration_delay.timeout_seconds
+            Value: 10
+    WebTCP3000TargetGroup:
+      Properties:
+        TargetGroupAttributes:
+          - Key: deregistration_delay.timeout_seconds
+            Value: 10

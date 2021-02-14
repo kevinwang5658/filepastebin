@@ -1,17 +1,17 @@
 'use strict';
 
-import {HostSocketManager} from "./hostsocketmanager";
+import {HostNetworkManager} from "./network/hostNetworkManager";
 import {Constants} from "../../../shared/constants";
 import * as io from "socket.io-client";
 import CONNECT = Constants.CONNECT;
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 import Socket = SocketIOClient.Socket;
 import {DialogManager} from "./components/dialogmanager";
-import {JoinManager} from "./joinmanager";
+import {requestJoinRoom} from "./joinRoomRequest";
 import adapter from 'webrtc-adapter';
 
 const container = <HTMLDivElement> document.getElementById('container');
-const inp_element = <HTMLInputElement> document.getElementById('in');
+const file_input_element = <HTMLInputElement> document.getElementById('in');
 const join_room_button = <HTMLDivElement> document.getElementById('join-room-button');
 const code_element = document.getElementById('code');
 const paste = <HTMLInputElement>document.getElementById('paste');
@@ -28,12 +28,13 @@ const dialog_description = <HTMLParagraphElement> document.getElementById('dialo
 const dialog_loading_spinner = <HTMLDivElement> document.getElementById('dialog-loading-spinner');
 const dialog_back = <HTMLDivElement> document.getElementById('dialog-cancel');
 
-let mFile: File;
+let selectedFiles: File[] = []
 let socket: Socket;
-let socketManager: HostSocketManager;
-let joinManager = new JoinManager();
+let socketManager: HostNetworkManager;
 
 let dialogManager = new DialogManager();
+
+console.log(adapter.browserDetails.browser);
 
 //******************************************
 // Page Events
@@ -47,21 +48,24 @@ paste.addEventListener('click', (e) => {
     paste.style.background = "#62A4F0";
 
     socket = io.connect();
-    socketManager = new HostSocketManager(socket, mFile);
-    socketManager.hostacceptedcallback = onRoomCreated
+    socketManager = new HostNetworkManager(socket, selectedFiles);
+    socketManager.onRoomCreatedCallback = onRoomCreated
 });
 
-inp_element.addEventListener('change', () => {
-    if (inp_element.files[0] && inp_element.files[0].name !== '') {
-        fileAdded(inp_element.files[0])
+file_input_element.addEventListener('change', () => {
+    if (file_input_element.files.length != 0) {
+        console.log(file_input_element.files)
+        filesAdded(file_input_element.files)
     }
 });
 
 join_room_button.addEventListener('click', (ev: Event) => {
-    dialogManager.showJoinDialog(joinManager, (roomId: string) => {
+    dialogManager.showJoinDialog(requestJoinRoom, (roomId: string) => {
         window.location.href = window.location.href + roomId;
     })
 });
+
+// Drag and Drop
 
 container.addEventListener('drop', (ev: DragEvent) => {
     ev.preventDefault();
@@ -70,7 +74,7 @@ container.addEventListener('drop', (ev: DragEvent) => {
     container.style.background = '#FFFFFF';
 
     if (ev.dataTransfer && ev.dataTransfer.files[0] && ev.dataTransfer.files[0].name !== '') {
-        fileAdded(ev.dataTransfer.files[0])
+        filesAdded(ev.dataTransfer.files)
     }
 });
 
@@ -111,10 +115,10 @@ function onRoomCreated(response: RequestHostAcceptedModel) {
     })
 }
 
-function fileAdded(file: File) {
+function filesAdded(files: FileList) {
     paste.disabled = false;
 
-    mFile = file;
-    let filename = file.name;
-    document.getElementById("in-label").innerHTML = filename.fontcolor("#4A4A4A");
+    selectedFiles.push(...Array.from(files));
+
+    document.getElementById("in-label").innerHTML = files[0].name.fontcolor("#4A4A4A");
 }

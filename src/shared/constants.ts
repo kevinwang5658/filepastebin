@@ -8,6 +8,15 @@ export namespace Constants {
     export const ERROR = 'error';
     export const MESSAGE = 'message';
 
+    //**********************
+    // Files
+    //**********************
+    export interface FileDescription {
+        fileName: string,
+        fileSize: number,
+        fileType: string,
+    }
+
     //********************
     // RTC host requests
     //*********************
@@ -15,17 +24,13 @@ export namespace Constants {
     export const REQUEST_HOST = 'request-host';
 
     export interface RequestHostRequestModel {
-        fileName: string,
-        fileSize: number,
-        fileType: string
+        files: FileDescription[]
     }
 
     export const REQUEST_HOST_ACCEPTED = 'request-host-accepted';
     export interface RequestHostAcceptedModel {
         roomId: string,
-        fileName: string,
-        fileSize: number,
-        fileType: string
+        files: FileDescription[]
     }
 
     //**********************
@@ -38,16 +43,14 @@ export namespace Constants {
     export const REQUEST_CLIENT_ACCEPTED = 'request-client-accepted';
     export interface RequestClientAcceptedModel {
         roomId: string,
-        fileName: string,
-        fileSize: number,
-        fileType: string
+        files: FileDescription[]
     }
 
     //************************
     // RTC Constants
     //*********************
 
-    export const BYTES_PER_CHUNK = 15000;
+    export const SOCKET_IO_BYTES_PER_CHUNK = 1000000;
     export const MAX_BUFFER = 100 * 1024;
 
     export const NUMBER_WORKERS = 10;

@@ -20,10 +20,8 @@ export enum MessageAction {
     IceCandidate = 'ice-candidate'
 }
 
-export class FileChunkRequest {
+export class FileRequest {
     constructor(
        public fileName: string,
-       public chunkStart: number,
-       public chunkEnd: number
     ) {}
 }
