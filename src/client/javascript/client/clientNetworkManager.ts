@@ -59,7 +59,7 @@ export class ClientNetworkManager {
     private handleprogresschanged = () => {
         let progress = [ ...this.workers.values() ]
             .map((peer: fileRequester) => peer.progress)
-            // .map((progress) => progress * (this.workerFileSize / this.fileSize) * 100)
+            .map((progress) => (progress / this.files.length) * 100)
             .reduce((previousValue, currentValue) => previousValue + currentValue);
 
         this.onProgressChangedCallback(progress);

@@ -58,7 +58,8 @@ export class fileRequester {
     private onRTCMessage = (message: any) => {
         if (message !== 'eof') {
             this.fileData.push(message);
-            // this.progress = (this.fileData.length * BYTES_PER_CHUNK) / this.chunkSize
+            this.progress = (this.fileData[0].byteLength || 0) * this.fileData.length
+                / this.file.fileSize;
         } else {
             this.externalPromise.resolve(this.fileData);
             this.progress = 1;

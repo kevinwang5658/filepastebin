@@ -9,7 +9,6 @@ import Socket = SocketIOClient.Socket;
 export class UploadWorker {
 
     private fileSender: BaseFileSender;
-
     private progress: number = 0;
 
     constructor(private id: string, private socket: Socket, private file: Blob){
