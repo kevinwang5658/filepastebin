@@ -7,7 +7,7 @@ import CONNECT = Constants.CONNECT;
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 import Socket = SocketIOClient.Socket;
 import {DialogManager} from "./components/dialogmanager";
-import {requestJoinRoom} from "./JoinRoomRequest";
+import {requestJoinRoom} from "./joinRoomRequest";
 import adapter from 'webrtc-adapter';
 
 const container = <HTMLDivElement> document.getElementById('container');
