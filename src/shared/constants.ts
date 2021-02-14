@@ -50,7 +50,7 @@ export namespace Constants {
     // RTC Constants
     //*********************
 
-    export const BYTES_PER_CHUNK = 15000;
+    export const SOCKET_IO_BYTES_PER_CHUNK = 1000000;
     export const MAX_BUFFER = 100 * 1024;
 
     export const NUMBER_WORKERS = 10;

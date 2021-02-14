@@ -1,4 +1,3 @@
-import {PromiseWrapper} from "../../../helpers/PromiseWrapper";
 import {BaseRTCPeerConnectionWrapper} from "../../../webrtc-base/baseRTCPeerConnectionWrapper";
 import {Constants} from "../../../../../shared/constants";
 import READY = Constants.READY;

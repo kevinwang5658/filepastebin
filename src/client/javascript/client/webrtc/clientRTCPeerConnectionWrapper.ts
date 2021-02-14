@@ -1,4 +1,3 @@
-import {PromiseWrapper} from "../../helpers/PromiseWrapper";
 import {Constants} from "../../../../shared/constants";
 import READY = Constants.READY;
 import RTC_OPEN = Constants.RTC_OPEN;
@@ -7,12 +6,14 @@ import {BaseRTCPeerConnectionWrapper} from "../../webrtc-base/baseRTCPeerConnect
 export class ClientRTCPeerConnectionWrapper extends BaseRTCPeerConnectionWrapper {
 
     private dataChannel: RTCDataChannel;
-    private externalPromise: PromiseWrapper<RTCDataChannel> = new PromiseWrapper();
+    private resolve;
 
     initDataChannel(): Promise<RTCDataChannel> {
         this.peer.ondatachannel = this.onDataChannel;
 
-        return this.externalPromise.promise
+        return new Promise(resolve => {
+            this.resolve = resolve;
+        });
     }
 
     private onDataChannel = (event: RTCDataChannelEvent) => {
@@ -29,7 +30,7 @@ export class ClientRTCPeerConnectionWrapper extends BaseRTCPeerConnectionWrapper
 
     private onDataChannelReady = () => {
         console.log('onDataChannelOpen')
-        this.externalPromise.resolve(this.dataChannel);
+        this.resolve(this.dataChannel);
         this.dataChannel.send(READY);
     }
 }

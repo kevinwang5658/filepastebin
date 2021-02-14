@@ -1,6 +1,4 @@
-import {PromiseWrapper} from "../../helpers/PromiseWrapper";
 import {Constants} from "../../../../shared/constants";
-import BYTES_PER_CHUNK = Constants.BYTES_PER_CHUNK;
 import Socket = SocketIOClient.Socket;
 import {ClientRTCPeerConnectionWrapper} from "./clientRTCPeerConnectionWrapper";
 import {FileRequest, Message, MessageAction, MessageType} from "../../webrtc-base/models/message";
@@ -12,7 +10,7 @@ export class fileRequester {
     private rtcPeer: RTCPeerConnection;
     private rtcWrapper: ClientRTCPeerConnectionWrapper
     private dataChannel: RTCDataChannel;
-    private externalPromise: PromiseWrapper<ArrayBuffer[]> = new PromiseWrapper();
+    private resolveOnComplete;
     private fileData: ArrayBuffer[] = [];
 
     constructor(public id: string, private socket: Socket, public file: Constants.FileDescription){
@@ -30,7 +28,9 @@ export class fileRequester {
     };
 
     public getCompleteListener() {
-        return this.externalPromise.promise;
+        return new Promise(resolve => {
+            this.resolveOnComplete = resolve
+        });
     }
 
     public onProgressChangedCallback: (number: number) => void = (number) => {};
@@ -46,7 +46,7 @@ export class fileRequester {
     private init = () => {
         this.rtcWrapper.initDataChannel()
             .then((dataChannel) => {
-                console.log(`onopen: ${this.id}`);
+                console.log(`Promise return onOpen: ${this.id}`);
 
                 this.dataChannel = dataChannel;
                 this.dataChannel.onmessage = (ev: MessageEvent) => this.onRTCMessage(ev.data);
@@ -61,7 +61,7 @@ export class fileRequester {
             this.progress = (this.fileData[0].byteLength || 0) * this.fileData.length
                 / this.file.fileSize;
         } else {
-            this.externalPromise.resolve(this.fileData);
+            this.resolveOnComplete(this.fileData);
             this.progress = 1;
 
             if (this.dataChannel) {

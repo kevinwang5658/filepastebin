@@ -81,9 +81,7 @@ export abstract class BaseRTCPeerConnectionWrapper {
     private onicecandidateerror = (err: RTCPeerConnectionIceErrorEvent) => console.log('Ice candidate error: ' + JSON.stringify(err));
 
     private onicecandidate = (event: RTCPeerConnectionIceEvent) => {
-        //if (event.hasOwnProperty('candidate')) {
-            this.sendIceCandidate(event.candidate);
-        //}
+        this.sendIceCandidate(event.candidate);
 
         console.log('Ice Candidate: ' + JSON.stringify(event));
     };

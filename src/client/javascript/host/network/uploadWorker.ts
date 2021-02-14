@@ -47,12 +47,9 @@ export class UploadWorker {
         console.log('onclosed');
         this.fileSender = new SocketFileSender(this.file, this.socket, this.id);
         this.fileSender.sendFiles(this.progress);
-
     };
 
     private onProgressChanged = (progress: number) => {
         this.progress = progress;
-
-        //console.log(this.progress);
     };
 }
