@@ -40,9 +40,7 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
   app.use('/', express.static(path.join(__dirname, '../client/node_modules')));
 
   app.get('/', (req: Request, res: Response) => {
-    res.render('index', {
-      dev: process.env.DEV && process.env.DEBUG,
-    });
+    res.render('index');
   });
 
   app.get(REQUEST_JOIN_ROOM + ':room_id', (req: Request, res: Response, next: NextFunction) => {
