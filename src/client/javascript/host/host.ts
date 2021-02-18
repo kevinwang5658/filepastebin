@@ -9,6 +9,7 @@ import Socket = SocketIOClient.Socket;
 import {DialogManager} from "./components/dialogmanager";
 import {requestJoinRoom} from "./joinRoomRequest";
 import adapter from 'webrtc-adapter';
+import {FileInputBase, renderFileInput} from "./components/file-input/fileInputBase";
 
 const container = <HTMLDivElement> document.getElementById('container');
 const file_input_element = <HTMLInputElement> document.getElementById('in');
@@ -33,6 +34,7 @@ let socket: Socket;
 let socketManager: HostNetworkManager;
 
 let dialogManager = new DialogManager();
+renderFileInput()
 
 console.log(adapter.browserDetails.browser);
 
