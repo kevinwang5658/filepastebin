@@ -5,6 +5,7 @@ import {FileItem} from "./fileItem";
 
 export type FileInputListProps = {
     openFileSelector: () => void
+    onFileRemoved: (name: number) => void
     filesList: File[]
 }
 
@@ -20,7 +21,8 @@ export class FileInputList extends Component<FileInputListProps, FileInputListSt
     render() {
         return (<div className={styles.fileList}>
             {
-                this.props.filesList.map(f => <FileItem fileName={f.name}/>)
+                this.props.filesList.map((f, idx) => <FileItem fileName={f.name} index={idx}
+                    onFileRemoved={this.props.onFileRemoved}/>)
             }
             { this.props.filesList.length == 0 &&
                 <label

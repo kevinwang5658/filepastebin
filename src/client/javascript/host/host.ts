@@ -51,7 +51,6 @@ paste.addEventListener('click', (e) => {
     paste.style.background = "#62A4F0";
 
     socket = io.connect();
-    console.log(fileInputRenderer.getFileList());
     socketManager = new HostNetworkManager(socket, fileInputRenderer.getFileList());
     socketManager.onRoomCreatedCallback = onRoomCreated
 });

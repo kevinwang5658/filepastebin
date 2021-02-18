@@ -32,12 +32,30 @@
     grid-template-rows: 1fr;
 }
 
+.fileNameWrapper {
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
 .fileName {
     color: #4A4A4A;
     padding-left: 15px;
     padding-right: 15px;
+    vertical-align: middle;
     font-size: 14px;
     font-family: "Roboto Light", Helvetica, sans-serif;
+    font-weight: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.deleteFileButton {
+    justify-self: center;
+    align-self: center;
+    width: 20px;
+    height: 20px;
+    padding: 10px;
 }
 
 .fileInputDescription {
@@ -53,4 +71,14 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+}
+
+.addFileButton:hover {
+    background: #D8D8D8;
+    border-radius: 0 25px 25px 0;
+}
+
+.fileInputDescription:hover {
+    background: #D8D8D8;
+    border-radius: 25px 0 0 25px;
 }

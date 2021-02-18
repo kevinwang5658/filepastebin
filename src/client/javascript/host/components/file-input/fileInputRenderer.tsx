@@ -13,7 +13,6 @@ export class FileInputRenderer {
     }
 
     public getFileList = () => {
-        console.log(this.fileInputBase)
         return this.fileInputBase.state.filesList
     }
 }

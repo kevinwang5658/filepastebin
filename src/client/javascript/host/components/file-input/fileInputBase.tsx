@@ -23,7 +23,7 @@ export class FileInputBase extends Component<FileInputBaseProps, FileInputBaseSt
 
     render() {
         return (<div className={styles.fileInputWrapper}>
-            <FileInputList openFileSelector={this.openFileSelector} filesList={this.state.filesList}/>
+            <FileInputList openFileSelector={this.openFileSelector} filesList={this.state.filesList} onFileRemoved={this.onFileRemoved}/>
             <div className={styles.addFileButtonDivider}/>
             <button className={styles.addFileButton} onClick={this.openFileSelector}>Add files</button>
             <input className={styles.fileInput}
@@ -41,5 +41,14 @@ export class FileInputBase extends Component<FileInputBaseProps, FileInputBaseSt
         })
 
         this.props.pasteButton.disabled = this.state.filesList.length == 0;
+    }
+
+    private onFileRemoved = (index: number) => {
+        this.setState(prevState => {
+            prevState.filesList.splice(index, 1)
+            return {
+                prevState
+            }
+        })
     }
 }
