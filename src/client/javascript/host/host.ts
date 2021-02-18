@@ -9,13 +9,14 @@ import Socket = SocketIOClient.Socket;
 import {DialogManager} from "./components/dialogmanager";
 import {requestJoinRoom} from "./joinRoomRequest";
 import adapter from 'webrtc-adapter';
-import {FileInputBase, renderFileInput} from "./components/file-input/fileInputBase";
+import {FileInputList} from "./components/file-input/fileInputList";
+import {FileInputRenderer} from "./components/file-input/fileInputRenderer";
 
 const container = <HTMLDivElement> document.getElementById('container');
-const file_input_element = <HTMLInputElement> document.getElementById('in');
 const join_room_button = <HTMLDivElement> document.getElementById('join-room-button');
+const paste = <HTMLButtonElement>document.getElementById('paste');
 const code_element = document.getElementById('code');
-const paste = <HTMLInputElement>document.getElementById('paste');
+
 const share_url = document.getElementById('share-url');
 const center_initial = document.getElementById("initial-wrapper");
 const center_host = document.getElementById("host-wrapper");
@@ -34,7 +35,7 @@ let socket: Socket;
 let socketManager: HostNetworkManager;
 
 let dialogManager = new DialogManager();
-renderFileInput()
+let fileInputRenderer = new FileInputRenderer();
 
 console.log(adapter.browserDetails.browser);
 
@@ -50,16 +51,17 @@ paste.addEventListener('click', (e) => {
     paste.style.background = "#62A4F0";
 
     socket = io.connect();
-    socketManager = new HostNetworkManager(socket, selectedFiles);
+    console.log(fileInputRenderer.getFileList());
+    socketManager = new HostNetworkManager(socket, fileInputRenderer.getFileList());
     socketManager.onRoomCreatedCallback = onRoomCreated
 });
 
-file_input_element.addEventListener('change', () => {
-    if (file_input_element.files.length != 0) {
-        console.log(file_input_element.files)
-        filesAdded(file_input_element.files)
-    }
-});
+// file_input_element.addEventListener('change', () => {
+//     if (file_input_element.files.length != 0) {
+//         console.log(file_input_element.files)
+//         filesAdded(file_input_element.files)
+//     }
+// });
 
 join_room_button.addEventListener('click', (ev: Event) => {
     dialogManager.showJoinDialog(requestJoinRoom, (roomId: string) => {
@@ -120,7 +122,7 @@ function onRoomCreated(response: RequestHostAcceptedModel) {
 function filesAdded(files: FileList) {
     paste.disabled = false;
 
-    selectedFiles.push(...Array.from(files));
+    //selectedFiles.push(...Array.from(files));
 
-    document.getElementById("in-label").innerHTML = files[0].name.fontcolor("#4A4A4A");
+    //document.getElementById("in-label").innerHTML = files[0].name.fontcolor("#4A4A4A");
 }

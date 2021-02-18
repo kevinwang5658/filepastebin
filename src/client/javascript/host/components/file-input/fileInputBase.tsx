@@ -3,30 +3,27 @@ import {Component, h, render} from "preact";
 import styles from './file-input.module.css'
 import {FileInputList} from "./fileInputList";
 
-export function renderFileInput() {
-    render(
-        <FileInputBase />, document.getElementById("file-input")
-    );
+export type FileInputBaseProps = {
+    pasteButton: HTMLButtonElement,
 }
 
 export type FileInputBaseState = {
-    fileList: File[]
+    filesList: File[]
 }
 
-export class FileInputBase extends Component<any, FileInputBaseState>{
-
+export class FileInputBase extends Component<FileInputBaseProps, FileInputBaseState>{
     private fileInput;
 
     constructor(props) {
         super(props)
         this.setState({
-            fileList: []
+            filesList: []
         })
     }
 
     render() {
         return (<div className={styles.fileInputWrapper}>
-            <FileInputList openFileSelector={this.openFileSelector} filesList={this.state.fileList}/>
+            <FileInputList openFileSelector={this.openFileSelector} filesList={this.state.filesList}/>
             <div className={styles.addFileButtonDivider}/>
             <button className={styles.addFileButton} onClick={this.openFileSelector}>Add files</button>
             <input className={styles.fileInput}
@@ -40,7 +37,9 @@ export class FileInputBase extends Component<any, FileInputBaseState>{
 
     private onFileInputChanged = () => {
         this.setState({
-            fileList: Array.from(this.fileInput.files)
+            filesList: this.state.filesList.concat(Array.from(this.fileInput.files))
         })
+
+        this.props.pasteButton.disabled = this.state.filesList.length == 0;
     }
 }
