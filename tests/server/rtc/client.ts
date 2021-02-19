@@ -15,9 +15,13 @@ describe("Client", () => {
     const HOST_MODEL = <HostModel> {
         roomId: ROOM_ID,
         hostId: "host_id",
-        fileName: "file_name",
-        fileSize: 100,
-        fileType: "file_type"
+        files: [
+            {
+                fileName: "file_name",
+                fileSize: 100,
+                fileType: "file_type"
+            }
+        ]
     };
 
     let instance: Client;
@@ -37,9 +41,9 @@ describe("Client", () => {
 
         socketMock.verify(x => x.join(ROOM_ID), TypeMoq.Times.once());
         socketMock.verify(x => x.emit(REQUEST_CLIENT_ACCEPTED, TypeMoq.It.is<RequestClientAcceptedModel>(r => {
-            assert.equal(r.fileName, HOST_MODEL.fileName);
-            assert.equal(r.fileSize, HOST_MODEL.fileSize);
-            assert.equal(r.fileType, HOST_MODEL.fileType);
+            assert.equal(r.files[0].fileName, HOST_MODEL.files[0].fileName);
+            assert.equal(r.files[0].fileSize, HOST_MODEL.files[0].fileSize);
+            assert.equal(r.files[0].fileType, HOST_MODEL.files[0].fileType);
             return true;
         })), TypeMoq.Times.once());
     });

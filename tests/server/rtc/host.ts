@@ -14,9 +14,13 @@ describe("Host", () => {
     const SOCKET_ID = "id";
     const HOST_MODEL = <HostModel> {
         hostId: SOCKET_ID,
-        fileName: "file_name",
-        fileSize: 100,
-        fileType: "file_type"
+        files: [
+            {
+                fileName: "file_name",
+                fileSize: 100,
+                fileType: "file_type"
+            }
+        ]
     };
 
     let socketMock: TypeMoq.IMock<Socket>;
@@ -38,18 +42,18 @@ describe("Host", () => {
 
         assert.equal(hostMap.size, 1);
         let host = hostMap.values().next().value;
-        assert.equal(host.fileName, HOST_MODEL.fileName);
-        assert.equal(host.fileSize, HOST_MODEL.fileSize);
-        assert.equal(host.fileType, HOST_MODEL.fileType);
+        assert.equal(host.files[0].fileName, HOST_MODEL.files[0].fileName);
+        assert.equal(host.files[0].fileSize, HOST_MODEL.files[0].fileSize);
+        assert.equal(host.files[0].fileType, HOST_MODEL.files[0].fileType);
         assert.equal(host.hostId, HOST_MODEL.hostId);
         assert.exists(host.roomId);
 
         socketMock.verify(x => x.join(host.roomId), TypeMoq.Times.once());
         socketMock.verify(x => x.emit(REQUEST_HOST_ACCEPTED, TypeMoq.It.is<RequestHostAcceptedModel>(r => {
             assert.equal(r.roomId, host.roomId);
-            assert.equal(r.fileName, HOST_MODEL.fileName);
-            assert.equal(r.fileSize, HOST_MODEL.fileSize);
-            assert.equal(r.fileType, HOST_MODEL.fileType);
+            assert.equal(r.files[0].fileName, HOST_MODEL.files[0].fileName);
+            assert.equal(r.files[0].fileSize, HOST_MODEL.files[0].fileSize);
+            assert.equal(r.files[0].fileType, HOST_MODEL.files[0].fileType);
             return true;
         })), TypeMoq.Times.once())
     });

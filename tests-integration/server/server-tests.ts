@@ -12,9 +12,13 @@ const ROOM_ID = '123234';
 const HOST_MODEL = <HostModel> {
     roomId: ROOM_ID,
     hostId: "host_id",
-    fileName: "file_name",
-    fileSize: 100,
-    fileType: "file_type"
+    files: [
+        {
+            fileName: "file_name",
+            fileSize: 100,
+            fileType: "file_type"
+        }
+    ]
 };
 
 let app: Express;

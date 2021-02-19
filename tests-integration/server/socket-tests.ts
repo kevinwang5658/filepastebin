@@ -21,9 +21,13 @@ const ROOM_ID = '123234';
 const HOST_MODEL = <HostModel>{
     roomId: ROOM_ID,
     hostId: "host_id",
-    fileName: "file_name",
-    fileSize: 100,
-    fileType: "file_type"
+    files: [
+        {
+            fileName: "file_name",
+            fileSize: 100,
+            fileType: "file_type"
+        }
+    ]
 };
 
 let hostMap: Map<string, HostModel>;
@@ -67,16 +71,20 @@ describe('Socket', function () {
 
     it('is able to request host', done => {
         host.emit(REQUEST_HOST, <RequestHostRequestModel> {
-            fileName: HOST_MODEL.fileName,
-            fileType: HOST_MODEL.fileType,
-            fileSize: HOST_MODEL.fileSize
+            files: [
+                {
+                    fileName: HOST_MODEL.files[0].fileName,
+                    fileType: HOST_MODEL.files[0].fileType,
+                    fileSize: HOST_MODEL.files[0].fileSize
+                }
+            ]
         });
 
         host.on(REQUEST_HOST_ACCEPTED, (response: RequestHostAcceptedModel) => {
             assert.isNotNull(response.roomId);
-            assert.equal(response.fileName, HOST_MODEL.fileName);
-            assert.equal(response.fileType, HOST_MODEL.fileType);
-            assert.equal(response.fileSize, HOST_MODEL.fileSize);
+            assert.equal(response.files[0].fileName, HOST_MODEL.files[0].fileName);
+            assert.equal(response.files[0].fileType, HOST_MODEL.files[0].fileType);
+            assert.equal(response.files[0].fileSize, HOST_MODEL.files[0].fileSize);
 
             done();
         })
@@ -84,9 +92,13 @@ describe('Socket', function () {
 
     it('is able to request a client', done => {
         host.emit(REQUEST_HOST, <RequestHostAcceptedModel> {
-            fileName: HOST_MODEL.fileName,
-            fileType: HOST_MODEL.fileType,
-            fileSize: HOST_MODEL.fileSize
+            files: [
+                {
+                    fileName: HOST_MODEL.files[0].fileName,
+                    fileType: HOST_MODEL.files[0].fileType,
+                    fileSize: HOST_MODEL.files[0].fileSize
+                }
+            ]
         });
 
         host.on(REQUEST_HOST_ACCEPTED, (hResponse: RequestHostAcceptedModel) => {
@@ -96,10 +108,7 @@ describe('Socket', function () {
 
             client.on(REQUEST_CLIENT_ACCEPTED, (cResponse: RequestClientAcceptedModel) => {
                 assert.equal(cResponse.roomId, hResponse.roomId);
-                assert.equal(cResponse.fileName, HOST_MODEL.fileName);
-                assert.equal(cResponse.fileType, HOST_MODEL.fileType);
-                assert.equal(cResponse.fileSize, HOST_MODEL.fileSize);
-
+                assert.deepEqual(cResponse.files, HOST_MODEL.files);
                 done();
             });
         })
@@ -107,9 +116,13 @@ describe('Socket', function () {
 
     it('is able to send messages', done => {
         host.emit(REQUEST_HOST, <RequestHostAcceptedModel>{
-            fileName: HOST_MODEL.fileName,
-            fileType: HOST_MODEL.fileType,
-            fileSize: HOST_MODEL.fileSize
+            files: [
+                {
+                    fileName: HOST_MODEL.files[0].fileName,
+                    fileType: HOST_MODEL.files[0].fileType,
+                    fileSize: HOST_MODEL.files[0].fileSize
+                }
+            ]
         });
 
         host.on(REQUEST_HOST_ACCEPTED, (hResponse: RequestHostAcceptedModel) => {
