@@ -23,7 +23,7 @@ export class DownloadFileItem extends Component<DownloadFileItemProps, DownloadF
                 <div className={[styles.fileDescription, this.props.isDownloadClicked ? styles.downloadAnimation : ""].join(' ')}>
                     {this.props.fileName + " - " + prettyBytes(this.props.fileSize)}</div>
                 { this.props.isDownloadClicked &&
-                    <div className={styles.fileDownloadProgress}>{this.props.progress + "%"}</div>
+                    <div className={styles.fileDownloadProgress}>{`${Math.min(this.props.progress, 100).toFixed(2)}%`}</div>
                 }
             </div>
         )

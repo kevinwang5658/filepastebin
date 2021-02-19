@@ -45,10 +45,6 @@
     100% {flex-grow: 1}
 }
 
-.slide-down {
-    transition: all 750ms;
-}
-
 .downloadButton {
     width: 510px;
     max-width: 100%;

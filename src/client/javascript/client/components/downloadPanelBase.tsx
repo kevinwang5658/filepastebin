@@ -6,11 +6,14 @@ import FileDescription = Constants.FileDescription;
 import {DownloadFileItem} from "./downloadFileItem";
 
 export type DownloadPageBaseProps = {
-    filesList: FileDescription[]
+    filesList: FileDescription[],
+    progress: number[],
+    onDownloadClickedCallback: () => void
 }
 
 export type DownloadPageBaseState = {
     isDownloadClicked: boolean
+    progress: number[]
 }
 
 export class DownloadPanelBase extends Component<DownloadPageBaseProps, DownloadPageBaseState>{
@@ -18,7 +21,14 @@ export class DownloadPanelBase extends Component<DownloadPageBaseProps, Download
     constructor(props) {
         super(props);
         this.setState({
-            isDownloadClicked: false
+            isDownloadClicked: false,
+            progress: this.props.progress
+        })
+    }
+
+    public setProgress = (progress: number[]) => {
+        this.setState({
+            progress: progress
         })
     }
 
@@ -26,6 +36,7 @@ export class DownloadPanelBase extends Component<DownloadPageBaseProps, Download
         this.setState({
             isDownloadClicked: true
         })
+        this.props.onDownloadClickedCallback()
     }
 
     render() {
@@ -34,12 +45,15 @@ export class DownloadPanelBase extends Component<DownloadPageBaseProps, Download
                 <div className={styles.downloadPanelHeader}>Files</div>
                 <div className={styles.filesList}>
                     {
-                        this.props.filesList.map(f => (
-                            <DownloadFileItem fileName={f.fileName} fileSize={f.fileSize} progress={0} isDownloadClicked={this.state.isDownloadClicked} />
+                        this.props.filesList.map((f, idx) => (
+                            <DownloadFileItem fileName={f.fileName} fileSize={f.fileSize} progress={this.state.progress[idx]} isDownloadClicked={this.state.isDownloadClicked} />
                         ))
                     }
                 </div>
-                <button onClick={this.onDownloadClicked} className={["blue-round", styles.downloadButton].join(' ')}>Download</button>
+                <button onClick={this.onDownloadClicked}
+                        style={this.state.isDownloadClicked && {background: '#62A4F0'}}
+                        disabled={this.state.isDownloadClicked}
+                        className={["blue-round", styles.downloadButton].join(' ')}>Download</button>
             </div>
         )
     }

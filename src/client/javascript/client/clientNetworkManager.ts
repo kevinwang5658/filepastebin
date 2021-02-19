@@ -11,7 +11,7 @@ declare var download: any;
 
 export class ClientNetworkManager {
 
-    public onProgressChangedCallback: (progress: number) => void = (progress) => {};
+    public onProgressChangedCallback: (progress: number[]) => void = (progress) => {};
 
     private workers = new Map<string, fileRequester>();
     private files: Constants.FileDescription[];
@@ -59,8 +59,8 @@ export class ClientNetworkManager {
     private handleprogresschanged = () => {
         let progress = [ ...this.workers.values() ]
             .map((peer: fileRequester) => peer.progress)
-            .map((progress) => (progress / this.files.length) * 100)
-            .reduce((previousValue, currentValue) => previousValue + currentValue);
+            .map((progress) => progress * 100)
+
 
         this.onProgressChangedCallback(progress);
     };
