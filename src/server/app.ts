@@ -10,7 +10,6 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const prettyBytes = require('pretty-bytes');
 
 export const newInstance = (hostMap: Map<String, HostModel>) => {
   let app = express();

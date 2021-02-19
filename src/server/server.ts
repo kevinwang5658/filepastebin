@@ -15,7 +15,7 @@ require('dotenv').config();
  * Module dependencies.
  */
 
-const debug = require('debug')('transferfirst:server');
+const debug = require('debug')('filepastebin:server');
 
 //TODO: Switch from a map to redis in the future
 const hostMap = new Map<string, HostModel>();
