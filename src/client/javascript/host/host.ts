@@ -9,28 +9,12 @@ import Socket = SocketIOClient.Socket;
 import {DialogManager} from "./components/dialogmanager";
 import {requestJoinRoom} from "./joinRoomRequest";
 import adapter from 'webrtc-adapter';
-import {FileInputList} from "./components/file-input/fileInputList";
 import {FileInputRenderer} from "./components/file-input/fileInputRenderer";
 
 const container = <HTMLDivElement> document.getElementById('container');
 const join_room_button = <HTMLDivElement> document.getElementById('join-room-button');
 const paste = <HTMLButtonElement>document.getElementById('paste');
-const code_element = document.getElementById('code');
 
-const share_url = document.getElementById('share-url');
-const center_initial = document.getElementById("initial-wrapper");
-const center_host = document.getElementById("host-wrapper");
-const file_name = document.getElementById("file-name");
-const client_connected_number = document.getElementById("device-connected-number");
-
-const dialog_container = <HTMLDivElement> document.getElementById('dialog-container');
-const dialog_box = <HTMLDivElement> document.getElementById('dialog');
-const dialog_code = <HTMLHeadingElement> document.getElementById('dialog-code');
-const dialog_description = <HTMLParagraphElement> document.getElementById('dialog-description');
-const dialog_loading_spinner = <HTMLDivElement> document.getElementById('dialog-loading-spinner');
-const dialog_back = <HTMLDivElement> document.getElementById('dialog-cancel');
-
-let selectedFiles: File[] = []
 let socket: Socket;
 let socketManager: HostNetworkManager;
 
@@ -54,13 +38,6 @@ paste.addEventListener('click', (e) => {
     socketManager = new HostNetworkManager(socket, fileInputRenderer.getFileList());
     socketManager.onRoomCreatedCallback = onRoomCreated
 });
-
-// file_input_element.addEventListener('change', () => {
-//     if (file_input_element.files.length != 0) {
-//         console.log(file_input_element.files)
-//         filesAdded(file_input_element.files)
-//     }
-// });
 
 join_room_button.addEventListener('click', (ev: Event) => {
     dialogManager.showJoinDialog(requestJoinRoom, (roomId: string) => {
@@ -120,8 +97,4 @@ function onRoomCreated(response: RequestHostAcceptedModel) {
 
 function filesAdded(files: FileList) {
     paste.disabled = false;
-
-    //selectedFiles.push(...Array.from(files));
-
-    //document.getElementById("in-label").innerHTML = files[0].name.fontcolor("#4A4A4A");
 }

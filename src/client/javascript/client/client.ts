@@ -20,7 +20,6 @@ const clientNetworkManager = new ClientNetworkManager(socket, roomCode);
 
 console.log(adapter.browserDetails.browser);
 
-
 //******************************
 // Document events
 //******************************
@@ -30,7 +29,6 @@ downloadPanel.setOnDownloadClickedCallback(() => {
 })
 
 clientNetworkManager.onProgressChangedCallback = (progress: number[]) => {
-  console.log(progress.toString())
   downloadPanel.updateProgress(progress);
 };
 
