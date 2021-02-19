@@ -1,0 +1,58 @@
+.downloadPanelWrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.downloadPanelHeader {
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    color: #4A4A4A;
+    justify-self: center;
+    margin-top: 30px;
+}
+
+.filesList {
+    height: 420px;
+}
+
+.fileDescriptionWrapper {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.fileDescription {
+    font-family: Roboto, Helvetica, sans-serif;
+    font-size: 18px;
+    color: #4A4A4A;
+    flex-grow: 0;
+}
+
+.fileDownloadProgress {
+    font-family: Roboto, Helvetica, sans-serif;
+    font-size: 18px;
+    color: #4A4A4A;
+}
+
+.downloadAnimation {
+    animation: downloadInProgress 1.5s forwards;
+}
+
+@keyframes downloadInProgress {
+    100% {flex-grow: 1}
+}
+
+.slide-down {
+    transition: all 750ms;
+}
+
+.downloadButton {
+    width: 510px;
+    max-width: 100%;
+    align-self: center;
+    justify-self: center;
+}
+

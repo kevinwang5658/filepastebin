@@ -57,13 +57,11 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
       console.log(hostMap);
 
       let sessionId = req.params.room_id;
-      let hostModel = hostMap.get(req.params.room_id);
+      let host = hostMap.get(req.params.room_id);
 
       res.render('download', {
-        dev: process.env.DEV && process.env.DEBUG,
-        code: sessionId,
-        fileName: hostModel.files[0].fileName,
-        fileSize: prettyBytes(hostModel.files[0].fileSize)
+        code: escape(sessionId),
+        files: escape(JSON.stringify(host.files))
 
       })
     } else {
