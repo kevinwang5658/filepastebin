@@ -45,7 +45,7 @@ export class DialogManager {
         })
     };
 
-    private showDialog = (element: JSX.Element) => {
+    private showDialog = (element: preact.JSX.Element) => {
         this.container.setState({
             dialog: element,
         })
@@ -53,7 +53,7 @@ export class DialogManager {
 }
 
 interface IDialogContainerState {
-    dialog: JSX.Element,
+    dialog: preact.JSX.Element,
     onbackgroundclicked?: () => void
 }
 

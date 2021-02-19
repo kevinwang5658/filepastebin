@@ -6,73 +6,36 @@
     <meta name="viewport" content="width=device-width, height=device-height"/>
     <link rel="stylesheet" type="text/css" href="styles/common.css">
     <link rel="stylesheet" type="text/css" href="styles/down.css">
-    <title>KobeTransfer</title>
+    <title>FilePasteBin | Fast & Simple File Transfer</title>
 </head>
 <body>
-
-<% if (dev) { %>
-
-<!-- Dev Layout -->
-
-<h1>FilePasteBin</h1>
-<h1 id="code"><%= code %></h1>
-<h1 id="file-name"><%= fileName %></h1>
-<h1 id="file-size"><%= fileSize%></h1>
-<h1 id="progress">0%</h1>
-<button id="download">Download</button>
-<div id="reveal"></div>
-<div id="text-wrapper"></div>
-<div id="center-wrapper"></div>
-
-<% } else { %>
-
-<!-- Actual Layout -->
-
-<div id="container">
-    <div class="column ad side">
-        <div class="line left"></div>
-    </div>
-    <div class="column center">
-        <div id="top-bar">
-            <div id="mini-logo">
-                <span class="mini-title front">Kobe</span><span class="mini-title end">Transfer</span>
-            </div>
+    <div id="container">
+        <div class="column ad side">
+            <div class="line left"></div>
         </div>
-        <div class="center">
-            <div class="transition-wrapper">
-                <div id="reveal" class="center">
-                    <div id="progress">0%</div>
-                </div>
-                <div id="text-wrapper" class="slide-down center">
-                    <div id="file-name"><%= fileName%></div>
-                    <div id="file-size"><%= fileSize%></div>
+        <div class="column center">
+            <div id="top-bar">
+                <div id="mini-logo">
+                    <span class="mini-title front">Kobe</span><span class="mini-title end">Transfer</span>
                 </div>
             </div>
-            <div class="center-wrapper">
-                <button id="download" class="blue-round">Download</button>
+            <div class="center">
+                <div id="download-panel"></div>
             </div>
         </div>
+        <div class="column ad side">
+            <div class="line right"></div>
+        </div>
     </div>
-    <div class="column ad side">
-        <div class="line right"></div>
-    </div>
-</div>
-<div id="code" style="display: none"><%= code%></div>
-
-
-<% }%>
-
 </body>
 
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+<script>
+    const ROOM_CODE = "<%= code %>"
+    const FILES_LIST = "<%= files %>"
+</script>
 <script src="/libs/download.js"></script>
 <script src="/javascript/client.js"></script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-134611312-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-134611312-1');
-</script>
 </html>

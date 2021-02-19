@@ -40,9 +40,7 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
   app.use('/', express.static(path.join(__dirname, '../client/node_modules')));
 
   app.get('/', (req: Request, res: Response) => {
-    res.render('index', {
-      dev: process.env.DEV && process.env.DEBUG,
-    });
+    res.render('index');
   });
 
   app.get(REQUEST_JOIN_ROOM + ':room_id', (req: Request, res: Response, next: NextFunction) => {
@@ -59,13 +57,11 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
       console.log(hostMap);
 
       let sessionId = req.params.room_id;
-      let hostModel = hostMap.get(req.params.room_id);
+      let host = hostMap.get(req.params.room_id);
 
       res.render('download', {
-        dev: process.env.DEV && process.env.DEBUG,
-        code: sessionId,
-        fileName: hostModel.files[0].fileName,
-        fileSize: prettyBytes(hostModel.files[0].fileSize)
+        code: escape(sessionId),
+        files: escape(JSON.stringify(host.files))
 
       })
     } else {
