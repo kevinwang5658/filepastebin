@@ -1,6 +1,7 @@
 .downloadPanelWrapper {
     display: grid;
-    grid-template-columns: 1fr;
+    width: max-content;
+    margin: 20px;
 }
 
 .downloadPanelHeader {
@@ -34,6 +35,7 @@
 .fileDownloadProgress {
     font-family: Roboto, Helvetica, sans-serif;
     font-size: 18px;
+    margin-left: 20px;
     color: #4A4A4A;
 }
 
@@ -46,9 +48,8 @@
 }
 
 .downloadButton {
-    width: 510px;
-    max-width: 100%;
     align-self: center;
-    justify-self: center;
+    width: 80vw;
+    max-width: 510px
 }
 
