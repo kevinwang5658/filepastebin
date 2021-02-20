@@ -18,21 +18,11 @@ p {
     align-items: stretch;
 }
 
-.ad {
-}
 
 .line {
-    flex: 1;
     margin-top: 30px;
     margin-bottom: 30px;
-}
-
-.line.left {
     border-right: 1px solid #F2F2F2
-}
-
-.line.right {
-    border-left: 1px solid #F2F2F2
 }
 
 .column {
@@ -44,6 +34,7 @@ p {
 
 .column.side {
     width: 400px;
+    flex-direction: row;
 }
 
 .column.center {
@@ -123,4 +114,10 @@ p {
 
 .blue-round:focus {
     outline: none;
+}
+
+.ad {
+    flex: 1;
+    height: 100%;
+    margin: 20px;
 }
