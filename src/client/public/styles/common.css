@@ -121,3 +121,10 @@ p {
     height: 100%;
     margin: 20px;
 }
+
+@media(max-width: 600px) {
+    .ad{
+        width: 0;
+        margin: 0;
+    }
+}
