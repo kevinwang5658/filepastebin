@@ -1,0 +1,9 @@
+serviceName: filepastebin-1
+containers:
+  filepastebin-1:
+    image: kevinwang5658/filepastebin:latest
+    ports:
+      "3000": HTTP
+publicEndpoint:
+  containerName: filepastebin-1
+  containerPort: 3000
