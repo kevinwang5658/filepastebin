@@ -4,6 +4,7 @@ import {Logger} from "./config/logger";
 import {StreamOptions} from "morgan";
 import {Constants} from "../shared/constants";
 import REQUEST_JOIN_ROOM = Constants.REQUEST_JOIN_ROOM;
+import {forceDomain} from "forcedomain";
 
 const createError = require('http-errors');
 const express = require('express');
@@ -29,6 +30,11 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
       }
     }
   }));
+
+  //TODO: This is temporary. Remove when redirects are setup in AWS
+  app.use(forceDomain({
+    hostname: 'www.filepastebin.com'
+  }))
 
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
