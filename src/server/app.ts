@@ -31,11 +31,6 @@ export const newInstance = (hostMap: Map<String, HostModel>) => {
     }
   }));
 
-  //TODO: This is temporary. Remove when redirects are setup in AWS
-  app.use(forceDomain({
-    hostname: 'www.filepastebin.com'
-  }))
-
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
