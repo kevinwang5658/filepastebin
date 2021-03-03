@@ -5,12 +5,17 @@ import {Express} from "express";
 import * as http from "http";
 import {Constants} from "../../src/shared/constants";
 import REQUEST_JOIN_ROOM = Constants.REQUEST_JOIN_ROOM;
+import { v4 as uuidv4 } from 'uuid';
 
 const request = require('supertest');
 
-const ROOM_ID = '123234';
+
+const ROOM_ID = uuidv4();
+const ROOM_CODE = '123234';
+
 const HOST_MODEL = <HostModel> {
     roomId: ROOM_ID,
+    roomCode: ROOM_CODE,
     hostId: "host_id",
     files: [
         {
@@ -23,9 +28,11 @@ const HOST_MODEL = <HostModel> {
 
 let app: Express;
 let hostMap: Map<string, HostModel> = new Map();
+let roomCodeToRoomIdMap: Map<string, string> = new Map();
 hostMap.set(ROOM_ID, HOST_MODEL);
+roomCodeToRoomIdMap.set(ROOM_CODE, ROOM_ID)
 
-app = App.newInstance(hostMap);
+app = App.newInstance(hostMap, roomCodeToRoomIdMap);
 
 describe('GET /', () => {
     it('responds with html', (done) => {
@@ -36,17 +43,17 @@ describe('GET /', () => {
     });
 });
 
-describe(`GET ${REQUEST_JOIN_ROOM}:room_id`, () => {
+describe(`GET ${REQUEST_JOIN_ROOM}:room_code`, () => {
     it('creates a room', (done) => {
         request(app)
-            .get(`${REQUEST_JOIN_ROOM}${ROOM_ID}`)
-            .expect(200, "true", done)
+            .get(`${REQUEST_JOIN_ROOM}${ROOM_CODE}`)
+            .expect(200, { roomId: ROOM_ID}, done)
     });
 
     it('rejects wrong room ids', (done) => {
         request(app)
             .get(`${REQUEST_JOIN_ROOM}123193`)
-            .expect(200, "false", done)
+            .expect(200, {}, done)
     });
 
     it('rejects empty room ids', (done) => {
@@ -66,7 +73,7 @@ describe(`GET /:room_id`, () => {
 
    it('responds with 404 on not found', (done) => {
        request(app)
-           .get(`/131232`)
+           .get(`/` + uuidv4())
            .expect(404, done)
    })
 });
