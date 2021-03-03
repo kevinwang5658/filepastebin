@@ -1,4 +1,4 @@
-import {Base} from "../../../src/server/signaling/Base";
+import {Base} from "../../../src/server/signaling/base";
 import {beforeEach, describe} from "mocha";
 import {Message, MessageAction, MessageType} from "../../../src/client/javascript/webrtc-base/models/message";
 import {Socket} from "socket.io";

@@ -65,9 +65,9 @@ export class JoinDialog extends Component<IJoinDialogProps, IJoinDialogState> im
 
 
         this.props.joinRoomRequest(value)
-            .then((successful: boolean) => {
-                if (successful) {
-                    this.props.onsuccess(value);
+            .then((response: any) => {
+                if (response) {
+                    this.props.onsuccess(response.roomId);
                 } else {
                     this.setState({
                         borderColor: BORDER_COLOR_WRONG
