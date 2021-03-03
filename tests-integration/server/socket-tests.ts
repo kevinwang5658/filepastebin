@@ -1,6 +1,6 @@
 import {after, afterEach, before, beforeEach, describe} from 'mocha'
-import {HostModel} from "../../src/server/models/HostModel";
-import {SocketManager} from "../../src/server/signaling/SocketManager";
+import {HostModel} from "../../src/server/models/hostModel";
+import {SocketManager} from "../../src/server/signaling/socketManager";
 import * as http from 'http';
 import * as io from 'socket.io-client';
 import {Constants} from "../../src/shared/constants";

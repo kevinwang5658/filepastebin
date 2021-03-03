@@ -2,8 +2,8 @@
 
 import * as http from "http";
 import * as App from "./app";
-import {SocketManager} from "./signaling/SocketManager";
-import {HostModel} from "./models/HostModel";
+import {SocketManager} from "./signaling/socketManager";
+import {HostModel} from "./models/hostModel";
 
 /**
  * Environment variables
@@ -19,12 +19,13 @@ const debug = require('debug')('filepastebin:server');
 
 //TODO: Switch from a map to redis in the future
 const hostMap = new Map<string, HostModel>();
+const roomCodeToRoomIdMap = new Map<string, string>()
 
 /**
  * Get port from environment and store in Express.
  */
 
-let app = App.newInstance(hostMap);
+let app = App.newInstance(hostMap, roomCodeToRoomIdMap);
 
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
@@ -34,8 +35,7 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
-
-const socketManager = new SocketManager(server, hostMap);
+const socketManager = new SocketManager(server, hostMap, roomCodeToRoomIdMap);
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -1,14 +1,14 @@
 import {Socket} from "socket.io";
 import {Server} from "http";
 import {RedisClient} from "redis";
-import {Host} from "./Host";
+import {Host} from "./host";
 import * as redis from "redis";
 import * as randomstring from "randomstring";
 
-import {HostModel} from "../models/HostModel";
+import {HostModel} from "../models/hostModel";
 import {Constants} from "../../shared/constants";
 import RequestHostRequestModel = Constants.RequestHostRequestModel;
-import {Client} from "./Client";
+import {Client} from "./client";
 import CONNECT = Constants.CONNECT;
 import DISCONNECT = Constants.DISCONNECT;
 
@@ -18,14 +18,16 @@ export class SocketManager {
 
     private io: SocketIO.Server;
 
-    constructor(private server: Server, private hostMap: Map<string, HostModel>) {
+    constructor(private server: Server,
+                private hostMap: Map<string, HostModel>,
+                private roomCodeToRoomIdMap: Map<string, string>) {
         this.io = new SocketIo(server);
         this.io.on(CONNECT, this.connection);
     }
 
     private connection = (socket: Socket) => {
         socket.on(Constants.REQUEST_HOST, (req: RequestHostRequestModel) => {
-            let host = new Host(socket, this.io, this.hostMap);
+            let host = new Host(socket, this.io, this.hostMap, this.roomCodeToRoomIdMap);
             host.createHost(req);
 
             socket.on(DISCONNECT, () => host.destroyHost())
