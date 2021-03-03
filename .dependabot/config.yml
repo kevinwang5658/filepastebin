@@ -1,6 +1,8 @@
 version: 1
 update_configs:
-  # required properties omitted ...
-  allowed_updates:
-    - match:
-        dependency_type: "production"
+  - package_manager: "javascript"
+    directory: "/"
+    update_schedule: "live"
+    allowed_updates:
+      - match:
+          dependency_type: "production"
