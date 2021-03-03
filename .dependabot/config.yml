@@ -1,0 +1,6 @@
+version: 1
+update_configs:
+  # required properties omitted ...
+  allowed_updates:
+    - match:
+        dependency_type: "production"
