@@ -2,24 +2,24 @@ import {Component, h} from "preact";
 
 // @ts-ignore
 import style from './index-dialog.module.css'
-import {IDialog} from "./idialog";
+import {BaseDialog} from "./baseDialog";
 
-export interface IHostDialogProps {
+export interface HostDialogProps {
     roomId: string
     oncancel: () => void
 }
 
-export interface IHostDialogState {
+export interface HostDialogState {
 
 }
 
-export class HostDialog extends Component <IHostDialogProps, IHostDialogState> implements IDialog {
+export class HostDialog extends Component <HostDialogProps, HostDialogState> implements BaseDialog {
 
-    constructor(props: IHostDialogProps) {
+    constructor(props: HostDialogProps) {
         super(props);
     }
 
-    onbackgroundclicked = () => {
+    onBackgroundClicked = () => {
 
     };
 

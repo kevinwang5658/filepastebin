@@ -6,7 +6,7 @@ import * as io from "socket.io-client";
 import CONNECT = Constants.CONNECT;
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 import Socket = SocketIOClient.Socket;
-import {DialogManager} from "./components/dialogmanager";
+import {DialogManager} from "./components/dialogManager";
 import {requestJoinRoom} from "./joinRoomRequest";
 import adapter from 'webrtc-adapter';
 import {FileInputRenderer} from "./components/file-input/fileInputRenderer";

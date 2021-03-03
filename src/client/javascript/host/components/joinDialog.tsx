@@ -1,15 +1,15 @@
 import {Component, h} from "preact";
 // @ts-ignore
 import style from "./index-dialog.module.css";
-import {IDialog} from "./idialog";
+import {BaseDialog} from "./baseDialog";
 
-export interface IJoinDialogProps {
+export interface JoinDialogProps {
     joinRoomRequest: Function,
     onsuccess: (roomId: string) => void,
     oncancel: () => void
 }
 
-export interface IJoinDialogState {
+export interface JoinDialogState {
     value: string,
     borderColor: string
 }
@@ -17,11 +17,11 @@ export interface IJoinDialogState {
 const BORDER_COLOR_NORMAL = "#9B9B9B";
 const BORDER_COLOR_WRONG = "#D0021B";
 
-export class JoinDialog extends Component<IJoinDialogProps, IJoinDialogState> implements IDialog{
+export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> implements BaseDialog{
 
     private input: HTMLInputElement;
 
-    constructor(props: IJoinDialogProps) {
+    constructor(props: JoinDialogProps) {
         super(props);
 
         this.setState({
@@ -76,7 +76,7 @@ export class JoinDialog extends Component<IJoinDialogProps, IJoinDialogState> im
             })
     };
 
-    onbackgroundclicked = () => {
+    onBackgroundClicked = () => {
         this.props.oncancel()
     };
 
