@@ -18,7 +18,6 @@ p {
     align-items: stretch;
 }
 
-
 .line {
     margin-top: 30px;
     margin-bottom: 30px;
@@ -46,6 +45,19 @@ p {
 
 #top-bar {
     height: 80px;
+}
+
+header {
+    height: 80px;
+    margin: 10px;
+}
+
+#main-content {
+    flex: 1;
+}
+
+footer {
+    margin: 10px;
 }
 
 #mini-logo {
@@ -120,6 +132,13 @@ p {
     flex: 1;
     height: 100%;
     margin: 20px;
+}
+
+.logo {
+    width: auto;
+    padding: 8px;
+    height: 32px;
+    vertical-align: middle;
 }
 
 @media(max-width: 600px) {

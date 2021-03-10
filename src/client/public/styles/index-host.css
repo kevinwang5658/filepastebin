@@ -44,3 +44,10 @@
     color: #4A90E2;
     margin-top: 10px;
 }
+
+#name {
+    display: inline-block;
+    color: #4A4A4A;
+    font-size: 14px;
+    font-family: Roboto, Arial, sans-serif;
+}
