@@ -6,12 +6,11 @@ import * as io from "socket.io-client";
 import CONNECT = Constants.CONNECT;
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 import Socket = SocketIOClient.Socket;
-import {DialogManager} from "./components/dialogmanager";
+import {DialogManager} from "./components/dialogManager";
 import {requestJoinRoom} from "./joinRoomRequest";
 import adapter from 'webrtc-adapter';
 import {FileInputRenderer} from "./components/file-input/fileInputRenderer";
 
-const container = <HTMLDivElement> document.getElementById('container');
 const join_room_button = <HTMLDivElement> document.getElementById('join-room-button');
 const paste = <HTMLButtonElement>document.getElementById('paste');
 
@@ -45,47 +44,6 @@ join_room_button.addEventListener('click', (ev: Event) => {
     })
 });
 
-// Drag and Drop
-
-container.addEventListener('drop', (ev: DragEvent) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-
-    container.style.background = '#FFFFFF';
-
-    if (ev.dataTransfer && ev.dataTransfer.files[0] && ev.dataTransfer.files[0].name !== '') {
-        filesAdded(ev.dataTransfer.files)
-    }
-});
-
-container.addEventListener('dragover', (ev: DragEvent) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-
-    container.style.background = '#F4F4F4'
-});
-
-let drag_count = 0;
-
-container.addEventListener('dragenter', (ev: DragEvent) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-
-    drag_count++;
-    container.style.background = '#F4F4F4'
-});
-
-container.addEventListener('dragleave', (ev: DragEvent) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-
-    drag_count--;
-
-    if (drag_count == 0) {
-        container.style.background = '#FFFFFF';
-    }
-});
-
 function onRoomCreated(response: RequestHostAcceptedModel) {
     dialogManager.showHostDialog(response.roomId, () => {
         paste.disabled = false;
@@ -93,8 +51,4 @@ function onRoomCreated(response: RequestHostAcceptedModel) {
         paste.style.background = '#297FE2';
         socket.disconnect();
     })
-}
-
-function filesAdded(files: FileList) {
-    paste.disabled = false;
 }

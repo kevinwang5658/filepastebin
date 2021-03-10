@@ -1,6 +1,5 @@
 .downloadPanelWrapper {
     display: grid;
-    width: max-content;
     margin: 20px;
 }
 
@@ -16,20 +15,28 @@
 
 .filesList {
     height: 420px;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .fileDescriptionWrapper {
     display: flex;
+    max-width: 100%;
     flex-direction: row;
     margin-top: 20px;
     justify-content: center;
+    overflow: hidden;
 }
 
 .fileDescription {
     font-family: Roboto, Helvetica, sans-serif;
     font-size: 18px;
+    max-width: 100%;
     color: #4A4A4A;
     flex-grow: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .fileDownloadProgress {
