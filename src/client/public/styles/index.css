@@ -55,42 +55,13 @@
     color: #4A4A4A;
 }
 
-.inputfile {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-}
-
-.inputfile + label {
-    border-radius: 25px;
-    background: #E9E9E9;
-    display: block;
-    height: 44px;
-    cursor: text;
-    vertical-align: middle;
-    color: #9B9B9B;
-    line-height: 44px;
-    padding-left: 15px;
-    padding-right: 15px;
-    font-family: Helvetica, sans-serif;
-    font-weight: normal;
-    font-size: 15px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.inputfile:hover + label {
-    background:  #D8D8D8;
-}
-
-.inputfile + label * {
-    pointer-events: none;
-}
-
 #paste {
     margin-top: 40px;
+}
+
+#name {
+    display: inline-block;
+    color: #4A4A4A;
+    font-size: 14px;
+    font-family: Roboto, Arial, sans-serif;
 }
