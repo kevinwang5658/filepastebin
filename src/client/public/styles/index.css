@@ -1,0 +1,67 @@
+#join-room-button {
+    display: inline-block;
+    align-self: flex-end;
+    margin: 10px;
+    padding: 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+    border: 1.5px solid #297FE2;
+    border-radius: 5px;
+    font-family: Helvetica, Arial, sans-serif;
+    cursor: pointer;
+    color: #297FE2;
+}
+
+.header-item {
+    display: inline-block;
+    font-family: Roboto, Arial, sans-serif;
+    color: #4A4A4A;
+    font-size: 14px;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.description {
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: justify;
+    text-align-last: center;
+    color: #4A4A4A;
+}
+
+@media (hover: hover) {
+    #join-room-button:hover {
+        background: #F2F2F2;
+    }
+    .header-item:hover {
+        background: #F2F2F2;
+    }
+}
+
+#main-logo {
+    align-self: flex-end;
+    margin-bottom: 70px;
+}
+
+.title {
+    font-family: "Arial Black", sans-serif;
+    font-weight: 900;
+    font-size: 30px;
+}
+
+.secondary-title {
+    font-family: "Arial Black", sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    color: #4A4A4A;
+}
+
+#paste {
+    margin-top: 40px;
+}
+
+#name {
+    display: inline-block;
+    color: #4A4A4A;
+    font-size: 14px;
+    font-family: Roboto, Arial, sans-serif;
+}

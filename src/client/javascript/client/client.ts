@@ -31,7 +31,3 @@ downloadPanel.setOnDownloadClickedCallback(() => {
 clientNetworkManager.onProgressChangedCallback = (progress: number[]) => {
   downloadPanel.updateProgress(progress);
 };
-
-logo.addEventListener('click', () => {
-  window.location.href = window.location.origin;
-});

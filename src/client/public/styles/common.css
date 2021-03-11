@@ -11,13 +11,16 @@ p {
     color: #4A4A4A;
 }
 
+a {
+    text-decoration: none;
+}
+
 #container {
     display: flex;
     width: 100%;
     height: 100%;
     align-items: stretch;
 }
-
 
 .line {
     margin-top: 30px;
@@ -48,7 +51,23 @@ p {
     height: 80px;
 }
 
+header {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin: 10px;
+}
+
+#main-content {
+    flex: 1;
+}
+
+footer {
+    margin: 10px;
+}
+
 #mini-logo {
+    display: inline-block;
     padding: 15px;
     margin: 15px;
     margin-left: 60px;
@@ -120,6 +139,13 @@ p {
     flex: 1;
     height: 100%;
     margin: 20px;
+}
+
+.logo {
+    width: auto;
+    padding: 8px;
+    height: 32px;
+    vertical-align: middle;
 }
 
 @media(max-width: 600px) {

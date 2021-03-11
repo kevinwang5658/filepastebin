@@ -48,6 +48,10 @@ export const newInstance = (hostMap: Map<string, HostModel>, roomCodeToRoomIdMap
     res.render('index');
   });
 
+  app.get('/info', (req: Request, res: Response) => {
+    res.render('info');
+  });
+
   app.get(REQUEST_JOIN_ROOM + ':room_code', (req: Request, res: Response, next: NextFunction) => {
     if (req.params.room_code && roomCodeToRoomIdMap.get(req.params.room_code)) {
       res.send({
