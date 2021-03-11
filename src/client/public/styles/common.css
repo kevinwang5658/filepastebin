@@ -11,6 +11,10 @@ p {
     color: #4A4A4A;
 }
 
+a {
+    text-decoration: none;
+}
+
 #container {
     display: flex;
     width: 100%;
@@ -48,7 +52,9 @@ p {
 }
 
 header {
-    height: 80px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
     margin: 10px;
 }
 

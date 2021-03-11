@@ -1,15 +1,31 @@
 #join-room-button {
+    display: inline-block;
     align-self: flex-end;
     margin: 10px;
     padding: 10px;
     font-size: 14px;
     box-sizing: border-box;
+    border: 1.5px solid #297FE2;
+    border-radius: 5px;
+    font-family: Helvetica, Arial, sans-serif;
     cursor: pointer;
-    color: #297FE2;;
+    color: #297FE2;
+}
+
+.header-item {
+    display: inline-block;
+    font-family: Roboto, Arial, sans-serif;
+    color: #4A4A4A;
+    font-size: 14px;
+    padding: 10px;
+    text-decoration: none;
 }
 
 @media (hover: hover) {
     #join-room-button:hover {
+        background: #F2F2F2;
+    }
+    .header-item:hover {
         background: #F2F2F2;
     }
 }
