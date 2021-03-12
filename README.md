@@ -3,7 +3,7 @@
 
 [![Codeship Status for kevinwang5658/transferfirst](https://app.codeship.com/projects/ad2f6ec0-19d6-0137-b96c-1a1a0859fc7b/status?branch=master)](https://app.codeship.com/projects/328506)
 
-FilePastebin ([link](www.filepastebin.com)) is a peer to peer file transfer website based on WebRTC. The goal of the website is to help users share files between their mobile phones and their computers for those of us who are unable to use airdrop. 
+FilePastebin ([link](https://www.filepastebin.com)) is a peer to peer file transfer website based on WebRTC. The goal of the website is to help users share files between their mobile phones and their computers for those of us who are unable to use airdrop. 
 
 ## How it works
 
