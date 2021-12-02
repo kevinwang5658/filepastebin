@@ -21,7 +21,9 @@ export class SocketManager {
     constructor(private server: Server,
                 private hostMap: Map<string, HostModel>,
                 private roomCodeToRoomIdMap: Map<string, string>) {
-        this.io = new SocketIo(server);
+        this.io = new SocketIo(server, {
+            pingTimeout: 30000,
+        });
         this.io.on(CONNECT, this.connection);
     }
 

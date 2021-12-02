@@ -3,7 +3,7 @@ import Socket = SocketIOClient.Socket;
 import {ClientRTCPeerConnectionWrapper} from "./clientRTCPeerConnectionWrapper";
 import {FileRequest, Message, MessageAction, MessageType} from "../../webrtc-base/models/message";
 
-export class fileRequester {
+export class FileRequester {
 
     public progress = 0;
 
