@@ -5,7 +5,7 @@ import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;
 import {Message} from "../webrtc-base/models/message";
 import MESSAGE = Constants.MESSAGE;
 import Socket = SocketIOClient.Socket;
-import {fileRequester} from "./webrtc/fileRequester";
+import {FileRequester} from "./webrtc/fileRequester";
 
 declare var download: any;
 
@@ -13,7 +13,7 @@ export class ClientNetworkManager {
 
     public onProgressChangedCallback: (progress: number[]) => void = (progress) => {};
 
-    private workers = new Map<string, fileRequester>();
+    private workers = new Map<string, FileRequester>();
     private files: Constants.FileDescription[];
 
     constructor(private socket: Socket,
@@ -30,18 +30,18 @@ export class ClientNetworkManager {
 
             this.workers.set(
                 id,
-                new fileRequester(
+                new FileRequester(
                     id,
                     this.socket,
                     file));
         }
 
-        Promise.all([ ...this.workers.values() ].map((peer: fileRequester) => peer.getCompleteListener()
+        Promise.all([ ...this.workers.values() ].map((peer: FileRequester) => peer.getCompleteListener()
             .then((value: ArrayBuffer[]) => {
                 this.onDataLoaded(value, peer.file)
             })));
 
-        [ ...this.workers.values() ].forEach((peer: fileRequester) => peer.onProgressChangedCallback = this.handleprogresschanged)
+        [ ...this.workers.values() ].forEach((peer: FileRequester) => peer.onProgressChangedCallback = this.handleprogresschanged)
     };
 
     private joinSocketIORoom = () => {
@@ -58,7 +58,7 @@ export class ClientNetworkManager {
 
     private handleprogresschanged = () => {
         let progress = [ ...this.workers.values() ]
-            .map((peer: fileRequester) => peer.progress)
+            .map((peer: FileRequester) => peer.progress)
             .map((progress) => progress * 100)
 
 
