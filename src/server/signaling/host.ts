@@ -34,7 +34,7 @@ export class Host extends Base {
 
     this.socket.join(roomId);
     this.socket.emit(Constants.REQUEST_HOST_ACCEPTED, <RequestHostAcceptedModel>{
-      roomId: roomCode,
+      roomCode: roomCode,
       files: req.files
     });
 

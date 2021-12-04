@@ -5,7 +5,7 @@ import style from './index-dialog.module.css'
 import { BaseDialog } from "./base-dialog";
 
 export interface HostDialogProps {
-  roomId: string
+  roomCode: string
   oncancel: () => void
 }
 
@@ -25,7 +25,7 @@ export class HostDialog extends Component <HostDialogProps, HostDialogState> imp
   render() {
     return (
       <div className={style.dialog}>
-        <h1 id="dialogcode" className={style.dialogcode}>{this.props.roomId}</h1>
+        <h1 id="dialogcode" className={style.dialogcode}>{this.props.roomCode}</h1>
         <p className={style.dialogdescription}>
           Use this code to receive files <br/>
           (must keep dialog open)

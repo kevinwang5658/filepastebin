@@ -84,7 +84,7 @@ describe('Socket', function () {
     });
 
     host.on(REQUEST_HOST_ACCEPTED, (response: RequestHostAcceptedModel) => {
-      assert.isNotNull(response.roomId);
+      assert.isNotNull(response.roomCode);
       assert.equal(response.files[0].fileName, HOST_MODEL.files[0].fileName);
       assert.equal(response.files[0].fileType, HOST_MODEL.files[0].fileType);
       assert.equal(response.files[0].fileSize, HOST_MODEL.files[0].fileSize);

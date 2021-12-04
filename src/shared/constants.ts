@@ -30,7 +30,7 @@ export namespace Constants {
   export const REQUEST_HOST_ACCEPTED = 'request-host-accepted';
 
   export interface RequestHostAcceptedModel {
-    roomId: string,
+    roomCode: string,
     files: FileDescription[]
   }
 

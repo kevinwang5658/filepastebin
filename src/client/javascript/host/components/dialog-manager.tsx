@@ -28,9 +28,9 @@ export class DialogManager {
     />);
   };
 
-  showHostDialog = (roomId: string, oncancel: () => void) => {
+  showHostDialog = (roomCode: string, oncancel: () => void) => {
     this.showDialog(<HostDialog
-      roomId={roomId}
+      roomCode={roomCode}
       oncancel={() => {
         oncancel();
         this.hideDialog()

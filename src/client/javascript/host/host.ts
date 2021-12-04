@@ -44,7 +44,7 @@ join_room_button.addEventListener('click', (_) => {
 });
 
 function onRoomCreated(response: RequestHostAcceptedModel) {
-  dialogManager.showHostDialog(response.roomId, () => {
+  dialogManager.showHostDialog(response.roomCode, () => {
     paste.disabled = false;
     paste.innerText = "Paste It";
     paste.style.background = '#297FE2';

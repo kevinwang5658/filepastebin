@@ -52,7 +52,7 @@ describe("Host", () => {
 
     socketMock.verify(x => x.join(host.roomId), TypeMoq.Times.once());
     socketMock.verify(x => x.emit(REQUEST_HOST_ACCEPTED, TypeMoq.It.is<RequestHostAcceptedModel>(r => {
-      assert.equal(r.roomId, host.roomId);
+      assert.equal(r.roomCode, host.roomCode);
       assert.equal(r.files[0].fileName, HOST_MODEL.files[0].fileName);
       assert.equal(r.files[0].fileSize, HOST_MODEL.files[0].fileSize);
       assert.equal(r.files[0].fileType, HOST_MODEL.files[0].fileType);
