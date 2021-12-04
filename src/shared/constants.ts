@@ -55,7 +55,6 @@ export namespace Constants {
   export const SOCKET_IO_BYTES_PER_CHUNK = 1000000;
   export const MAX_BUFFER = 100 * 1024;
 
-  export const NUMBER_WORKERS = 10;
   export const RTC_OPEN = 'open';
   export const RTC_INIT_TIMEOUT = 5000;
 
@@ -78,5 +77,4 @@ export namespace Constants {
   // bytes are sent
   // host =====> client
   export const EOF = 'eof';
-
 }
