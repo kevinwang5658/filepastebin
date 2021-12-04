@@ -1,8 +1,8 @@
-import {HostModel} from "./models/hostModel";
-import {NextFunction, Request, Response} from "express";
-import {Logger} from "./config/logger";
-import {StreamOptions} from "morgan";
-import {Constants} from "../shared/constants";
+import { HostModel } from "./models/host-model";
+import { NextFunction, Request, Response } from "express";
+import { Logger } from "./config/logger";
+import { StreamOptions } from "morgan";
+import { Constants } from "../shared/constants";
 import REQUEST_JOIN_ROOM = Constants.REQUEST_JOIN_ROOM;
 
 const createError = require('http-errors');
@@ -24,7 +24,7 @@ export const newInstance = (hostMap: Map<string, HostModel>, roomCodeToRoomIdMap
   app.set('view engine', 'ejs');
 
   app.use(logger('combined', {
-    stream:<StreamOptions>{
+    stream: <StreamOptions>{
       write(str: string): void {
         if (!process.env.DEV) {
           Logger.info(str) //Using winston for production
@@ -86,12 +86,12 @@ export const newInstance = (hostMap: Map<string, HostModel>, roomCodeToRoomIdMap
   });
 
 // catch 404 and forward to error handler
-  app.use(function(req, res, next) {
+  app.use(function (req, res, next) {
     next(createError(404));
   });
 
 // error handler
-  app.use(function(err, req, res, next) {
+  app.use(function (err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};

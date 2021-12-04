@@ -1,146 +1,146 @@
 .dialogcontainer {
-    background: #00000066;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  background: #00000066;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .dialog {
-    background: white;
-    border-radius: 5px;
-    width: 330px;
-    max-width: 100%;
-    height: 254px;
-    margin-top: 200px;
-    margin-left: 10px;
-    margin-right: 10px;
-    box-sizing: border-box;
-    box-shadow: 1px 1px 1px #00000011;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  background: white;
+  border-radius: 5px;
+  width: 330px;
+  max-width: 100%;
+  height: 254px;
+  margin-top: 200px;
+  margin-left: 10px;
+  margin-right: 10px;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 1px #00000011;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .dialogcode {
-    margin-top: 40px;
-    margin-bottom: 0;
-    letter-spacing: 5px;
-    font-size: 24px;
-    color: #4A4A4A;
+  margin-top: 40px;
+  margin-bottom: 0;
+  letter-spacing: 5px;
+  font-size: 24px;
+  color: #4A4A4A;
 }
 
 .dialogdescription {
-    margin-top: 14px;
-    padding-left: 41px;
-    padding-right: 41px;
-    font-size: 12px;
-    color: #9B9B9B;
-    text-align: center;
-    margin-bottom: 0;
+  margin-top: 14px;
+  padding-left: 41px;
+  padding-right: 41px;
+  font-size: 12px;
+  color: #9B9B9B;
+  text-align: center;
+  margin-bottom: 0;
 }
 
 .dialogloadingring {
-    margin-top: 27px;
-    margin-bottom: 0;
+  margin-top: 27px;
+  margin-bottom: 0;
 }
 
 .dialogbuttonwrapper {
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    width: 100%;
-    align-items: flex-start;
-    margin: auto 0 10px;
-    padding: 0 50px 0;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  width: 100%;
+  align-items: flex-start;
+  margin: auto 0 10px;
+  padding: 0 50px 0;
 }
 
 .dialogjoin {
-    color: #4A90E2;
-    padding: 10px;
-    font-size: 14px;
-    cursor: pointer;
+  color: #4A90E2;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
 }
 
 @media (hover: hover) {
-    .dialogjoin:hover {
-        background: #F2F2F2;
-    }
+  .dialogjoin:hover {
+    background: #F2F2F2;
+  }
 }
 
 .joindialogcancel {
-    color: #4A90E2;
-    padding: 10px;
-    margin-left: auto;
-    font-size: 14px;
-    cursor: pointer;
+  color: #4A90E2;
+  padding: 10px;
+  margin-left: auto;
+  font-size: 14px;
+  cursor: pointer;
 }
 
 .hostdialogcancel {
-    color: #4A90E2;
-    padding: 10px;
-    margin-left: auto;
-    font-size: 14px;
-    cursor: pointer;
-    margin-top: auto;
-    margin-bottom: 28px;
-    margin-right: 28px;
+  color: #4A90E2;
+  padding: 10px;
+  margin-left: auto;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: auto;
+  margin-bottom: 28px;
+  margin-right: 28px;
 }
 
 @media (hover: hover) {
-    .joindialogcancel:hover {
-        background: #F2F2F2;
-    }
+  .joindialogcancel:hover {
+    background: #F2F2F2;
+  }
 }
 
 @media (hover: hover) {
-    .hostdialogcancel:hover {
-        background: #F2F2F2;
-    }
+  .hostdialogcancel:hover {
+    background: #F2F2F2;
+  }
 }
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .roomtitle {
-    margin-top: 30px;
-    text-align: center;
-    font-size: 14px;
-    padding-left: 41px;
-    padding-right: 41px;
-    margin-bottom: 0;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 14px;
+  padding-left: 41px;
+  padding-right: 41px;
+  margin-bottom: 0;
 }
 
 .roominput {
-    height: 40px;
-    width: 260px;
-    margin-top: 20px;
-    font-size: 16px;
-    text-align: center;
-    border-color: #ccc;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 5px;
+  height: 40px;
+  width: 260px;
+  margin-top: 20px;
+  font-size: 16px;
+  text-align: center;
+  border-color: #ccc;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
 }
 
 @media (hover: hover) {
-    .roominput:hover {
-        background: #FBFBFB;
-    }
+  .roominput:hover {
+    background: #FBFBFB;
+  }
 }
 
 .joinbuttonwrapper {
-    margin-top: auto;
-    margin-bottom: 23px;
-    padding-left: 38px;
-    padding-right: 38px;
-    width: 100%;
-    box-sizing: border-box;
+  margin-top: auto;
+  margin-bottom: 23px;
+  padding-left: 38px;
+  padding-right: 38px;
+  width: 100%;
+  box-sizing: border-box;
 }
