@@ -1,8 +1,8 @@
-import {describe, before, after} from "mocha";
-import {Builder, By, until, WebDriver, Key} from "selenium-webdriver";
-import {Options} from "selenium-webdriver/chrome";
-import {assert} from "chai";
-import {FileDetector} from 'selenium-webdriver/remote/index';
+import { describe, before, after } from "mocha";
+import { Builder, By, until, WebDriver, Key } from "selenium-webdriver";
+import { Options } from "selenium-webdriver/chrome";
+import { assert } from "chai";
+import { FileDetector } from 'selenium-webdriver/remote/index';
 
 require('chromedriver');
 const homeDir = require('os').homedir();

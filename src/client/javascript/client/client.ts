@@ -1,15 +1,12 @@
 'use strict';
 
 import * as io from "socket.io-client";
-import {ClientNetworkManager} from "./clientNetworkManager";
+import { ClientNetworkManager } from "./client-network-manager";
 import adapter from 'webrtc-adapter';
-import {DownloadPanelBase} from "./components/downloadPanelBase";
-import {DownloadPanelRenderer} from "./components/downloadPanelRenderer";
+import { DownloadPanelRenderer } from "./components/download-panel-renderer";
 
 declare const FILES_LIST: string
 declare const ROOM_CODE: string
-
-const logo = document.getElementById('mini-logo');
 
 const filesList = JSON.parse(unescape(FILES_LIST))
 const roomCode = unescape(ROOM_CODE)

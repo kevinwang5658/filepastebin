@@ -1,84 +1,84 @@
 .fileInputWrapper {
-    display: grid;
-    border-radius: 25px;
-    background: #E9E9E9;
-    grid-template-columns: 1fr 1px auto;
-    grid-template-rows: minmax(44px, auto);
+  display: grid;
+  border-radius: 25px;
+  background: #E9E9E9;
+  grid-template-columns: 1fr 1px auto;
+  grid-template-rows: minmax(44px, auto);
 }
 
 .addFileButton {
-    border: none;
-    padding-left: 15px;
-    padding-right: 15px;
-    background: transparent;
-    cursor: pointer;
-    font-weight: bold;
-    color: #297FE2;
-    outline: none;
+  border: none;
+  padding-left: 15px;
+  padding-right: 15px;
+  background: transparent;
+  cursor: pointer;
+  font-weight: bold;
+  color: #297FE2;
+  outline: none;
 }
 
 .addFileButtonDivider {
-    background: #D8D8D8;
-    margin-top: 5px;
-    margin-bottom: 5px;
+  background: #D8D8D8;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .fileInput {
-    display: none;
+  display: none;
 }
 
 .fileList {
-    display: grid;
-    grid-template-rows: 1fr;
+  display: grid;
+  grid-template-rows: 1fr;
 }
 
 .fileNameWrapper {
-    display: grid;
-    grid-template-columns: 1fr auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
 }
 
 .fileName {
-    color: #4A4A4A;
-    padding-left: 15px;
-    padding-right: 15px;
-    vertical-align: middle;
-    font-size: 15px;
-    font-family: Roboto, Helvetica, sans-serif;
-    font-weight: normal;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+  color: #4A4A4A;
+  padding-left: 15px;
+  padding-right: 15px;
+  vertical-align: middle;
+  font-size: 15px;
+  font-family: Roboto, Helvetica, sans-serif;
+  font-weight: normal;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .deleteFileButton {
-    justify-self: center;
-    align-self: center;
-    width: 20px;
-    height: 20px;
-    padding: 10px;
+  justify-self: center;
+  align-self: center;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
 }
 
 .fileInputDescription {
-    cursor: text;
-    vertical-align: middle;
-    color: #9B9B9B;
-    line-height: 44px;
-    padding-left: 15px;
-    padding-right: 15px;
-    font-family: Helvetica, sans-serif;
-    font-weight: normal;
-    font-size: 15px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+  cursor: text;
+  vertical-align: middle;
+  color: #9B9B9B;
+  line-height: 44px;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-family: Helvetica, sans-serif;
+  font-weight: normal;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .addFileButton:hover {
-    background: #D8D8D8;
-    border-radius: 0 25px 25px 0;
+  background: #D8D8D8;
+  border-radius: 0 25px 25px 0;
 }
 
 .fileInputDescription:hover {
-    background: #D8D8D8;
-    border-radius: 25px 0 0 25px;
+  background: #D8D8D8;
+  border-radius: 25px 0 0 25px;
 }
