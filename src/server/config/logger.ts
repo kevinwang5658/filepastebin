@@ -1,5 +1,5 @@
-import winston from 'winston'
 import * as rootPath from 'app-root-path';
+import winston from 'winston';
 
 let options = {
   file: {

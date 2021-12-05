@@ -40,7 +40,7 @@ export namespace Constants {
 
   export const REQUEST_JOIN_ROOM = '/request/room/';
 
-  export const REQUEST_CLIENT = 'request-client';
+  export const REQUEST_GUEST = 'request-guest';
   export const REQUEST_CLIENT_ACCEPTED = 'request-client-accepted';
 
   export interface RequestClientAcceptedModel {
