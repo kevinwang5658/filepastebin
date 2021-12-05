@@ -1,38 +1,37 @@
-import { Base } from "./base";
 import { Socket } from "socket.io";
-import { HostModel } from "../models/host-model";
 import { Constants } from "../../shared/constants";
+import { Logger } from "../config/logger";
+import { RoomState } from "./room-state";
 import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;
 import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
-import { Logger } from "../config/logger";
 
-export class Client extends Base {
+const logger = Logger;
 
-  private host: HostModel;
+export class Guest {
+
+  private state: RoomState;
 
   constructor(
-    socket: Socket,
+    private socket: Socket,
     private io: SocketIO.Server,
-    private hostMap: Map<string, HostModel>,
+    private roomsMap: Map<string, RoomState>,
     private roomId: string) {
-    super(socket)
   }
 
-  public createClient() {
-    if (!this.hostMap.get(this.roomId)) {
+  public joinRoomAsGuest() {
+    if (!this.roomsMap.get(this.roomId)) {
       this.socket.emit('exception', 'host disconnected');
       return;
     }
 
-    this.host = this.hostMap.get(this.roomId);
-
+    this.state = this.roomsMap.get(this.roomId);
     this.socket.join(this.roomId);
     this.socket.emit(REQUEST_CLIENT_ACCEPTED, <RequestClientAcceptedModel>{
       roomId: this.roomId,
-      files: this.host.files
+      files: this.state.files
     });
 
-    Logger.info(`Client connected: ${this.roomId}`)
+    logger.info(`Client connected: ${this.roomId}`)
   }
 
 }

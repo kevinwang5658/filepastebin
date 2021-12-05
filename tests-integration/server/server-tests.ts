@@ -1,6 +1,6 @@
 import { describe } from "mocha";
 import * as App from '../../src/server/app'
-import { HostModel } from "../../src/server/models/host-model";
+import { RoomState } from "../../src/server/signaling/room-state";
 import { Express } from "express";
 import { Constants } from "../../src/shared/constants";
 import REQUEST_JOIN_ROOM = Constants.REQUEST_JOIN_ROOM;
@@ -12,7 +12,7 @@ const request = require('supertest');
 const ROOM_ID = uuidv4();
 const ROOM_CODE = '123234';
 
-const HOST_MODEL = <HostModel>{
+const HOST_MODEL = <RoomState>{
   roomId: ROOM_ID,
   roomCode: ROOM_CODE,
   hostId: "host_id",
@@ -26,7 +26,7 @@ const HOST_MODEL = <HostModel>{
 };
 
 let app: Express;
-let hostMap: Map<string, HostModel> = new Map();
+let hostMap: Map<string, RoomState> = new Map();
 let roomCodeToRoomIdMap: Map<string, string> = new Map();
 hostMap.set(ROOM_ID, HOST_MODEL);
 roomCodeToRoomIdMap.set(ROOM_CODE, ROOM_ID)

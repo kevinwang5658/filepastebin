@@ -1,11 +1,11 @@
 import { Constants } from "../../../shared/constants";
 import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
-import REQUEST_CLIENT = Constants.REQUEST_CLIENT;
 import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;
 import { Message } from "../webrtc-base/models/message";
 import MESSAGE = Constants.MESSAGE;
 import Socket = SocketIOClient.Socket;
 import { FileRequester } from "./web-rtc/file-requester";
+import REQUEST_GUEST = Constants.REQUEST_GUEST;
 
 declare var download: any;
 
@@ -46,7 +46,7 @@ export class ClientNetworkManager {
   };
 
   private joinSocketIORoom = () => {
-    this.socket.emit(REQUEST_CLIENT, this.roomId)
+    this.socket.emit(REQUEST_GUEST, this.roomId)
   };
 
   private onRoomJoined = (res: RequestClientAcceptedModel) => {

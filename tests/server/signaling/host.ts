@@ -3,7 +3,7 @@ import { Host } from "../../../src/server/signaling/host";
 import * as TypeMoq from "typemoq"
 import { Socket } from "socket.io";
 import * as SocketIO from "socket.io";
-import { HostModel } from "../../../src/server/models/host-model";
+import { RoomState } from "../../../src/server/signaling/room-state";
 import { assert } from "chai";
 import { Constants } from "../../../src/shared/constants";
 import REQUEST_HOST_ACCEPTED = Constants.REQUEST_HOST_ACCEPTED;
@@ -12,7 +12,7 @@ import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 describe("Host", () => {
 
   const SOCKET_ID = "id";
-  const HOST_MODEL = <HostModel>{
+  const HOST_MODEL = <RoomState>{
     hostId: SOCKET_ID,
     files: [
       {
@@ -32,7 +32,7 @@ describe("Host", () => {
   beforeEach(() => {
     socketMock = TypeMoq.Mock.ofType<Socket>();
     ioMock = TypeMoq.Mock.ofType<SocketIO.Server>();
-    hostMap = new Map<string, HostModel>();
+    hostMap = new Map<string, RoomState>();
     roomToIdMap = new Map<string, number>();
     instance = new Host(socketMock.object, ioMock.object, hostMap, roomToIdMap);
 

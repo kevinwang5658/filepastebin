@@ -1,35 +1,33 @@
+import * as randomstring from 'randomstring';
 import { Socket } from "socket.io";
-import { Constants } from '../../shared/constants'
-import { HostModel } from "../models/host-model";
-import { Logger } from "../config/logger";
 import { v4 as uuidv4 } from 'uuid';
-
-import * as randomstring from 'randomstring'
-import { Base } from "./base";
+import { Constants } from '../../shared/constants';
+import { Logger } from "../config/logger";
+import { RoomState } from "./room-state";
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 import RequestHostRequestModel = Constants.RequestHostRequestModel;
 
-export class Host extends Base {
+const logger = Logger;
 
-  private host: HostModel;
+export class Host {
+  private state: RoomState;
 
   constructor(
-    socket: Socket,
+    private socket: Socket,
     private io: SocketIO.Server,
-    private hostMap: Map<string, HostModel>,
+    private roomsMap: Map<string, RoomState>,
     private roomCodeToRoomIdMap: Map<string, string>) {
-    super(socket)
   }
 
   public createHost(req: RequestHostRequestModel) {
     let [roomId, roomCode] = this.generateSessionID();
-    this.host = {
+    this.state = {
       roomId: roomId,
       roomCode: roomCode,
       hostId: this.socket.id,
       files: req.files
     };
-    this.hostMap.set(roomId, this.host);
+    this.roomsMap.set(roomId, this.state);
     this.roomCodeToRoomIdMap.set(roomCode, roomId)
 
     this.socket.join(roomId);
@@ -38,13 +36,13 @@ export class Host extends Base {
       files: req.files
     });
 
-    Logger.info(`Host created: ${this.host.roomId}`);
+    logger.info(`Host created: ${this.state.roomId}`);
   }
 
   public destroyHost() {
-    this.socket.leave(this.host.roomId);
-    this.hostMap.delete(this.host.roomId);
-    Logger.info(`Host destroyed: ${this.host.roomId}`);
+    this.socket.leave(this.state.roomId);
+    this.roomsMap.delete(this.state.roomId);
+    logger.info(`Host destroyed: ${this.state.roomId}`);
   }
 
   private generateSessionID(): [string, string] {
@@ -57,7 +55,7 @@ export class Host extends Base {
         length: 6,
         charset: 'numeric'
       })
-    } while (this.hostMap.get(sessionCode));
+    } while (this.roomsMap.get(sessionCode));
 
 
     return [sessionId, sessionCode]

@@ -1,6 +1,6 @@
 import { after, afterEach, before, beforeEach, describe } from 'mocha'
-import { HostModel } from "../../src/server/models/host-model";
-import { SocketManager } from "../../src/server/signaling/socket-manager";
+import { RoomState } from "../../src/server/signaling/room-state";
+import { SocketClient } from "../../src/server/clients/socket-client";
 import * as http from 'http';
 import * as io from 'socket.io-client';
 import { Constants } from "../../src/shared/constants";
@@ -9,7 +9,7 @@ import REQUEST_HOST = Constants.REQUEST_HOST;
 import RequestHostRequestModel = Constants.RequestHostRequestModel;
 import REQUEST_HOST_ACCEPTED = Constants.REQUEST_HOST_ACCEPTED;
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
-import REQUEST_CLIENT = Constants.REQUEST_CLIENT;
+import REQUEST_CLIENT = Constants.REQUEST_GUEST;
 import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;
 import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
 import { v4 as uuidv4 } from 'uuid';
@@ -18,7 +18,7 @@ const request = require('supertest');
 
 const ROOM_ID = uuidv4();
 const ROOM_CODE = '123234';
-const HOST_MODEL = <HostModel>{
+const HOST_MODEL = <RoomState>{
   roomId: ROOM_ID,
   roomCode: ROOM_CODE,
   hostId: "host_id",
@@ -31,21 +31,21 @@ const HOST_MODEL = <HostModel>{
   ]
 };
 
-let hostMap: Map<string, HostModel>;
+let hostMap: Map<string, RoomState>;
 let roomCodeToRoomIdMap: Map<string, string>;
 let server: http.Server;
 let serverAddress;
-let socketManager: SocketManager;
-let host: SocketIOClient.Socket;
-let client: SocketIOClient.Socket;
+let socketManager: SocketClient;
+let host: SocketClient.Socket;
+let client: SocketClient.Socket;
 
 describe('Socket', function () {
   before(() => {
     server = http.createServer().listen();
     serverAddress = server.address();
-    hostMap = new Map<string, HostModel>();
+    hostMap = new Map<string, RoomState>();
     roomCodeToRoomIdMap = new Map<string, string>();
-    socketManager = new SocketManager(server, hostMap, roomCodeToRoomIdMap);
+    socketManager = new SocketClient(server, hostMap, roomCodeToRoomIdMap);
   });
 
   beforeEach(async () => {

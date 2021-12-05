@@ -1,7 +1,7 @@
 import { Constants } from "../../shared/constants";
 import File = Constants.FileDescription;
 
-export interface HostModel {
+export interface RoomState {
   roomId: string
   roomCode: string
   hostId: string,
