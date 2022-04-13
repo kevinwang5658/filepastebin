@@ -29,7 +29,7 @@ export class DialogContainer extends Component<DialogContainerProps, DialogConta
   }
 
   render(): preact.ComponentChild {
-    return (<div className={style.dialogcontainer}
+    return (<div className={style.Dialogcontainer}
                  style={{ display: this.state.dialog ? 'flex' : 'none' }}
                  onClick={() => {
                    if (this.backgroundClickedListener) {

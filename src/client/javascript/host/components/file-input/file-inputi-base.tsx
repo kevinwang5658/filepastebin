@@ -25,12 +25,12 @@ export class FileInputiBase extends Component<FileInputBaseProps, FileInputBaseS
   }
 
   render() {
-    return (<div className={styles.fileInputWrapper}>
+    return (<div className={styles.FileInputWrapper}>
       <FileInputList openFileSelector={this.openFileSelector} filesList={this.state.filesList}
                      onFileRemoved={this.onFileRemoved}/>
-      <div className={styles.addFileButtonDivider}/>
-      <button className={styles.addFileButton} onClick={this.openFileSelector}>Add files</button>
-      <input className={styles.fileInput}
+      <div className={styles.AddFileButtonDivider}/>
+      <button className={styles.AddFileButton} onClick={this.openFileSelector}>Add files</button>
+      <input className={styles.FileInput}
              ref={ref => this.fileInput = ref}
              onChange={this.onFileInputChanged}
              type="file" multiple/>
@@ -56,11 +56,11 @@ export class FileInputiBase extends Component<FileInputBaseProps, FileInputBaseS
   }
 
   private onFileRemoved = (index: number) => {
-    this.setState(prevState => {
-      prevState.filesList.splice(index, 1)
-      return {
-        prevState
-      }
-    })
+    // this.setState((prevState) => {
+    //   prevState.filesList.splice(index, 1)
+    //   return {
+    //     prevState
+    //   }
+    // })
   }
 }

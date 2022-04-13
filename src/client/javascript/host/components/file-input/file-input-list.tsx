@@ -17,7 +17,7 @@ export class FileInputList extends Component<FileInputListProps, FileInputListSt
   }
 
   render() {
-    return (<div className={styles.fileList}>
+    return (<div className={styles.FileList}>
       {
         this.props.filesList.map((f, idx) => <FileItem fileName={f.name} index={idx}
                                                        onFileRemoved={this.props.onFileRemoved}/>)
@@ -25,7 +25,7 @@ export class FileInputList extends Component<FileInputListProps, FileInputListSt
       {this.props.filesList.length == 0 &&
       <label
         onClick={this.props.openFileSelector}
-        className={styles.fileInputDescription}>Click to add file, or drag and drop</label>
+        className={styles.FileInputDescription}>Click to add file, or drag and drop</label>
       }
     </div>)
   }

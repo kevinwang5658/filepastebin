@@ -1,7 +1,10 @@
+import { ChangeEvent } from 'cleave.js/react/props';
 import { Component, h } from "preact";
+import { JSXInternal } from 'preact/src/jsx';
 // @ts-ignore
 import style from "./index-dialog.module.css";
 import { BaseDialog } from "./base-dialog";
+import GenericEventHandler = JSXInternal.GenericEventHandler;
 
 export interface JoinDialogProps {
   joinRoomRequest: Function,
@@ -39,11 +42,9 @@ export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> impl
     this.input.focus()
   }
 
-  oninput = (event: KeyboardEvent) => {
-    let target = event.target as HTMLInputElement;
-
+  oninput = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      value: target.value
+      value: event.target.value,
     });
   };
 
@@ -82,29 +83,29 @@ export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> impl
 
   render(): preact.ComponentChild {
     return (
-      <div className={style.dialog}
+      <div className={style.Dialog}
            onClick={(e: Event) => {
              e.stopPropagation()
            }}>
-        <p className={style.roomtitle} id="roomtitle">
+        <p className={style.Roomtitle} id="roomtitle">
           Enter the 6 digit room code:
         </p>
-        <input className={style.roominput}
+        <input className={style.Roominput}
                id="roominput"
                style={{ borderColor: this.state.borderColor, outline: 'none' }}
                type="tel"
                pattern="\d*"
                maxLength={6}
-               onInput={this.oninput}
+               onInput={oninput}
                onKeyPress={this.onkeypressed}
                value={this.state.value}
                ref={(input) => this.input = input}/>
-        <div className={style.dialogbuttonwrapper} id="dialogbuttonwrapper">
-          <div className={style.dialogjoin}
+        <div className={style.Dialogbuttonwrapper} id="dialogbuttonwrapper">
+          <div className={style.Dialogjoin}
                id="dialogjoin"
                onClick={() => this.onjoinclicked()}>JOIN
           </div>
-          <div className={style.joindialogcancel}
+          <div className={style.Joindialogcancel}
                id="dialogcancel"
                onClick={this.props.oncancel}>CANCEL
           </div>

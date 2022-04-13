@@ -41,9 +41,9 @@ export class DownloadPanelBase extends Component<DownloadPageBaseProps, Download
 
   render() {
     return (
-      <div className={styles.downloadPanelWrapper}>
-        <div className={styles.downloadPanelHeader}>Files</div>
-        <div className={styles.filesList}>
+      <div className={styles.DownloadPanelWrapper}>
+        <div className={styles.DownloadPanelHeader}>Files</div>
+        <div className={styles.FilesList}>
           {
             this.props.filesList.map((f, idx) => (
               <DownloadFileItem fileName={f.fileName} fileSize={f.fileSize} progress={this.state.progress[idx]}
@@ -54,7 +54,7 @@ export class DownloadPanelBase extends Component<DownloadPageBaseProps, Download
         <button onClick={this.onDownloadClicked}
                 style={this.state.isDownloadClicked && { background: '#62A4F0' }}
                 disabled={this.state.isDownloadClicked}
-                className={["blue-round", styles.downloadButton].join(' ')}>Download
+                className={["blue-round", styles.DownloadButton].join(' ')}>Download
         </button>
       </div>
     )

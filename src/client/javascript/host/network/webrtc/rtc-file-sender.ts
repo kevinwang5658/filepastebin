@@ -24,8 +24,8 @@ export class RtcFileSender implements BaseFileSender {
       .then((dataChannel) => {
         console.log("Configuring data channel");
 
-        this.bytesPerChunk = this.rtcPeerConnection.sctp.maxMessageSize
-        console.log(this.rtcPeerConnection.sctp.maxMessageSize);
+        this.bytesPerChunk = 2000;//this.rtcPeerConnection.sctp.maxMessageSize
+        //console.log(this.rtcPeerConnection.sctp.maxMessageSize);
 
         dataChannel.bufferedAmountLowThreshold = this.bytesPerChunk
         dataChannel.onerror = this.onRTCError;

@@ -1,4 +1,4 @@
-.fileInputWrapper {
+.FileInputWrapper {
   display: grid;
   border-radius: 25px;
   background: #E9E9E9;
@@ -6,7 +6,7 @@
   grid-template-rows: minmax(44px, auto);
 }
 
-.addFileButton {
+.AddFileButton {
   border: none;
   padding-left: 15px;
   padding-right: 15px;
@@ -17,27 +17,27 @@
   outline: none;
 }
 
-.addFileButtonDivider {
+.AddFileButtonDivider {
   background: #D8D8D8;
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
-.fileInput {
+.FileInput {
   display: none;
 }
 
-.fileList {
+.FileList {
   display: grid;
   grid-template-rows: 1fr;
 }
 
-.fileNameWrapper {
+.FileNameWrapper {
   display: grid;
   grid-template-columns: 1fr auto;
 }
 
-.fileName {
+.FileName {
   color: #4A4A4A;
   padding-left: 15px;
   padding-right: 15px;
@@ -50,7 +50,7 @@
   white-space: nowrap;
 }
 
-.deleteFileButton {
+.DeleteFileButton {
   justify-self: center;
   align-self: center;
   width: 20px;
@@ -58,7 +58,7 @@
   padding: 10px;
 }
 
-.fileInputDescription {
+.FileInputDescription {
   cursor: text;
   vertical-align: middle;
   color: #9B9B9B;
@@ -73,12 +73,12 @@
   white-space: nowrap;
 }
 
-.addFileButton:hover {
+.AddFileButton:hover {
   background: #D8D8D8;
   border-radius: 0 25px 25px 0;
 }
 
-.fileInputDescription:hover {
+.FileInputDescription:hover {
   background: #D8D8D8;
   border-radius: 25px 0 0 25px;
 }

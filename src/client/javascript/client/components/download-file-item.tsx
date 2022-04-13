@@ -19,10 +19,10 @@ export class DownloadFileItem extends Component<DownloadFileItemProps, DownloadF
       <div className={styles.fileDescriptionWrapper}>
         {/*Adding animation by adding animation class if the boolean isDownloadClicked is true*/}
         <div
-          className={[styles.fileDescription, this.props.isDownloadClicked ? styles.downloadAnimation : ""].join(' ')}>
+          className={[styles.FileDescription, this.props.isDownloadClicked ? styles.DownloadAnimation : ""].join(' ')}>
           {this.props.fileName + " - " + prettyBytes(this.props.fileSize)}</div>
         {this.props.isDownloadClicked &&
-        <div className={styles.fileDownloadProgress}>{`${Math.min(this.props.progress, 100).toFixed(2)}%`}</div>
+        <div className={styles.FileDownloadProgress}>{`${Math.min(this.props.progress, 100).toFixed(2)}%`}</div>
         }
       </div>
     )

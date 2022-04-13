@@ -24,13 +24,13 @@ export class HostDialog extends Component <HostDialogProps, HostDialogState> imp
 
   render() {
     return (
-      <div className={style.dialog}>
-        <h1 id="dialogcode" className={style.dialogcode}>{this.props.roomCode}</h1>
-        <p className={style.dialogdescription}>
+      <div className={style.Dialog}>
+        <h1 id="dialogcode" className={style.Dialogcode}>{this.props.roomCode}</h1>
+        <p className={style.Dialogdescription}>
           Use this code to receive files <br/>
           (must keep dialog open)
         </p>
-        <div className={style.hostdialogcancel} onClick={this.props.oncancel}>CANCEL</div>
+        <div className={style.Hostdialogcancel} onClick={this.props.oncancel}>CANCEL</div>
       </div>
     )
   }
