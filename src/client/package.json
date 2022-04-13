@@ -23,7 +23,7 @@
     "postcss-modules": "^1.4.1",
     "protractor": "~5.4.0",
     "resolve": "^1.10.0",
-    "style-loader": "^0.23.1",
+    "style-loader": "^3.3.1",
     "terser": "^3.17.0",
     "ts-loader": "^9.2.8",
     "tslint": "~5.11.0",
