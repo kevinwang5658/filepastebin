@@ -2,7 +2,7 @@ import { describe } from "mocha";
 import * as App from '../../src/server/app'
 import { HostModel } from "../../src/server/models/host-model";
 import { Express } from "express";
-import { Constants } from "../../src/shared/constants";
+import { Constants } from "../../src/server/constants";
 import REQUEST_JOIN_ROOM = Constants.REQUEST_JOIN_ROOM;
 import { v4 as uuidv4 } from 'uuid';
 

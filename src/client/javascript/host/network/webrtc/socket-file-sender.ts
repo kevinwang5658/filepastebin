@@ -1,4 +1,4 @@
-import { Constants } from "../../../../../shared/constants";
+import { Constants } from "../../../../../server/constants";
 import { BaseFileSender } from "../../../webrtc-base/base-file-sender";
 import { Message, MessageType } from "../../../webrtc-base/models/message";
 import EOF = Constants.EOF;

@@ -1,7 +1,7 @@
 'use strict';
 
 import { HostNetworkManager } from "./network/host-network-manager";
-import { Constants } from "../../../shared/constants";
+import { Constants } from "../../../server/constants";
 import * as io from "socket.io-client";
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 import Socket = SocketIOClient.Socket;

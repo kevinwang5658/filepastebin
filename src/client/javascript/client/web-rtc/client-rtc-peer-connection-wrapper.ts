@@ -1,4 +1,4 @@
-import { Constants } from "../../../../shared/constants";
+import { Constants } from "../../../../server/constants";
 import READY = Constants.READY;
 import RTC_OPEN = Constants.RTC_OPEN;
 import { BaseRtcPeerConnectionWrapper } from "../../webrtc-base/base-rtc-peer-connection-wrapper";

@@ -2,7 +2,7 @@ import { HostModel } from "./models/host-model";
 import { NextFunction, Request, Response } from "express";
 import { Logger } from "./config/logger";
 import { StreamOptions } from "morgan";
-import { Constants } from "../shared/constants";
+import { Constants } from "./constants";
 import REQUEST_JOIN_ROOM = Constants.REQUEST_JOIN_ROOM;
 
 const createError = require('http-errors');

@@ -1,4 +1,4 @@
-import { Constants } from "../../../../shared/constants";
+import { Constants } from "../../../../server/constants";
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 import MESSAGE = Constants.MESSAGE;
 import { FileRequest, Message, MessageAction, MessageType } from "../../webrtc-base/models/message";

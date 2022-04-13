@@ -1,7 +1,7 @@
 import { Base } from "./base";
 import { Socket } from "socket.io";
 import { HostModel } from "../models/host-model";
-import { Constants } from "../../shared/constants";
+import { Constants } from "../constants";
 import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;
 import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
 import { Logger } from "../config/logger";

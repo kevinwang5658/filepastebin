@@ -1,4 +1,4 @@
-import { Constants } from "../../../../shared/constants";
+import { Constants } from "../../../../server/constants";
 import Socket = SocketIOClient.Socket;
 import { ClientRtcPeerConnectionWrapper } from "./client-rtc-peer-connection-wrapper";
 import { FileRequest, Message, MessageAction, MessageType } from "../../webrtc-base/models/message";

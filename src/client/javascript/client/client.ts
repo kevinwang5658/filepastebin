@@ -5,11 +5,11 @@ import { ClientNetworkManager } from "./client-network-manager";
 import adapter from 'webrtc-adapter';
 import { DownloadPanelRenderer } from "./components/download-panel-renderer";
 
-declare const FILES_LIST: string
-declare const ROOM_CODE: string
+declare const FILES_LIST: string;
+declare const ROOM_CODE: string;
 
-const filesList = JSON.parse(unescape(FILES_LIST))
-const roomCode = unescape(ROOM_CODE)
+const filesList = JSON.parse(unescape(FILES_LIST));
+const roomCode = unescape(ROOM_CODE);
 
 const downloadPanel = new DownloadPanelRenderer(filesList);
 const socket = io.connect();
@@ -22,8 +22,8 @@ console.log(adapter.browserDetails.browser);
 //******************************
 
 downloadPanel.setOnDownloadClickedCallback(() => {
-  clientNetworkManager.requestDownload()
-})
+  clientNetworkManager.requestDownload();
+});
 
 clientNetworkManager.onProgressChangedCallback = (progress: number[]) => {
   downloadPanel.updateProgress(progress);

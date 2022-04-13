@@ -1,4 +1,4 @@
-import { Constants } from "../../../shared/constants";
+import { Constants } from "../../../server/constants";
 import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
 import REQUEST_CLIENT = Constants.REQUEST_CLIENT;
 import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;

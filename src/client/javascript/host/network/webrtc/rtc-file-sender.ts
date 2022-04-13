@@ -1,4 +1,4 @@
-import { Constants } from "../../../../../shared/constants";
+import { Constants } from "../../../../../server/constants";
 import MAX_BUFFER = Constants.MAX_BUFFER;
 import { BaseFileSender } from "../../../webrtc-base/base-file-sender";
 import EOF = Constants.EOF;

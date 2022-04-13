@@ -1,6 +1,6 @@
 import { h, render } from "preact";
 import { DownloadPanelBase } from "./download-panel-base";
-import { Constants } from "../../../../shared/constants";
+import { Constants } from "../../../../server/constants";
 import FileDescription = Constants.FileDescription;
 
 export class DownloadPanelRenderer {

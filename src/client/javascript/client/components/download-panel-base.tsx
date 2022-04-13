@@ -1,7 +1,7 @@
 import { Component, h } from "preact";
 // @ts-ignore
 import styles from './download-page.module.css'
-import { Constants } from "../../../../shared/constants";
+import { Constants } from "../../../../server/constants";
 import FileDescription = Constants.FileDescription;
 import { DownloadFileItem } from "./download-file-item";
 

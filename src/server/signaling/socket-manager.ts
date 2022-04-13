@@ -2,7 +2,7 @@ import { Socket } from "socket.io";
 import { Server } from "http";
 import { Host } from "./host";
 import { HostModel } from "../models/host-model";
-import { Constants } from "../../shared/constants";
+import { Constants } from "../constants";
 import RequestHostRequestModel = Constants.RequestHostRequestModel;
 import { Client } from "./client";
 import CONNECT = Constants.CONNECT;

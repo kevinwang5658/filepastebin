@@ -3,7 +3,7 @@ import { HostModel } from "../../src/server/models/host-model";
 import { SocketManager } from "../../src/server/signaling/socket-manager";
 import * as http from 'http';
 import * as io from 'socket.io-client';
-import { Constants } from "../../src/shared/constants";
+import { Constants } from "../../src/server/constants";
 import { assert } from 'chai';
 import REQUEST_HOST = Constants.REQUEST_HOST;
 import RequestHostRequestModel = Constants.RequestHostRequestModel;

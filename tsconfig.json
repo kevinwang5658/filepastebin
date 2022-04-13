@@ -1,37 +1,14 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src/",
-    "baseUrl": ".",
-    "sourceMap": true,
-    "declaration": true,
+    "outDir": "dist/server",
+    "rootDir": "src/server",
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "lib": ["es2020"],
     "module": "commonjs",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "downlevelIteration": true,
-    "composite": true,
-    "importHelpers": true,
-    "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018"
-    ],
-    "paths": {
-      "*": [
-        "node_modules/"
-      ]
-    }
+    "incremental": true,
+    "target": "es2019",
   },
-
   "include": [
-    "src/**/*", "src/shared/**/*"
+    "src/server/**/*"
   ],
-  "exclude": [
-    "src/client/**/*"
-  ]
 }

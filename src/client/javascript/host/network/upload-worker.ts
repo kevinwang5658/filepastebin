@@ -1,6 +1,6 @@
 import { RtcFileSender } from "./webrtc/rtc-file-sender";
 import { BaseFileSender } from "../../webrtc-base/base-file-sender";
-import { Constants } from "../../../../shared/constants";
+import { Constants } from "../../../../server/constants";
 import RTC_INIT_TIMEOUT = Constants.RTC_INIT_TIMEOUT;
 import { SocketFileSender } from "./webrtc/socket-file-sender";
 import Socket = SocketIOClient.Socket;
