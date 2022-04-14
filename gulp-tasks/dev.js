@@ -17,7 +17,7 @@ gulp.task('compile-ts', (done) => {
 });
 
 gulp.task('compile-client', (done) => {
-  exec('cd src/client && node fuse-dev', (err, stdout, stderr) => {
+  exec('cd src/client && npx webpack', (err, stdout, stderr) => {
     console.log(stdout);
     console.log(stderr);
     done(err);
@@ -51,7 +51,7 @@ gulp.task('watch-views', () => {
 gulp.task('watch-client', () => {
   gulp.watch('src/client/javascript/**/*',
     (done) => {
-      exec('cd src/client && node fuse-dev', (err, stdout, stderr) => {
+      exec('cd src/client && npx webpack', (err, stdout, stderr) => {
         console.log(stdout);
         console.log(stderr);
         done(err);

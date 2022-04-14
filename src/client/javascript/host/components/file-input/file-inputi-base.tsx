@@ -1,6 +1,7 @@
 import { Component, h } from "preact";
 import { FileDragAndDropHandler } from "./file-drag-and-drop-handler";
 import { FileInputList } from "./file-input-list";
+// @ts-ignore
 import styles from './file-input.module.css';
 
 export type FileInputBaseProps = {
@@ -43,7 +44,7 @@ export class FileInputiBase extends Component<FileInputBaseProps, FileInputBaseS
       filesList: this.state.filesList.concat(Array.from(this.fileInput.files)),
     });
 
-    this.props.pasteButton.disabled = this.state.filesList.length == 0;
+    this.props.pasteButton.disabled = this.state.filesList.length == 0 && this.fileInput.files.length == 0;
   };
 
   private onFileDropped = (filesList: File[]) => {

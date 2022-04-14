@@ -1,6 +1,4 @@
-import { ChangeEvent } from 'cleave.js/react/props';
 import { Component, h } from "preact";
-import { JSXInternal } from 'preact/src/jsx';
 import { BaseDialog } from "./base-dialog";
 // @ts-ignore
 import style from "./index-dialog.module.css";
@@ -41,9 +39,9 @@ export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> impl
     this.input.focus();
   }
 
-  oninput = (event: ChangeEvent<HTMLInputElement>) => {
+  oninput = (currentTarget: any) => {
     this.setState({
-      value: event.target.value,
+      value: currentTarget.target.value,
     });
   };
 
@@ -95,7 +93,7 @@ export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> impl
                type="tel"
                pattern="\d*"
                maxLength={6}
-               onInput={oninput}
+               onInput={this.oninput}
                onKeyPress={this.onkeypressed}
                value={this.state.value}
                ref={(input) => this.input = input}/>
