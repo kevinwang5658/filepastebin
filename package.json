@@ -65,7 +65,7 @@
     "pm2": "^3.5.1",
     "protractor": "~5.4.0",
     "selenium-webdriver": "^4.0.0-alpha.5",
-    "shelljs": "~0.8.3",
+    "shelljs": "~0.8.5",
     "supertest": "^4.0.2",
     "ts-node": "~7.0.0",
     "typemoq": "^2.1.0",
