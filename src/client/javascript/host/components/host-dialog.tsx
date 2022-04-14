@@ -1,7 +1,5 @@
 import { Component, h } from "preact";
 import { BaseDialog } from "./base-dialog";
-
-// @ts-ignore
 import style from './index-dialog.module.css';
 
 export interface HostDialogProps {

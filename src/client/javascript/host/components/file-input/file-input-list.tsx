@@ -1,5 +1,4 @@
 import { Component, h } from "preact";
-// @ts-ignore
 import styles from "./file-input.module.css";
 import { FileItem } from "./file-item";
 

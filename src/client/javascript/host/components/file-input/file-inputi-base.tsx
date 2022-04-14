@@ -1,7 +1,6 @@
 import { Component, h } from "preact";
 import { FileDragAndDropHandler } from "./file-drag-and-drop-handler";
 import { FileInputList } from "./file-input-list";
-// @ts-ignore
 import styles from './file-input.module.css';
 
 export type FileInputBaseProps = {

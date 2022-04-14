@@ -1,6 +1,5 @@
 import { Component, h } from "preact";
 import * as prettyBytes from "pretty-bytes";
-// @ts-ignore
 import styles from './download-page.module.css';
 
 export type DownloadFileItemProps = {

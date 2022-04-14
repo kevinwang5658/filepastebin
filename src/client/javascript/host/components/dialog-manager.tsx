@@ -2,8 +2,6 @@ import { h, render } from "preact";
 import { BaseDialog } from "./base-dialog";
 import { DialogContainer } from "./dialog-container";
 import { HostDialog } from "./host-dialog";
-// @ts-ignore
-import style from './index-dialog.module.css';
 import { JoinDialog } from "./join-dialog";
 
 export class DialogManager {

@@ -1,6 +1,5 @@
 import * as preact from "preact";
 import { Component, h } from "preact";
-// @ts-ignore
 import style from "./index-dialog.module.css";
 
 interface DialogContainerState {
