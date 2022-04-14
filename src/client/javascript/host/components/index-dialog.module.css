@@ -1,4 +1,4 @@
-.dialogcontainer {
+.Dialogcontainer {
   background: #00000066;
   position: absolute;
   left: 0;
@@ -10,7 +10,7 @@
   align-items: center;
 }
 
-.dialog {
+.Dialog {
   background: white;
   border-radius: 5px;
   width: 330px;
@@ -26,7 +26,7 @@
   align-items: center;
 }
 
-.dialogcode {
+.Dialogcode {
   margin-top: 40px;
   margin-bottom: 0;
   letter-spacing: 5px;
@@ -34,7 +34,7 @@
   color: #4A4A4A;
 }
 
-.dialogdescription {
+.Dialogdescription {
   margin-top: 14px;
   padding-left: 41px;
   padding-right: 41px;
@@ -44,12 +44,12 @@
   margin-bottom: 0;
 }
 
-.dialogloadingring {
+.Dialogloadingring {
   margin-top: 27px;
   margin-bottom: 0;
 }
 
-.dialogbuttonwrapper {
+.Dialogbuttonwrapper {
   display: flex;
   flex-direction: row;
   box-sizing: border-box;
@@ -59,7 +59,7 @@
   padding: 0 50px 0;
 }
 
-.dialogjoin {
+.Dialogjoin {
   color: #4A90E2;
   padding: 10px;
   font-size: 14px;
@@ -67,12 +67,12 @@
 }
 
 @media (hover: hover) {
-  .dialogjoin:hover {
+  .Dialogjoin:hover {
     background: #F2F2F2;
   }
 }
 
-.joindialogcancel {
+.Joindialogcancel {
   color: #4A90E2;
   padding: 10px;
   margin-left: auto;
@@ -80,7 +80,7 @@
   cursor: pointer;
 }
 
-.hostdialogcancel {
+.Hostdialogcancel {
   color: #4A90E2;
   padding: 10px;
   margin-left: auto;
@@ -92,13 +92,13 @@
 }
 
 @media (hover: hover) {
-  .joindialogcancel:hover {
+  .Joindialogcancel:hover {
     background: #F2F2F2;
   }
 }
 
 @media (hover: hover) {
-  .hostdialogcancel:hover {
+  .Hostdialogcancel:hover {
     background: #F2F2F2;
   }
 }
@@ -109,7 +109,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-.roomtitle {
+.Roomtitle {
   margin-top: 30px;
   text-align: center;
   font-size: 14px;
@@ -118,7 +118,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin-bottom: 0;
 }
 
-.roominput {
+.Roominput {
   height: 40px;
   width: 260px;
   margin-top: 20px;
@@ -131,12 +131,12 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 @media (hover: hover) {
-  .roominput:hover {
+  .Roominput:hover {
     background: #FBFBFB;
   }
 }
 
-.joinbuttonwrapper {
+.Joinbuttonwrapper {
   margin-top: auto;
   margin-bottom: 23px;
   padding-left: 38px;

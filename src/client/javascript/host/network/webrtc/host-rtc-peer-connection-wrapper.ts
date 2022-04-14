@@ -1,8 +1,8 @@
-import { BaseRtcPeerConnectionWrapper } from "../../../webrtc-base/base-rtc-peer-connection-wrapper";
-import { Constants } from "../../../../../shared/constants";
-import READY = Constants.READY;
-import { Message, MessageType } from "../../../webrtc-base/models/message";
+import { Constants } from '../../../../../server/constants';
+import { BaseRtcPeerConnectionWrapper } from '../../../webrtc-base/base-rtc-peer-connection-wrapper';
+import { Message, MessageType } from '../../../webrtc-base/models/message';
 import MESSAGE = Constants.MESSAGE;
+import READY = Constants.READY;
 
 export class HostRtcPeerConnectionWrapper extends BaseRtcPeerConnectionWrapper {
 
@@ -17,7 +17,7 @@ export class HostRtcPeerConnectionWrapper extends BaseRtcPeerConnectionWrapper {
     this.dataChannel.onmessage = this.onDataChannelReady;
     this.socket.on(MESSAGE, this.onMessage);
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.resolve = resolve;
     });
   }
@@ -37,14 +37,14 @@ export class HostRtcPeerConnectionWrapper extends BaseRtcPeerConnectionWrapper {
     if (message.data === READY) {
       console.log('Data channel ready');
 
-      this.resolve(this.dataChannel)
+      this.resolve(this.dataChannel);
     }
   };
 
   public onMessage = (message: Message) => {
     if (message.type === MessageType.Signal && message.senderId == this.id) {
-      this.handleMessage(message)
+      this.handleMessage(message);
     }
-  }
+  };
 
 }

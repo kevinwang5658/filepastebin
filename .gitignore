@@ -6,11 +6,8 @@
 .idea/**/shelf
 
 node_modules/
-
 dist/
-
 src/client/.fusebox
-
 logs/
-
 *.env
+tsconfig.tsbuildinfo

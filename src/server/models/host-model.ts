@@ -1,4 +1,4 @@
-import { Constants } from "../../shared/constants";
+import { Constants } from "../constants";
 import File = Constants.FileDescription;
 
 export interface HostModel {

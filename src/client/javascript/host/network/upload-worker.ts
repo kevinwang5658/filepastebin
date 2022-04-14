@@ -1,45 +1,45 @@
-import { RtcFileSender } from "./webrtc/rtc-file-sender";
-import { BaseFileSender } from "../../webrtc-base/base-file-sender";
-import { Constants } from "../../../../shared/constants";
+import { RtcFileSender } from './webrtc/rtc-file-sender';
+import { SocketFileSender } from './webrtc/socket-file-sender';
+import { Constants } from '../../../../server/constants';
+import { BaseFileSender } from '../../webrtc-base/base-file-sender';
 import RTC_INIT_TIMEOUT = Constants.RTC_INIT_TIMEOUT;
-import { SocketFileSender } from "./webrtc/socket-file-sender";
 import Socket = SocketIOClient.Socket;
 
 export class UploadWorker {
 
   private fileSender: BaseFileSender;
-  private progress: number = 0;
+  private progress = 0;
 
   constructor(private id: string, private socket: Socket, private file: Blob) {
     this.init();
   }
 
   private async init() {
-    const rtcFileSender = new RtcFileSender(this.id, this.file, this.socket)
+    const rtcFileSender = new RtcFileSender(this.id, this.file, this.socket);
     Promise.race([
       rtcFileSender.initDataChannel()
         .then((dataChannel) => {
-          console.log("dataChannel is open in uploadWorker")
+          console.log('dataChannel is open in uploadWorker');
 
           dataChannel.onclose = this.onRTCClose;
           return rtcFileSender;
         }),
       //fallback to socketIO
-      new Promise(resolve => {
+      new Promise((resolve) => {
         setTimeout(() => {
-          resolve(new SocketFileSender(this.file, this.socket, this.id))
-        }, RTC_INIT_TIMEOUT)
+          resolve(new SocketFileSender(this.file, this.socket, this.id));
+        }, RTC_INIT_TIMEOUT);
       }),
     ]).then((fileSender: BaseFileSender) => {
       this.onOpen(fileSender);
-    })
+    });
   }
 
   private onOpen = (fileSender: BaseFileSender) => {
     console.log(`onopen: ${this.id}`);
     this.fileSender = fileSender;
     this.fileSender.onProgressChanged = this.onProgressChanged;
-    this.fileSender.sendFiles()
+    this.fileSender.sendFiles();
   };
 
   private onRTCClose = () => {

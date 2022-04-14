@@ -1,9 +1,9 @@
-import { Message, MessageAction, MessageType } from "./models/message";
+import { Message, MessageAction, MessageType } from './models/message';
 import Socket = SocketIOClient.Socket;
 
 export abstract class BaseRtcPeerConnectionWrapper {
 
-  abstract initDataChannel(): Promise<RTCDataChannel>
+  abstract initDataChannel(): Promise<RTCDataChannel>;
 
   constructor(protected peer: RTCPeerConnection, protected id: string, protected socket: Socket) {
     this.peer.onconnectionstatechange = this.onconnectionstatechange;
@@ -13,7 +13,7 @@ export abstract class BaseRtcPeerConnectionWrapper {
 
   public handleMessage = (message: Message) => {
     if (message.type !== MessageType.Signal) {
-      return
+      return;
     }
 
     console.log('Got: ' + JSON.stringify(message));
@@ -31,7 +31,7 @@ export abstract class BaseRtcPeerConnectionWrapper {
             .setRemoteDescription(message.content)
             .then(() => {
               this.createAnswer();
-              console.log('Created Answer')
+              console.log('Created Answer');
             }).catch((err: Event) => console.error(err));
 
         }
@@ -41,7 +41,7 @@ export abstract class BaseRtcPeerConnectionWrapper {
           this.peer
             .setRemoteDescription(message.content)
             .then(() => {
-              console.log('Answer set')
+              console.log('Answer set');
             }).catch((err: Event) => console.error(err));
         }
         break;
@@ -54,18 +54,18 @@ export abstract class BaseRtcPeerConnectionWrapper {
 
   protected createOffer = () => this.peer.createOffer()
     .then((desc) => {
-      console.log("createOffer")
-      return this.peer.setLocalDescription(desc)
+      console.log('createOffer');
+      return this.peer.setLocalDescription(desc);
     }).then((desc) => {
-      this.sendOffer(this.peer.localDescription.toJSON())
+      this.sendOffer(this.peer.localDescription.toJSON());
     }).catch((err) => console.error(err));
 
   protected createAnswer = () => this.peer.createAnswer()
     .then((desc) => {
-      console.log("createAnswer")
+      console.log('createAnswer');
       return this.peer.setLocalDescription(desc);
     }).then((desc) => {
-      this.sendAnswer(this.peer.localDescription.toJSON())
+      this.sendAnswer(this.peer.localDescription.toJSON());
     }).catch((err) => console.error(err));
 
   protected sendOffer = (content: string) => this.socket.send(new Message(this.id, MessageType.Signal, MessageAction.Offer, content));

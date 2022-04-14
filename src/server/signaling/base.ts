@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { Constants } from "../../shared/constants";
+import { Constants } from "../constants";
 
 export class Base {
   constructor(protected socket: Socket) {

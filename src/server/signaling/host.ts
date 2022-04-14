@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { Constants } from '../../shared/constants'
+import { Constants } from '../constants'
 import { HostModel } from "../models/host-model";
 import { Logger } from "../config/logger";
 import { v4 as uuidv4 } from 'uuid';

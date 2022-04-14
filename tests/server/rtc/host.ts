@@ -5,7 +5,7 @@ import { Socket } from "socket.io";
 import * as SocketIO from "socket.io";
 import { HostModel } from "../../../src/server/models/host-model";
 import { assert } from "chai";
-import { Constants } from "../../../src/shared/constants";
+import { Constants } from "../../../src/server/constants";
 import REQUEST_HOST_ACCEPTED = Constants.REQUEST_HOST_ACCEPTED;
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 

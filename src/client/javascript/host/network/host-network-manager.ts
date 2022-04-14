@@ -1,13 +1,13 @@
-import { Constants } from "../../../../shared/constants";
-import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
-import MESSAGE = Constants.MESSAGE;
-import { FileRequest, Message, MessageAction, MessageType } from "../../webrtc-base/models/message";
+import { UploadWorker } from './upload-worker';
+import { Constants } from '../../../../server/constants';
+import { FileRequest, Message, MessageAction, MessageType } from '../../webrtc-base/models/message';
 import DISCONNECT = Constants.DISCONNECT;
 import ERROR = Constants.ERROR;
-import REQUEST_HOST_ACCEPTED = Constants.REQUEST_HOST_ACCEPTED;
-import Socket = SocketIOClient.Socket;
 import FileDescription = Constants.FileDescription;
-import { UploadWorker } from "./upload-worker";
+import MESSAGE = Constants.MESSAGE;
+import REQUEST_HOST_ACCEPTED = Constants.REQUEST_HOST_ACCEPTED;
+import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
+import Socket = SocketIOClient.Socket;
 
 export class HostNetworkManager {
 
@@ -26,16 +26,16 @@ export class HostNetworkManager {
   }
 
   public createSocketIORoom = (files: File[]) => {
-    let fileDescriptions = files.map(u => (<FileDescription>{
+    const fileDescriptions = files.map((u) => (<FileDescription>{
       fileName: u.name,
       fileSize: u.size,
-      fileType: u.type
+      fileType: u.type,
     }));
 
     console.log(fileDescriptions);
 
     this.socket.emit(Constants.REQUEST_HOST, {
-      files: fileDescriptions
+      files: fileDescriptions,
     });
   };
 
@@ -45,12 +45,12 @@ export class HostNetworkManager {
 
   private onMessage = (message: Message) => {
     if (message.type === MessageType.Request && message.action === MessageAction.CreatePeer) {
-      let request: FileRequest = message.content;
+      const request: FileRequest = message.content;
 
-      let file = this.files.find(u => u.name === request.fileName)
+      const file = this.files.find((u) => u.name === request.fileName);
 
       this.workers.set(message.senderId, new UploadWorker(message.senderId, this.socket, file));
     }
-  }
+  };
 
 }

@@ -1,9 +1,9 @@
-.downloadPanelWrapper {
+.DownloadPanelWrapper {
   display: grid;
   margin: 20px;
 }
 
-.downloadPanelHeader {
+.DownloadPanelHeader {
   font-family: Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -13,7 +13,7 @@
   margin-top: 30px;
 }
 
-.filesList {
+.FilesList {
   height: 420px;
   max-width: 100%;
   overflow: hidden;
@@ -28,7 +28,7 @@
   overflow: hidden;
 }
 
-.fileDescription {
+.FileDescription {
   font-family: Roboto, Helvetica, sans-serif;
   font-size: 18px;
   max-width: 100%;
@@ -39,24 +39,24 @@
   white-space: nowrap;
 }
 
-.fileDownloadProgress {
+.FileDownloadProgress {
   font-family: Roboto, Helvetica, sans-serif;
   font-size: 18px;
   margin-left: 20px;
   color: #4A4A4A;
 }
 
-.downloadAnimation {
-  animation: downloadInProgress 1.5s forwards;
+.DownloadAnimation {
+  animation: DownloadInProgress 1.5s forwards;
 }
 
-@keyframes downloadInProgress {
+@keyframes DownloadInProgress {
   100% {
     flex-grow: 1
   }
 }
 
-.downloadButton {
+.DownloadButton {
   align-self: center;
   width: 80vw;
   max-width: 510px

@@ -1,7 +1,6 @@
 import { Component, h } from "preact";
-// @ts-ignore
-import style from "./index-dialog.module.css";
 import { BaseDialog } from "./base-dialog";
+import style from "./index-dialog.module.css";
 
 export interface JoinDialogProps {
   joinRoomRequest: Function,
@@ -25,7 +24,7 @@ export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> impl
     super(props);
 
     this.setState({
-      borderColor: BORDER_COLOR_NORMAL
+      borderColor: BORDER_COLOR_NORMAL,
     });
 
     document.addEventListener('keydown', (event: KeyboardEvent) => {
@@ -36,14 +35,12 @@ export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> impl
   }
 
   componentDidMount(): void {
-    this.input.focus()
+    this.input.focus();
   }
 
-  oninput = (event: KeyboardEvent) => {
-    let target = event.target as HTMLInputElement;
-
+  oninput = (currentTarget: any) => {
     this.setState({
-      value: target.value
+      value: currentTarget.target.value,
     });
   };
 
@@ -57,7 +54,7 @@ export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> impl
     let value = this.state.value;
     if (value.length < 6) {
       this.setState({
-        borderColor: BORDER_COLOR_WRONG
+        borderColor: BORDER_COLOR_WRONG,
       });
 
       return;
@@ -70,26 +67,26 @@ export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> impl
           this.props.onsuccess(response.roomId);
         } else {
           this.setState({
-            borderColor: BORDER_COLOR_WRONG
+            borderColor: BORDER_COLOR_WRONG,
           });
         }
-      })
+      });
   };
 
   onBackgroundClicked = () => {
-    this.props.oncancel()
+    this.props.oncancel();
   };
 
   render(): preact.ComponentChild {
     return (
-      <div className={style.dialog}
+      <div className={style.Dialog}
            onClick={(e: Event) => {
-             e.stopPropagation()
+             e.stopPropagation();
            }}>
-        <p className={style.roomtitle} id="roomtitle">
+        <p className={style.Roomtitle} id="roomtitle">
           Enter the 6 digit room code:
         </p>
-        <input className={style.roominput}
+        <input className={style.Roominput}
                id="roominput"
                style={{ borderColor: this.state.borderColor, outline: 'none' }}
                type="tel"
@@ -99,17 +96,17 @@ export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> impl
                onKeyPress={this.onkeypressed}
                value={this.state.value}
                ref={(input) => this.input = input}/>
-        <div className={style.dialogbuttonwrapper} id="dialogbuttonwrapper">
-          <div className={style.dialogjoin}
+        <div className={style.Dialogbuttonwrapper} id="dialogbuttonwrapper">
+          <div className={style.Dialogjoin}
                id="dialogjoin"
                onClick={() => this.onjoinclicked()}>JOIN
           </div>
-          <div className={style.joindialogcancel}
+          <div className={style.Joindialogcancel}
                id="dialogcancel"
                onClick={this.props.oncancel}>CANCEL
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

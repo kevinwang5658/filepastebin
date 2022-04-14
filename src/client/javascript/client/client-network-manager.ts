@@ -1,13 +1,13 @@
-import { Constants } from "../../../shared/constants";
-import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
+import { FileRequester } from './web-rtc/file-requester';
+import { Constants } from '../../../server/constants';
+import { Message } from '../webrtc-base/models/message';
+import MESSAGE = Constants.MESSAGE;
 import REQUEST_CLIENT = Constants.REQUEST_CLIENT;
 import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;
-import { Message } from "../webrtc-base/models/message";
-import MESSAGE = Constants.MESSAGE;
+import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
 import Socket = SocketIOClient.Socket;
-import { FileRequester } from "./web-rtc/file-requester";
 
-declare var download: any;
+declare let download: any;
 
 export class ClientNetworkManager {
 
@@ -18,16 +18,16 @@ export class ClientNetworkManager {
   private files: Constants.FileDescription[];
 
   constructor(private socket: Socket,
-              private roomId: string) {
+    private roomId: string) {
     socket.on(REQUEST_CLIENT_ACCEPTED, this.onRoomJoined);
     socket.on(MESSAGE, this.onMessage);
 
-    this.joinSocketIORoom()
+    this.joinSocketIORoom();
   }
 
   public requestDownload = () => {
     for (const file of this.files) {
-      let id = file.fileName;
+      const id = file.fileName;
 
       this.workers.set(
         id,
@@ -39,18 +39,18 @@ export class ClientNetworkManager {
 
     Promise.all([...this.workers.values()].map((peer: FileRequester) => peer.getCompleteListener()
       .then((value: ArrayBuffer[]) => {
-        this.onDataLoaded(value, peer.file)
+        this.onDataLoaded(value, peer.file);
       })));
 
-    [...this.workers.values()].forEach((peer: FileRequester) => peer.onProgressChangedCallback = this.handleprogresschanged)
+    [...this.workers.values()].forEach((peer: FileRequester) => peer.onProgressChangedCallback = this.handleprogresschanged);
   };
 
   private joinSocketIORoom = () => {
-    this.socket.emit(REQUEST_CLIENT, this.roomId)
+    this.socket.emit(REQUEST_CLIENT, this.roomId);
   };
 
   private onRoomJoined = (res: RequestClientAcceptedModel) => {
-    this.files = res.files
+    this.files = res.files;
   };
 
   private onMessage = (message: Message) => {
@@ -58,9 +58,9 @@ export class ClientNetworkManager {
   };
 
   private handleprogresschanged = () => {
-    let progress = [...this.workers.values()]
+    const progress = [...this.workers.values()]
       .map((peer: FileRequester) => peer.progress)
-      .map((progress) => progress * 100)
+      .map((progress) => progress * 100);
 
 
     this.onProgressChangedCallback(progress);
@@ -69,10 +69,10 @@ export class ClientNetworkManager {
   private onDataLoaded = (value: ArrayBuffer[], file: Constants.FileDescription) => {
     download(
       new Blob(value, {
-        type: file.fileType
+        type: file.fileType,
       }),
       file.fileName,
-      file.fileSize
-    )
-  }
+      file.fileSize,
+    );
+  };
 }

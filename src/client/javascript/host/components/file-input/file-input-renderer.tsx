@@ -9,11 +9,11 @@ export class FileInputRenderer {
   constructor() {
     render(
       <FileInputiBase pasteButton={this.paste}
-                      ref={ref => this.fileInputBase = ref}/>, document.getElementById("file-input")
+                      ref={ref => this.fileInputBase = ref}/>, document.getElementById("file-input"),
     );
   }
 
   public getFileList = () => {
-    return this.fileInputBase.state.filesList
-  }
+    return this.fileInputBase.state.filesList;
+  };
 }
