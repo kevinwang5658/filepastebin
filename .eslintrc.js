@@ -28,6 +28,7 @@ module.exports = {
     "space-infix-ops": "error",
     "space-in-parens": ["error", "never"],
     "space-before-blocks": "error",
+    "linebreak-style": ["error", "unix"],
   },
   overrides: [
     {
