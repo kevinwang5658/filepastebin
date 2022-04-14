@@ -1,13 +1,10 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'development',
-  plugins: [],
   entry: {
     client: './javascript/client/client.ts',
     host: './javascript/host/host.ts',
   },
-  devtool: 'eval-source-map',
   module: {
     rules: [
       {

@@ -17,7 +17,7 @@ gulp.task('compile-ts', (done) => {
 });
 
 gulp.task('compile-client', (done) => {
-  exec('cd src/client && npx webpack', (err, stdout, stderr) => {
+  exec('cd src/client && npx webpack --mode=development -d eval-source-map', (err, stdout, stderr) => {
     console.log(stdout);
     console.log(stderr);
     done(err);
@@ -51,7 +51,7 @@ gulp.task('watch-views', () => {
 gulp.task('watch-client', () => {
   gulp.watch('src/client/javascript/**/*',
     (done) => {
-      exec('cd src/client && npx webpack', (err, stdout, stderr) => {
+      exec('cd src/client && npx webpack --mode=development', (err, stdout, stderr) => {
         console.log(stdout);
         console.log(stderr);
         done(err);
