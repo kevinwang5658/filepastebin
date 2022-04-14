@@ -5,7 +5,7 @@ module.exports = {
   plugins: [],
   entry: {
     client: './javascript/client/client.ts',
-    host: './javascript/host/host.ts'
+    host: './javascript/host/host.ts',
   },
   devtool: 'eval-source-map',
   module: {
@@ -19,19 +19,19 @@ module.exports = {
         test: /\.css$/,
         use: [
           'style-loader',
-          'css-loader'
+          'css-loader',
         ],
         exclude: /node_modules/,
-        sideEffects: true
-      }
+        sideEffects: true,
+      },
     ],
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
     alias: {
-      "react": "preact-compat",
-      "react-dom": "preact-compat"
-    }
+      'react': 'preact-compat',
+      'react-dom': 'preact-compat',
+    },
   },
   output: {
     filename: '[name].js',
