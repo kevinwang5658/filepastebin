@@ -1,5 +1,5 @@
-import { Component, h } from "preact";
 import * as preact from "preact";
+import { Component, h } from "preact";
 // @ts-ignore
 import style from "./index-dialog.module.css";
 
@@ -9,7 +9,7 @@ interface DialogContainerState {
 }
 
 interface DialogContainerProps {
-  ref: any
+  ref: any;
 }
 
 export class DialogContainer extends Component<DialogContainerProps, DialogContainerState> {
@@ -20,7 +20,7 @@ export class DialogContainer extends Component<DialogContainerProps, DialogConta
     super();
 
     this.state = {
-      dialog: null
+      dialog: null,
     };
   }
 
@@ -33,11 +33,11 @@ export class DialogContainer extends Component<DialogContainerProps, DialogConta
                  style={{ display: this.state.dialog ? 'flex' : 'none' }}
                  onClick={() => {
                    if (this.backgroundClickedListener) {
-                     this.backgroundClickedListener()
+                     this.backgroundClickedListener();
                    }
                  }}>
       {
         this.state.dialog
-      }</div>)
+      }</div>);
   }
 }

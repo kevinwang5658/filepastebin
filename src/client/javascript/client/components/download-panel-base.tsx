@@ -1,9 +1,9 @@
 import { Component, h } from "preact";
-// @ts-ignore
-import styles from './download-page.module.css'
 import { Constants } from "../../../../server/constants";
-import FileDescription = Constants.FileDescription;
 import { DownloadFileItem } from "./download-file-item";
+// @ts-ignore
+import styles from './download-page.module.css';
+import FileDescription = Constants.FileDescription;
 
 export type DownloadPageBaseProps = {
   filesList: FileDescription[],
@@ -22,22 +22,22 @@ export class DownloadPanelBase extends Component<DownloadPageBaseProps, Download
     super(props);
     this.setState({
       isDownloadClicked: false,
-      progress: this.props.progress
-    })
+      progress: this.props.progress,
+    });
   }
 
   public setProgress = (progress: number[]) => {
     this.setState({
-      progress: progress
-    })
-  }
+      progress: progress,
+    });
+  };
 
   private onDownloadClicked = (_) => {
     this.setState({
-      isDownloadClicked: true
-    })
-    this.props.onDownloadClickedCallback()
-  }
+      isDownloadClicked: true,
+    });
+    this.props.onDownloadClickedCallback();
+  };
 
   render() {
     return (
@@ -57,6 +57,6 @@ export class DownloadPanelBase extends Component<DownloadPageBaseProps, Download
                 className={["blue-round", styles.DownloadButton].join(' ')}>Download
         </button>
       </div>
-    )
+    );
   }
 }

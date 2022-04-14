@@ -1,7 +1,7 @@
 import { Component, h } from "preact";
-// @ts-ignore
-import styles from './download-page.module.css'
 import * as prettyBytes from "pretty-bytes";
+// @ts-ignore
+import styles from './download-page.module.css';
 
 export type DownloadFileItemProps = {
   fileName: string
@@ -25,6 +25,6 @@ export class DownloadFileItem extends Component<DownloadFileItemProps, DownloadF
         <div className={styles.FileDownloadProgress}>{`${Math.min(this.props.progress, 100).toFixed(2)}%`}</div>
         }
       </div>
-    )
+    );
   }
 }

@@ -1,13 +1,13 @@
 import { h, render } from "preact";
-import { DownloadPanelBase } from "./download-panel-base";
 import { Constants } from "../../../../server/constants";
+import { DownloadPanelBase } from "./download-panel-base";
 import FileDescription = Constants.FileDescription;
 
 export class DownloadPanelRenderer {
-  private downloadPanelBase
+  private downloadPanelBase;
 
   constructor(filesList: FileDescription[]) {
-    const initialProgress = Array(filesList.length).fill(0)
+    const initialProgress = Array(filesList.length).fill(0);
 
     render(
       <DownloadPanelBase
@@ -16,8 +16,8 @@ export class DownloadPanelRenderer {
         progress={initialProgress}
         filesList={filesList}
         ref={f => this.downloadPanelBase = f}
-      />, document.getElementById("download-panel")
-    )
+      />, document.getElementById("download-panel"),
+    );
   }
 
   public setOnDownloadClickedCallback(callback: (progress: number[]) => void) {
@@ -25,6 +25,6 @@ export class DownloadPanelRenderer {
   }
 
   public updateProgress(progress: number[]) {
-    this.downloadPanelBase.setProgress(progress)
+    this.downloadPanelBase.setProgress(progress);
   }
 }

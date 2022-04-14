@@ -1,14 +1,14 @@
-import { Constants } from "../../../../server/constants";
+import { ClientRtcPeerConnectionWrapper } from './client-rtc-peer-connection-wrapper';
+import { Constants } from '../../../../server/constants';
+import { FileRequest, Message, MessageAction, MessageType } from '../../webrtc-base/models/message';
 import Socket = SocketIOClient.Socket;
-import { ClientRtcPeerConnectionWrapper } from "./client-rtc-peer-connection-wrapper";
-import { FileRequest, Message, MessageAction, MessageType } from "../../webrtc-base/models/message";
 
 export class FileRequester {
 
   public progress = 0;
 
   private rtcPeer: RTCPeerConnection;
-  private rtcWrapper: ClientRtcPeerConnectionWrapper
+  private rtcWrapper: ClientRtcPeerConnectionWrapper;
   private dataChannel: RTCDataChannel;
   private resolveOnComplete;
   private fileData: ArrayBuffer[] = [];
@@ -23,13 +23,13 @@ export class FileRequester {
   public handleMessage = (message: Message) => {
     this.rtcWrapper.handleMessage(message);
     if (message.type === MessageType.Data) {
-      this.onRTCMessage(message.content)
+      this.onRTCMessage(message.content);
     }
   };
 
   public getCompleteListener() {
-    return new Promise(resolve => {
-      this.resolveOnComplete = resolve
+    return new Promise((resolve) => {
+      this.resolveOnComplete = resolve;
     });
   }
 
@@ -41,7 +41,7 @@ export class FileRequester {
       this.id,
       MessageType.Request,
       MessageAction.CreatePeer,
-      new FileRequest(this.file.fileName))
+      new FileRequest(this.file.fileName)),
   );
 
   private init = () => {
@@ -72,5 +72,5 @@ export class FileRequester {
     }
 
     this.onProgressChangedCallback(this.progress);
-  }
+  };
 }

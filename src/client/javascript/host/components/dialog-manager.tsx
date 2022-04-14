@@ -1,10 +1,10 @@
 import { h, render } from "preact";
-import { JoinDialog } from "./join-dialog";
-// @ts-ignore
-import style from './index-dialog.module.css';
-import { HostDialog } from "./host-dialog";
 import { BaseDialog } from "./base-dialog";
 import { DialogContainer } from "./dialog-container";
+import { HostDialog } from "./host-dialog";
+// @ts-ignore
+import style from './index-dialog.module.css';
+import { JoinDialog } from "./join-dialog";
 
 export class DialogManager {
 
@@ -12,7 +12,7 @@ export class DialogManager {
 
   constructor() {
     render(<DialogContainer ref={container => this.container = container}/>,
-      document.getElementById("dialog-manager"))
+      document.getElementById("dialog-manager"));
   }
 
   showJoinDialog = (joinRoomRequest: Function, onsuccess: (roomId: string) => void) => {
@@ -22,7 +22,7 @@ export class DialogManager {
       oncancel={this.hideDialog}
       ref={(dialog: BaseDialog) => {
         if (dialog) {
-          this.container.addOnBackgroundClickedListener(dialog.onBackgroundClicked)
+          this.container.addOnBackgroundClickedListener(dialog.onBackgroundClicked);
         }
       }}
     />);
@@ -33,7 +33,7 @@ export class DialogManager {
       roomCode={roomCode}
       oncancel={() => {
         oncancel();
-        this.hideDialog()
+        this.hideDialog();
       }}
     />);
   };
@@ -42,12 +42,12 @@ export class DialogManager {
     this.container.addOnBackgroundClickedListener(null);
     this.container.setState({
       dialog: null,
-    })
+    });
   };
 
   private showDialog = (element: JSX.Element) => {
     this.container.setState({
       dialog: element,
-    })
+    });
   };
 }

@@ -1,10 +1,9 @@
 import { ChangeEvent } from 'cleave.js/react/props';
 import { Component, h } from "preact";
 import { JSXInternal } from 'preact/src/jsx';
+import { BaseDialog } from "./base-dialog";
 // @ts-ignore
 import style from "./index-dialog.module.css";
-import { BaseDialog } from "./base-dialog";
-import GenericEventHandler = JSXInternal.GenericEventHandler;
 
 export interface JoinDialogProps {
   joinRoomRequest: Function,
@@ -28,7 +27,7 @@ export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> impl
     super(props);
 
     this.setState({
-      borderColor: BORDER_COLOR_NORMAL
+      borderColor: BORDER_COLOR_NORMAL,
     });
 
     document.addEventListener('keydown', (event: KeyboardEvent) => {
@@ -39,7 +38,7 @@ export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> impl
   }
 
   componentDidMount(): void {
-    this.input.focus()
+    this.input.focus();
   }
 
   oninput = (event: ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +57,7 @@ export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> impl
     let value = this.state.value;
     if (value.length < 6) {
       this.setState({
-        borderColor: BORDER_COLOR_WRONG
+        borderColor: BORDER_COLOR_WRONG,
       });
 
       return;
@@ -71,21 +70,21 @@ export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> impl
           this.props.onsuccess(response.roomId);
         } else {
           this.setState({
-            borderColor: BORDER_COLOR_WRONG
+            borderColor: BORDER_COLOR_WRONG,
           });
         }
-      })
+      });
   };
 
   onBackgroundClicked = () => {
-    this.props.oncancel()
+    this.props.oncancel();
   };
 
   render(): preact.ComponentChild {
     return (
       <div className={style.Dialog}
            onClick={(e: Event) => {
-             e.stopPropagation()
+             e.stopPropagation();
            }}>
         <p className={style.Roomtitle} id="roomtitle">
           Enter the 6 digit room code:
@@ -111,6 +110,6 @@ export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> impl
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

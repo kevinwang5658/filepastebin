@@ -27,7 +27,7 @@ export class FileInputList extends Component<FileInputListProps, FileInputListSt
         onClick={this.props.openFileSelector}
         className={styles.FileInputDescription}>Click to add file, or drag and drop</label>
       }
-    </div>)
+    </div>);
   }
 
 }

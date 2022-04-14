@@ -1,12 +1,12 @@
 import { Component, h } from "preact";
-
-// @ts-ignore
-import style from './index-dialog.module.css'
 import { BaseDialog } from "./base-dialog";
 
+// @ts-ignore
+import style from './index-dialog.module.css';
+
 export interface HostDialogProps {
-  roomCode: string
-  oncancel: () => void
+  roomCode: string;
+  oncancel: () => void;
 }
 
 export interface HostDialogState {
@@ -32,6 +32,6 @@ export class HostDialog extends Component <HostDialogProps, HostDialogState> imp
         </p>
         <div className={style.Hostdialogcancel} onClick={this.props.oncancel}>CANCEL</div>
       </div>
-    )
+    );
   }
 }

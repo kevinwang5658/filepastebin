@@ -1,9 +1,9 @@
 'use strict';
 
-import * as io from "socket.io-client";
-import { ClientNetworkManager } from "./client-network-manager";
+import * as io from 'socket.io-client';
 import adapter from 'webrtc-adapter';
-import { DownloadPanelRenderer } from "./components/download-panel-renderer";
+import { ClientNetworkManager } from './client-network-manager';
+import { DownloadPanelRenderer } from './components/download-panel-renderer';
 
 declare const FILES_LIST: string;
 declare const ROOM_CODE: string;

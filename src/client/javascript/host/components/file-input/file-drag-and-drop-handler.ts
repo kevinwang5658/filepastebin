@@ -12,22 +12,22 @@ export class FileDragAndDropHandler {
     ev.preventDefault();
     ev.stopPropagation();
 
-    this.container.style.background = '#F4F4F4'
-  }
+    this.container.style.background = '#F4F4F4';
+  };
 
   private dragHandler = (ev: DragEvent) => {
     ev.preventDefault();
     ev.stopPropagation();
 
-    this.container.style.background = '#F4F4F4'
-  }
+    this.container.style.background = '#F4F4F4';
+  };
 
   private dragLeaveHandler = (ev: DragEvent) => {
     ev.preventDefault();
     ev.stopPropagation();
 
     this.container.style.background = '#FFFFFF';
-  }
+  };
 
   private dropHandler = (ev: DragEvent) => {
     ev.preventDefault();
@@ -36,7 +36,7 @@ export class FileDragAndDropHandler {
     this.container.style.background = '#FFFFFF';
 
     if (ev.dataTransfer && ev.dataTransfer.files && ev.dataTransfer.files.length !== 0) {
-      this.listener(Array.from(ev.dataTransfer.files))
+      this.listener(Array.from(ev.dataTransfer.files));
     }
-  }
+  };
 }

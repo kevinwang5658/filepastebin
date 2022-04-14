@@ -16,12 +16,12 @@ export class FileItem extends Component<FileItemProps, FileItemState> {
 
   constructor(props) {
     super(props);
-    this.setState({ isHovering: false })
+    this.setState({ isHovering: false });
   }
 
-  private onHover = () => this.setState({ isHovering: true })
+  private onHover = () => this.setState({ isHovering: true });
 
-  private onHoverLeave = () => this.setState({ isHovering: false })
+  private onHoverLeave = () => this.setState({ isHovering: false });
 
   render() {
     return (
@@ -35,6 +35,6 @@ export class FileItem extends Component<FileItemProps, FileItemState> {
                onClick={() => this.props.onFileRemoved(this.props.index)}/>
         }
       </div>
-    )
+    );
   }
 }

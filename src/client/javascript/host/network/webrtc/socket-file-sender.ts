@@ -1,9 +1,9 @@
-import { Constants } from "../../../../../server/constants";
-import { BaseFileSender } from "../../../webrtc-base/base-file-sender";
-import { Message, MessageType } from "../../../webrtc-base/models/message";
+import { Constants } from '../../../../../server/constants';
+import { BaseFileSender } from '../../../webrtc-base/base-file-sender';
+import { Message, MessageType } from '../../../webrtc-base/models/message';
 import EOF = Constants.EOF;
-import Socket = SocketIOClient.Socket;
 import SOCKET_IO_BYTES_PER_CHUNK = Constants.SOCKET_IO_BYTES_PER_CHUNK;
+import Socket = SocketIOClient.Socket;
 
 export class SocketFileSender implements BaseFileSender {
 
@@ -13,14 +13,14 @@ export class SocketFileSender implements BaseFileSender {
   constructor(private file: Blob, private socket: Socket, private senderId: string) {
   }
 
-  public sendFiles = async (progress: number = 0) => {
+  public sendFiles = async (progress = 0) => {
     this.currentChunk = progress / SOCKET_IO_BYTES_PER_CHUNK;
 
     console.log(`id: ${this.senderId} fileSize: ${this.file.size}`);
 
     while (this.currentChunk * SOCKET_IO_BYTES_PER_CHUNK < this.file.size) {
-      let start = SOCKET_IO_BYTES_PER_CHUNK * this.currentChunk;
-      let end = Math.min(this.file.size, start + SOCKET_IO_BYTES_PER_CHUNK);
+      const start = SOCKET_IO_BYTES_PER_CHUNK * this.currentChunk;
+      const end = Math.min(this.file.size, start + SOCKET_IO_BYTES_PER_CHUNK);
 
       await this.readAsArrayBuffer(this.file.slice(start, end));
       this.socket.send(new Message(this.senderId, MessageType.Data, null, this.fileReader.result));
@@ -29,7 +29,7 @@ export class SocketFileSender implements BaseFileSender {
       this.onProgressChanged(this.currentChunk * SOCKET_IO_BYTES_PER_CHUNK);
     }
 
-    this.socket.send(new Message(this.senderId, MessageType.Data, null, EOF))
+    this.socket.send(new Message(this.senderId, MessageType.Data, null, EOF));
   };
 
   public onProgressChanged: (progress: number) => void = (_) => {
@@ -41,7 +41,7 @@ export class SocketFileSender implements BaseFileSender {
 
       this.fileReader.onerror = reject;
 
-      this.fileReader.readAsArrayBuffer(file)
-    })
+      this.fileReader.readAsArrayBuffer(file);
+    });
   };
 }
