@@ -44,8 +44,8 @@ export namespace Constants {
   export const REQUEST_CLIENT_ACCEPTED = 'request-client-accepted';
 
   export interface RequestClientAcceptedModel {
-    roomId: string,
-    files: FileDescription[]
+    roomId: string;
+    files: FileDescription[];
   }
 
   //************************

@@ -1,5 +1,5 @@
-import { Socket } from "socket.io";
-import { Constants } from "../constants";
+import { Socket } from 'socket.io';
+import { Constants } from '../constants';
 
 export class Base {
   constructor(protected socket: Socket) {
@@ -8,7 +8,7 @@ export class Base {
 
   public onmessage = (payload: any) => {
     Object.keys(this.socket.rooms).forEach((room) => {
-      if (room !== this.socket.id) this.socket.to(room).send(payload)
-    })
+      if (room !== this.socket.id) this.socket.to(room).send(payload);
+    });
   };
 }

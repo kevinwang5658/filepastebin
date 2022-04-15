@@ -5,6 +5,7 @@ import EOF = Constants.EOF;
 import MAX_BUFFER = Constants.MAX_BUFFER;
 import Socket = SocketIOClient.Socket;
 
+const MAXIMUM_MESSAGE_SIZE = 16384;
 
 export class RtcFileSender implements BaseFileSender {
   public currentChunk = 0;
@@ -24,7 +25,7 @@ export class RtcFileSender implements BaseFileSender {
       .then((dataChannel) => {
         console.log('Configuring data channel');
 
-        this.bytesPerChunk = 2000;
+        this.bytesPerChunk = MAXIMUM_MESSAGE_SIZE;
         dataChannel.bufferedAmountLowThreshold = this.bytesPerChunk;
         dataChannel.onerror = this.onRTCError;
         this.dataChannel = dataChannel;
@@ -43,8 +44,6 @@ export class RtcFileSender implements BaseFileSender {
 
       const start = this.bytesPerChunk * this.currentChunk;
       const end = Math.min(this.file.size, start + this.bytesPerChunk);
-
-      console.log('Sending chunk: ' + start);
 
       await this.readAsArrayBuffer(this.file.slice(start, end));
       this.dataChannel.send(<ArrayBuffer> this.fileReader.result);
