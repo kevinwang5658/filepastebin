@@ -43,7 +43,7 @@ join_room_button.addEventListener('click', (_) => {
   });
 });
 
-function onRoomCreated(response: RequestHostAcceptedModel) {
+function onRoomCreated(response: RequestHostAcceptedModel): void {
   dialogManager.showHostDialog(response.roomCode, () => {
     paste.disabled = false;
     paste.innerText = 'Paste It';

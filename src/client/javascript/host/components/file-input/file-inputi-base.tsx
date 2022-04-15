@@ -55,8 +55,9 @@ export class FileInputiBase extends Component<FileInputBaseProps, FileInputBaseS
   };
 
   private onFileRemoved = (index: number) => {
+    const newState = this.state.filesList.filter((e, i) => i !== index);
     this.setState({
-      filesList: this.state.filesList.splice(index, 1)
+      filesList: newState,
     })
   };
 }

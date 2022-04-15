@@ -19,7 +19,7 @@ export class RtcFileSender implements BaseFileSender {
     this.rtcWrapper = new HostRtcPeerConnectionWrapper(this.rtcPeerConnection, id, socket);
   }
 
-  public initDataChannel = async () => {
+  public initDataChannel = async (): Promise<RTCDataChannel> => {
     return this.rtcWrapper.initDataChannel()
       .then((dataChannel) => {
         console.log('Configuring data channel');
@@ -33,7 +33,7 @@ export class RtcFileSender implements BaseFileSender {
       });
   };
 
-  public sendFiles = async (progress = 0) => {
+  public sendFiles = async (progress = 0): Promise<void> => {
     this.currentChunk = progress / this.bytesPerChunk;
 
     while (this.currentChunk * this.bytesPerChunk < this.file.size) {
