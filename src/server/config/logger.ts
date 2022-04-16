@@ -1,7 +1,7 @@
-import winston from 'winston'
 import * as rootPath from 'app-root-path';
+import winston from 'winston';
 
-let options = {
+const options = {
   file: {
     level: 'info',
     filename: `${rootPath}/logs/apps.log`,
@@ -9,21 +9,21 @@ let options = {
     json: true,
     maxsize: 5242880,
     maxFiles: 5,
-    colorize: false
+    colorize: false,
   },
   console: {
     level: 'debug',
     handleExceptions: true,
     json: false,
-    colorize: true
-  }
+    colorize: true,
+  },
 };
 
 export const Logger = winston.createLogger({
   transports: [
     new winston.transports.File(options.file),
-    new winston.transports.Console(options.console)
+    new winston.transports.Console(options.console),
   ],
-  exitOnError: false
+  exitOnError: false,
 });
 

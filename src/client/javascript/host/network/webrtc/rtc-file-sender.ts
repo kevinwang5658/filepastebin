@@ -44,8 +44,6 @@ export class RtcFileSender implements BaseFileSender {
       const start = this.bytesPerChunk * this.currentChunk;
       const end = Math.min(this.file.size, start + this.bytesPerChunk);
 
-      console.log('Sending chunk: ' + start);
-
       await this.readAsArrayBuffer(this.file.slice(start, end));
       this.dataChannel.send(<ArrayBuffer> this.fileReader.result);
 
