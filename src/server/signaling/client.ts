@@ -1,10 +1,9 @@
 import { Socket } from 'socket.io';
 import { Base } from './base';
 import { Constants } from '../constants';
-import { HostModel } from '../models/host-model';
+import { HostModel } from '../storage/host-model';
 import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;
 import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
-import { Logger } from '../config/logger';
 
 export class Client extends Base {
 
@@ -18,7 +17,7 @@ export class Client extends Base {
     super(socket);
   }
 
-  public createClient() {
+  public createClient(): void {
     if (!this.hostMap.get(this.roomId)) {
       this.socket.emit('exception', 'host disconnected');
       return;
@@ -32,7 +31,7 @@ export class Client extends Base {
       files: this.host.files,
     });
 
-    Logger.info(`Client connected: ${this.roomId}`);
+    console.info(`Client connected: ${this.roomId}`);
   }
 
 }

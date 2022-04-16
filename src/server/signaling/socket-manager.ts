@@ -1,38 +1,34 @@
-import { Socket } from 'socket.io';
 import { Server } from 'http';
-import { Host } from './host';
+import SocketIO, { Socket } from 'socket.io';
 import { Constants } from '../constants';
-import { HostModel } from '../models/host-model';
-import RequestHostRequestModel = Constants.RequestHostRequestModel;
+import { HostMap, RoomCodeToRoomIdMap } from '../storage';
 import { Client } from './client';
+import { Host } from './host';
 import CONNECT = Constants.CONNECT;
 import DISCONNECT = Constants.DISCONNECT;
-
-const SocketIo = require('socket.io');
+import RequestHostRequestModel = Constants.RequestHostRequestModel;
 
 export class SocketManager {
 
-  private io: SocketIO.Server;
+  readonly io: SocketIO.Server;
 
-  constructor(private server: Server,
-    private hostMap: Map<string, HostModel>,
-    private roomCodeToRoomIdMap: Map<string, string>) {
-    this.io = new SocketIo(server, {
+  constructor(private server: Server) {
+    this.io = SocketIO(server, {
       pingTimeout: 30000,
     });
     this.io.on(CONNECT, this.connection);
   }
 
-  private connection = (socket: Socket) => {
+  private connection = (socket: Socket): void => {
     socket.on(Constants.REQUEST_HOST, (req: RequestHostRequestModel) => {
-      const host = new Host(socket, this.io, this.hostMap, this.roomCodeToRoomIdMap);
+      const host = new Host(socket, this.io, HostMap, RoomCodeToRoomIdMap);
       host.createHost(req);
 
       socket.on(DISCONNECT, () => host.destroyHost());
     });
 
     socket.on(Constants.REQUEST_CLIENT, (roomId: string) => {
-      const client = new Client(socket, this.io, this.hostMap, roomId);
+      const client = new Client(socket, this.io, HostMap, roomId);
       client.createClient();
     });
   };

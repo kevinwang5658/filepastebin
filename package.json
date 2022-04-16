@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "app-root-path": "^2.2.1",
-    "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "dotenv": "^6.2.0",
     "ejs": "~2.5.7",

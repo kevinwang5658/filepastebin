@@ -1,5 +1,5 @@
 import { after, afterEach, before, beforeEach, describe } from 'mocha'
-import { HostModel } from "../../src/server/models/host-model";
+import { HostModel } from "../../src/server/storage/host-model";
 import { SocketManager } from "../../src/server/signaling/socket-manager";
 import * as http from 'http';
 import * as io from 'socket.io-client';

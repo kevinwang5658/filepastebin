@@ -6,7 +6,7 @@ export class Base {
     socket.on(Constants.MESSAGE, this.onmessage);
   }
 
-  public onmessage = (payload: any) => {
+  public onmessage = (payload: any): void => {
     Object.keys(this.socket.rooms).forEach((room) => {
       if (room !== this.socket.id) this.socket.to(room).send(payload);
     });

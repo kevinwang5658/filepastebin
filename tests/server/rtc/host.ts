@@ -3,7 +3,7 @@ import { Host } from "../../../src/server/signaling/host";
 import * as TypeMoq from "typemoq"
 import { Socket } from "socket.io";
 import * as SocketIO from "socket.io";
-import { HostModel } from "../../../src/server/models/host-model";
+import { HostModel } from "../../../src/server/storage/host-model";
 import { assert } from "chai";
 import { Constants } from "../../../src/server/constants";
 import REQUEST_HOST_ACCEPTED = Constants.REQUEST_HOST_ACCEPTED;
