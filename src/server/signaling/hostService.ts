@@ -1,5 +1,4 @@
 import * as randomstring from 'randomstring';
-import { Socket } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
 import { HostMap, RoomCodeToHostIdMap } from '../storage';
 import { Host, RequestHostRequestModel } from './entities';
@@ -8,7 +7,7 @@ const hostMap = HostMap;
 const roomCodeToHostIdMap = RoomCodeToHostIdMap;
 
 export class HostService {
-  public static createHost(socket: Socket, req: RequestHostRequestModel): Host {
+  public static createHost(req: RequestHostRequestModel): Host {
     const [id, roomCode] = HostService.generateSessionID();
     const host: Host = {
       id: id,
@@ -21,8 +20,7 @@ export class HostService {
     return host;
   }
 
-  public static destroyHost(socket: Socket, hostId: string): void {
-    socket.leave(hostId);
+  public static destroyHost(hostId: string): void {
     hostMap.delete(hostId);
     console.info(`Host destroyed: ${hostId}`);
   }

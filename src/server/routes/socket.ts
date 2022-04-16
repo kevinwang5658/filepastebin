@@ -9,7 +9,7 @@ const hostMap = HostMap;
 export function socketIORouter(socket: Socket): void {
   socket.use(logger);
   socket.on('request-host', (req: RequestHostRequestModel) => {
-    const host = HostService.createHost(socket, req);
+    const host = HostService.createHost(req);
 
     socket.join(host.id);
     socket.emit('request-host-accepted', <RequestHostAcceptedModel>{
@@ -18,7 +18,10 @@ export function socketIORouter(socket: Socket): void {
     });
     console.info(`Host created: ${host.id}`);
 
-    socket.on('disconnect', () => HostService.destroyHost(socket, host.id));
+    socket.on('disconnect', () => {
+      socket.leave(host.id);
+      HostService.destroyHost(host.id);
+    });
   });
 
   socket.on('request-client', (hostId: string) => {
