@@ -1,6 +1,6 @@
 import { beforeEach, describe } from "mocha";
 import * as TypeMoq from "typemoq"
-import { Client } from "../../../src/server/signaling/client";
+import { ClientService } from "../../../src/server/signaling/clientService";
 import { Socket } from "socket.io";
 import * as SocketIO from "socket.io";
 import { HostModel } from "../../../src/server/storage/host-model";
@@ -24,7 +24,7 @@ describe("Client", () => {
     ]
   };
 
-  let instance: Client;
+  let instance: ClientService;
   let socketMock: TypeMoq.IMock<Socket>;
   let ioMock: TypeMoq.IMock<SocketIO.Server>;
   let roomMap = new Map<string, HostModel>();
@@ -36,7 +36,7 @@ describe("Client", () => {
   });
 
   it("should be able to create a client", () => {
-    instance = new Client(socketMock.object, ioMock.object, roomMap, ROOM_ID);
+    instance = new ClientService(socketMock.object, ioMock.object, roomMap, ROOM_ID);
     instance.createClient();
 
     socketMock.verify(x => x.join(ROOM_ID), TypeMoq.Times.once());
@@ -49,7 +49,7 @@ describe("Client", () => {
   });
 
   it("should return error is host is unavailable", () => {
-    instance = new Client(socketMock.object, ioMock.object, new Map(), ROOM_ID);
+    instance = new ClientService(socketMock.object, ioMock.object, new Map(), ROOM_ID);
     instance.createClient();
 
     socketMock.verify(x => x.emit("exception", TypeMoq.It.isAnyString()), TypeMoq.Times.once());

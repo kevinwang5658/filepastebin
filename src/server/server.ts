@@ -1,13 +1,12 @@
 import * as http from 'http';
 import * as App from './app';
-import { SocketManager } from './signaling/socket-manager';
 
-const app = App.newInstance();
+const app = App.newExpressInstance();
 const port = process.env.PORT || '3000';
 app.set('port', port);
 
 const server = http.createServer(app);
-const socketManager = new SocketManager(server);
+const socketIOServer = App.newSocketIOInstance(server);
 
 server.listen(port);
 server.on('error', onError);

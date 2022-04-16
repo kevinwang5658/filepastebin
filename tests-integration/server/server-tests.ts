@@ -31,7 +31,7 @@ let roomCodeToRoomIdMap: Map<string, string> = new Map();
 hostMap.set(ROOM_ID, HOST_MODEL);
 roomCodeToRoomIdMap.set(ROOM_CODE, ROOM_ID)
 
-app = App.newInstance(hostMap, roomCodeToRoomIdMap);
+app = App.newExpressInstance(hostMap, roomCodeToRoomIdMap);
 
 describe('GET /', () => {
   it('responds with html', (done) => {

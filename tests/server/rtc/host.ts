@@ -1,5 +1,5 @@
 import { beforeEach, describe } from "mocha";
-import { Host } from "../../../src/server/signaling/host";
+import { HostService } from "../../../src/server/signaling/hostService";
 import * as TypeMoq from "typemoq"
 import { Socket } from "socket.io";
 import * as SocketIO from "socket.io";
@@ -25,7 +25,7 @@ describe("Host", () => {
 
   let socketMock: TypeMoq.IMock<Socket>;
   let ioMock: TypeMoq.IMock<SocketIO.Server>;
-  let instance: Host;
+  let instance: HostService;
   let hostMap;
   let roomToIdMap;
 
@@ -34,7 +34,7 @@ describe("Host", () => {
     ioMock = TypeMoq.Mock.ofType<SocketIO.Server>();
     hostMap = new Map<string, HostModel>();
     roomToIdMap = new Map<string, number>();
-    instance = new Host(socketMock.object, ioMock.object, hostMap, roomToIdMap);
+    instance = new HostService(socketMock.object, ioMock.object, hostMap, roomToIdMap);
 
     socketMock.setup(x => x.id).returns(() => SOCKET_ID);
   });

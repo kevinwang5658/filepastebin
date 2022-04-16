@@ -1,5 +1,5 @@
+import { Constants } from '../../constants';
 import { UploadWorker } from './upload-worker';
-import { Constants } from '../../../../server/constants';
 import { FileRequest, Message, MessageAction, MessageType } from '../../webrtc-base/models/message';
 import DISCONNECT = Constants.DISCONNECT;
 import ERROR = Constants.ERROR;

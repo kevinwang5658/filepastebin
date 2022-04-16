@@ -1,4 +1,4 @@
-import { HostModel } from '../signaling/entities';
+import { Host } from '../signaling/entities';
 
-export const HostMap = new Map<string, HostModel>();
-export const RoomCodeToRoomIdMap = new Map<string, string>();
+export const HostMap = new Map<string, Host>();
+export const RoomCodeToHostIdMap = new Map<string, string>();
