@@ -1,5 +1,5 @@
+import { Constants } from '../constants';
 import { FileRequester } from './web-rtc/file-requester';
-import { Constants } from '../../../server/constants';
 import { Message } from '../webrtc-base/models/message';
 import MESSAGE = Constants.MESSAGE;
 import REQUEST_CLIENT = Constants.REQUEST_CLIENT;

@@ -1,4 +1,4 @@
-import { Constants } from '../../../server/constants';
+import { Constants } from '../constants';
 import REQUEST_JOIN_ROOM = Constants.REQUEST_JOIN_ROOM;
 
 export function requestJoinRoom(roomId: string): Promise<any> {

@@ -2,11 +2,11 @@
 
 import * as io from 'socket.io-client';
 import adapter from 'webrtc-adapter';
+import { Constants } from '../constants';
 import { DialogManager } from './components/dialog-manager';
 import { FileInputRenderer } from './components/file-input/file-input-renderer';
 import { requestJoinRoom } from './join-room-request';
 import { HostNetworkManager } from './network/host-network-manager';
-import { Constants } from '../../../server/constants';
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 import Socket = SocketIOClient.Socket;
 

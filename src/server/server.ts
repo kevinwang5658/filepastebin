@@ -1,18 +1,12 @@
 import * as http from 'http';
 import * as App from './app';
-import { HostModel } from './models/host-model';
-import { SocketManager } from './signaling/socket-manager';
 
-//TODO: Switch from a map to redis in the future
-const hostMap = new Map<string, HostModel>();
-const roomCodeToRoomIdMap = new Map<string, string>();
-
-const app = App.newInstance(hostMap, roomCodeToRoomIdMap);
+const app = App.newExpressInstance();
 const port = process.env.PORT || '3000';
 app.set('port', port);
 
 const server = http.createServer(app);
-const socketManager = new SocketManager(server, hostMap, roomCodeToRoomIdMap);
+const socketIOServer = App.newSocketIOInstance(server);
 
 server.listen(port);
 server.on('error', onError);

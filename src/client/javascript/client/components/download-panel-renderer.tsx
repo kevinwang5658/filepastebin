@@ -1,5 +1,5 @@
 import { h, render } from "preact";
-import { Constants } from "../../../../server/constants";
+import { Constants } from '../../constants';
 import { DownloadPanelBase } from "./download-panel-base";
 import FileDescription = Constants.FileDescription;
 

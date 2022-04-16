@@ -1,41 +1,35 @@
-import { after, afterEach, before, beforeEach, describe } from 'mocha'
-import { HostModel } from "../../src/server/models/host-model";
-import { SocketManager } from "../../src/server/signaling/socket-manager";
-import * as http from 'http';
-import * as io from 'socket.io-client';
-import { Constants } from "../../src/server/constants";
 import { assert } from 'chai';
-import REQUEST_HOST = Constants.REQUEST_HOST;
-import RequestHostRequestModel = Constants.RequestHostRequestModel;
-import REQUEST_HOST_ACCEPTED = Constants.REQUEST_HOST_ACCEPTED;
-import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
-import REQUEST_CLIENT = Constants.REQUEST_CLIENT;
-import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;
-import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
+import { after, afterEach, before, beforeEach, describe } from 'mocha';
+import * as io from 'socket.io-client';
+import * as App from '../../src/server/app';
 import { v4 as uuidv4 } from 'uuid';
-
-const request = require('supertest');
+import * as http from 'http';
+import request from 'supertest';
+import {
+  Host,
+  RequestClientAcceptedModel,
+  RequestHostAcceptedModel,
+  RequestHostRequestModel,
+} from '../../src/server/signaling/entities';
+import { HostMap, RoomCodeToHostIdMap } from '../../src/server/storage';
 
 const ROOM_ID = uuidv4();
 const ROOM_CODE = '123234';
-const HOST_MODEL = <HostModel>{
-  roomId: ROOM_ID,
+const HOST_MODEL = <Host>{
+  id: ROOM_ID,
   roomCode: ROOM_CODE,
-  hostId: "host_id",
+  hostId: 'host_id',
   files: [
     {
-      fileName: "file_name",
+      fileName: 'file_name',
       fileSize: 100,
-      fileType: "file_type"
-    }
-  ]
+      fileType: 'file_type',
+    },
+  ],
 };
 
-let hostMap: Map<string, HostModel>;
-let roomCodeToRoomIdMap: Map<string, string>;
 let server: http.Server;
 let serverAddress;
-let socketManager: SocketManager;
 let host: SocketIOClient.Socket;
 let client: SocketIOClient.Socket;
 
@@ -43,63 +37,61 @@ describe('Socket', function () {
   before(() => {
     server = http.createServer().listen();
     serverAddress = server.address();
-    hostMap = new Map<string, HostModel>();
-    roomCodeToRoomIdMap = new Map<string, string>();
-    socketManager = new SocketManager(server, hostMap, roomCodeToRoomIdMap);
+    App.newSocketIOInstance(server);
   });
 
   beforeEach(async () => {
     host = io.connect(`http://[${serverAddress.address}]:${serverAddress.port}`, {
       reconnectionDelay: 0,
-      forceNew: true
+      forceNew: true,
     });
 
     client = io.connect(`http://[${serverAddress.address}]:${serverAddress.port}`, {
       reconnectionDelay: 0,
-      forceNew: true
+      forceNew: true,
     });
 
     await Promise.all([
-      new Promise(resolve => {
+      new Promise((resolve) => {
         host.on('connect', () => {
-          resolve();
+          resolve(null);
         });
       }),
-      new Promise(resolve => {
+      new Promise((resolve) => {
         client.on('connect', () => {
-          resolve();
+          resolve(null);
         });
-      })])
+      })]);
   });
 
-  it('is able to request host', done => {
-    host.emit(REQUEST_HOST, <RequestHostRequestModel>{
+  it('is able to request host', (done) => {
+    host.emit('request-host', <RequestHostRequestModel>{
       files: [
         {
           fileName: HOST_MODEL.files[0].fileName,
           fileType: HOST_MODEL.files[0].fileType,
-          fileSize: HOST_MODEL.files[0].fileSize
-        }
-      ]
+          fileSize: HOST_MODEL.files[0].fileSize,
+        },
+      ],
     });
 
-    host.on(REQUEST_HOST_ACCEPTED, (response: RequestHostAcceptedModel) => {
+    host.on('request-host-accepted', (response: RequestHostAcceptedModel) => {
       assert.isNotNull(response.roomCode);
       assert.equal(response.files[0].fileName, HOST_MODEL.files[0].fileName);
       assert.equal(response.files[0].fileType, HOST_MODEL.files[0].fileType);
       assert.equal(response.files[0].fileSize, HOST_MODEL.files[0].fileSize);
 
       done();
-    })
+    });
   });
 
-  it('is able to request a client', done => {
-    hostMap.set(ROOM_ID, HOST_MODEL);
-    roomCodeToRoomIdMap.set(ROOM_CODE, ROOM_ID)
+  it('is able to request a client', (done) => {
+    HostMap.set(ROOM_ID, HOST_MODEL);
+    RoomCodeToHostIdMap.set(ROOM_CODE, ROOM_ID);
 
-    client.emit(REQUEST_CLIENT, ROOM_ID);
+    client.emit('request-client', ROOM_ID);
 
-    client.on(REQUEST_CLIENT_ACCEPTED, (cResponse: RequestClientAcceptedModel) => {
+    client.on('request-client-accepted', (cResponse: RequestClientAcceptedModel) => {
       assert.equal(cResponse.roomId, ROOM_ID);
       assert.deepEqual(cResponse.files, HOST_MODEL.files);
       done();
@@ -109,6 +101,8 @@ describe('Socket', function () {
   afterEach(() => {
     host.close();
     client.close();
+    HostMap.clear();
+    RoomCodeToHostIdMap.clear();
   });
 
   after(() => {

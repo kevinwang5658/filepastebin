@@ -1,4 +1,4 @@
-import { Constants } from '../../../../../server/constants';
+import { Constants } from '../../../constants';
 import { BaseRtcPeerConnectionWrapper } from '../../../webrtc-base/base-rtc-peer-connection-wrapper';
 import { Message, MessageType } from '../../../webrtc-base/models/message';
 import MESSAGE = Constants.MESSAGE;
