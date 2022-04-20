@@ -1,5 +1,5 @@
 import * as console from 'console';
-import { Packet, Socket } from 'socket.io';
+import { Event, Socket } from 'socket.io';
 import { RequestClientAcceptedModel, RequestHostAcceptedModel, RequestHostRequestModel } from '../signaling/entities';
 import { HostService } from '../signaling/hostService';
 import { HostMap } from '../storage';
@@ -42,12 +42,12 @@ export function socketIORouter(socket: Socket): void {
 
   socket.on('message', (payload: any): void => {
     Object.keys(socket.rooms).forEach((room) => {
-      if (room !== socket.id) socket.to(room).send(payload);
+      if (room !== socket.id) socket.to(room).emit('message', payload);
     });
   });
 
-  function logger(packet: Packet, next): void {
-    console.log(`SocketIO message received -- eventName: ${packet[0]}, socketId: ${socket.id}`);
+  function logger(event: Event, next): void {
+    console.log(`SocketIO message received -- eventName: ${JSON.stringify(event)}, socketId: ${socket.id}`);
     next();
   }
 }

@@ -1,5 +1,5 @@
+import { Socket } from 'socket.io-client';
 import { Message, MessageAction, MessageType } from './models/message';
-import Socket = SocketIOClient.Socket;
 
 export abstract class BaseRtcPeerConnectionWrapper {
 

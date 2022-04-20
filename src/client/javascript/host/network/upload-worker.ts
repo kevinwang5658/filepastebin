@@ -1,9 +1,9 @@
+import { Socket } from 'socket.io-client';
 import { Constants } from '../../constants';
 import { RtcFileSender } from './webrtc/rtc-file-sender';
 import { SocketFileSender } from './webrtc/socket-file-sender';
 import { BaseFileSender } from '../../webrtc-base/base-file-sender';
 import RTC_INIT_TIMEOUT = Constants.RTC_INIT_TIMEOUT;
-import Socket = SocketIOClient.Socket;
 
 export class UploadWorker {
 

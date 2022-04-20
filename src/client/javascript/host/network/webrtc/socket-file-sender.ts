@@ -1,9 +1,9 @@
+import { Socket } from 'socket.io-client';
 import { Constants } from '../../../constants';
 import { BaseFileSender } from '../../../webrtc-base/base-file-sender';
 import { Message, MessageType } from '../../../webrtc-base/models/message';
 import EOF = Constants.EOF;
 import SOCKET_IO_BYTES_PER_CHUNK = Constants.SOCKET_IO_BYTES_PER_CHUNK;
-import Socket = SocketIOClient.Socket;
 
 export class SocketFileSender implements BaseFileSender {
 

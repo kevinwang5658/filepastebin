@@ -1,6 +1,4 @@
-'use strict';
-
-import * as io from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 import adapter from 'webrtc-adapter';
 import { ClientNetworkManager } from './client-network-manager';
 import { DownloadPanelRenderer } from './components/download-panel-renderer';
@@ -12,7 +10,7 @@ const filesList = JSON.parse(unescape(FILES_LIST));
 const roomCode = unescape(ROOM_CODE);
 
 const downloadPanel = new DownloadPanelRenderer(filesList);
-const socket = io.connect();
+const socket: Socket = io();
 const clientNetworkManager = new ClientNetworkManager(socket, roomCode);
 
 console.log(adapter.browserDetails.browser);

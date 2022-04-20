@@ -1,3 +1,4 @@
+import { Socket } from 'socket.io-client';
 import { Constants } from '../constants';
 import { FileRequester } from './web-rtc/file-requester';
 import { Message } from '../webrtc-base/models/message';
@@ -5,7 +6,6 @@ import MESSAGE = Constants.MESSAGE;
 import REQUEST_CLIENT = Constants.REQUEST_CLIENT;
 import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;
 import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
-import Socket = SocketIOClient.Socket;
 
 declare let download: any;
 

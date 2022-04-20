@@ -1,3 +1,4 @@
+import { Socket } from 'socket.io-client';
 import { Constants } from '../../constants';
 import { UploadWorker } from './upload-worker';
 import { FileRequest, Message, MessageAction, MessageType } from '../../webrtc-base/models/message';
@@ -7,7 +8,6 @@ import FileDescription = Constants.FileDescription;
 import MESSAGE = Constants.MESSAGE;
 import REQUEST_HOST_ACCEPTED = Constants.REQUEST_HOST_ACCEPTED;
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
-import Socket = SocketIOClient.Socket;
 
 export class HostNetworkManager {
 
