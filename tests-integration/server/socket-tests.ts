@@ -1,10 +1,10 @@
 import { assert } from 'chai';
 import { after, afterEach, before, beforeEach, describe } from 'mocha';
+import { Socket } from 'socket.io-client';
 import * as io from 'socket.io-client';
 import * as App from '../../src/server/app';
 import { v4 as uuidv4 } from 'uuid';
 import * as http from 'http';
-import request from 'supertest';
 import {
   Host,
   RequestClientAcceptedModel,
@@ -30,8 +30,8 @@ const HOST_MODEL = <Host>{
 
 let server: http.Server;
 let serverAddress;
-let host: SocketIOClient.Socket;
-let client: SocketIOClient.Socket;
+let host: Socket;
+let client: Socket;
 
 describe('Socket', function () {
   before(() => {
