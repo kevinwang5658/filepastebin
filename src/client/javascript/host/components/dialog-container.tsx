@@ -1,6 +1,6 @@
-import * as preact from "preact";
-import { Component, h } from "preact";
+import { Component, createElement, h } from "preact";
 import style from "./index-dialog.module.css";
+import JSX = h.JSX;
 
 interface DialogContainerState {
   dialog: JSX.Element,
