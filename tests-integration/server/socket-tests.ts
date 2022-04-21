@@ -11,7 +11,7 @@ import {
   RequestHostAcceptedModel,
   RequestHostRequestModel,
 } from '../../src/server/signaling/entities';
-import { HostMap, RoomCodeToHostIdMap } from '../../src/server/storage';
+import { RoomMap, RoomCodeToHostIdMap } from '../../src/server/storage';
 
 const ROOM_ID = uuidv4();
 const ROOM_CODE = '123234';
@@ -86,7 +86,7 @@ describe('Socket', function () {
   });
 
   it('is able to request a client', (done) => {
-    HostMap.set(ROOM_ID, HOST_MODEL);
+    RoomMap.set(ROOM_ID, HOST_MODEL);
     RoomCodeToHostIdMap.set(ROOM_CODE, ROOM_ID);
 
     client.emit('request-client', ROOM_ID);
@@ -101,7 +101,7 @@ describe('Socket', function () {
   afterEach(() => {
     host.close();
     client.close();
-    HostMap.clear();
+    RoomMap.clear();
     RoomCodeToHostIdMap.clear();
   });
 

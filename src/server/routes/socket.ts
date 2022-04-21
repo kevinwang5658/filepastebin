@@ -2,9 +2,9 @@ import * as console from 'console';
 import { Event, Socket } from 'socket.io';
 import { RequestClientAcceptedModel, RequestHostAcceptedModel, RequestHostRequestModel } from '../signaling/entities';
 import { HostService } from '../signaling/hostService';
-import { HostMap } from '../storage';
+import { RoomMap } from '../storage';
 
-const hostMap = HostMap;
+const hostMap = RoomMap;
 
 export function socketIORouter(socket: Socket): void {
   socket.use(logger);
@@ -41,8 +41,10 @@ export function socketIORouter(socket: Socket): void {
   });
 
   socket.on('message', (payload: any): void => {
-    Object.keys(socket.rooms).forEach((room) => {
-      if (room !== socket.id) socket.to(room).emit('message', payload);
+    socket.rooms.forEach((room) => {
+      if (room !== socket.id) {
+        socket.to(room).emit('message', payload);
+      }
     });
   });
 

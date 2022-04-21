@@ -1,9 +1,9 @@
 import * as randomstring from 'randomstring';
 import { v4 as uuidv4 } from 'uuid';
-import { HostMap, RoomCodeToHostIdMap } from '../storage';
+import { RoomMap, RoomCodeToHostIdMap } from '../storage';
 import { Host, RequestHostRequestModel } from './entities';
 
-const hostMap = HostMap;
+const hostMap = RoomMap;
 const roomCodeToHostIdMap = RoomCodeToHostIdMap;
 
 export class HostService {

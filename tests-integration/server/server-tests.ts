@@ -3,7 +3,7 @@ import request from 'supertest';
 import { v4 as uuidv4 } from 'uuid';
 import * as App from '../../src/server/app';
 import { Host } from '../../src/server/signaling/entities';
-import { HostMap, RoomCodeToHostIdMap } from '../../src/server/storage';
+import { RoomMap, RoomCodeToHostIdMap } from '../../src/server/storage';
 
 const ROOM_ID = uuidv4();
 const ROOM_CODE = '123234';
@@ -21,7 +21,7 @@ const HOST_MODEL = <Host>{
   ],
 };
 
-const hostMap = HostMap;
+const hostMap = RoomMap;
 const roomCodeToRoomIdMap = RoomCodeToHostIdMap;
 hostMap.set(ROOM_ID, HOST_MODEL);
 roomCodeToRoomIdMap.set(ROOM_CODE, ROOM_ID);

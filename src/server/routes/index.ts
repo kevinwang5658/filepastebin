@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { HostMap, RoomCodeToHostIdMap } from '../storage';
+import { RoomMap, RoomCodeToHostIdMap } from '../storage';
 
 const router = express.Router();
 
@@ -22,9 +22,9 @@ router.get('/request/room/:room_code', (req: Request, res: Response) => {
 });
 
 router.get('/:room_id', (req: Request, res: Response, next: NextFunction) => {
-  if (req.params.room_id && HostMap.get(req.params.room_id)) {
+  if (req.params.room_id && RoomMap.get(req.params.room_id)) {
     const sessionId = req.params.room_id;
-    const host = HostMap.get(req.params.room_id);
+    const host = RoomMap.get(req.params.room_id);
 
     if (host.ipAddress && host.ipAddress !== req.ip) {
       next();
