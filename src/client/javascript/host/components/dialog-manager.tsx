@@ -3,6 +3,7 @@ import { BaseDialog } from "./base-dialog";
 import { DialogContainer } from "./dialog-container";
 import { HostDialog } from "./host-dialog";
 import { JoinDialog } from "./join-dialog";
+import JSX = h.JSX;
 
 export class DialogManager {
 

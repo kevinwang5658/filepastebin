@@ -1,7 +1,7 @@
+import { Socket } from 'socket.io-client';
 import { Constants } from '../../constants';
 import { ClientRtcPeerConnectionWrapper } from './client-rtc-peer-connection-wrapper';
 import { FileRequest, Message, MessageAction, MessageType } from '../../webrtc-base/models/message';
-import Socket = SocketIOClient.Socket;
 
 export class FileRequester {
 

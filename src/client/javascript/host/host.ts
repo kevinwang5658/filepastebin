@@ -1,5 +1,6 @@
 'use strict';
 
+import { Socket } from 'socket.io-client';
 import * as io from 'socket.io-client';
 import adapter from 'webrtc-adapter';
 import { Constants } from '../constants';
@@ -8,7 +9,6 @@ import { FileInputRenderer } from './components/file-input/file-input-renderer';
 import { requestJoinRoom } from './join-room-request';
 import { HostNetworkManager } from './network/host-network-manager';
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
-import Socket = SocketIOClient.Socket;
 
 const join_room_button = <HTMLDivElement>document.getElementById('join-room-button');
 const paste = <HTMLButtonElement>document.getElementById('paste');

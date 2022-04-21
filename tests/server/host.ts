@@ -2,9 +2,9 @@ import { assert } from 'chai';
 import { describe } from 'mocha';
 import { Host, RequestHostRequestModel } from '../../src/server/signaling/entities';
 import { HostService } from '../../src/server/signaling/hostService';
-import { HostMap, RoomCodeToHostIdMap } from '../../src/server/storage';
+import { RoomMap, RoomCodeToHostIdMap } from '../../src/server/storage';
 
-const hostMap = HostMap;
+const hostMap = RoomMap;
 const roomCodeToHostIdMap = RoomCodeToHostIdMap;
 
 describe('Host', () => {

@@ -4,7 +4,7 @@ import * as http from 'http';
 import createError from 'http-errors';
 import morgan from 'morgan';
 import path from 'path';
-import SocketIO from 'socket.io';
+import { Server } from 'socket.io';
 import router from './routes';
 import { socketIORouter } from './routes/socket';
 
@@ -18,8 +18,8 @@ export function newExpressInstance(): Express {
   return app;
 }
 
-export function newSocketIOInstance(server: http.Server): SocketIO.Server {
-  const socketIOServer = SocketIO(server, {
+export function newSocketIOInstance(server: http.Server): Server {
+  const socketIOServer = new Server(server, {
     pingTimeout: 30000,
   });
   socketIOServer.use(wrap(morgan('combined')));
@@ -27,23 +27,21 @@ export function newSocketIOInstance(server: http.Server): SocketIO.Server {
   return socketIOServer;
 }
 
+const rateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 15,
+});
+
 function attachMiddleware(app: Express): void {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(morgan('combined'));
   app.use('/', express.static(path.join(__dirname, '../client/public')));
   app.use('/javascript', express.static(path.join(__dirname, '../client/javascript')));
-  app.use('/request/room/:room_code', rateLimiter());
+  app.use('/request/room/:room_code', rateLimiter);
   app.use(router);
   app.use(defaultToError);
   app.use(handleErrors);
-}
-
-function rateLimiter(): rateLimit {
-  return rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 15,
-  });
 }
 
 function defaultToError(req: Request, res: Response, next: NextFunction): void {
