@@ -4,7 +4,6 @@ import { FileRequester } from './web-rtc/file-requester';
 import { Message } from '../webrtc-base/models/message';
 import MESSAGE = Constants.MESSAGE;
 import REQUEST_CLIENT = Constants.REQUEST_CLIENT;
-import REQUEST_CLIENT_ACCEPTED = Constants.REQUEST_CLIENT_ACCEPTED;
 import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
 
 declare let download: any;
@@ -19,7 +18,6 @@ export class ClientNetworkManager {
 
   constructor(private socket: Socket,
     private roomId: string) {
-    socket.on(REQUEST_CLIENT_ACCEPTED, this.onRoomJoined);
     socket.on(MESSAGE, this.onMessage);
 
     this.joinSocketIORoom();
@@ -46,7 +44,7 @@ export class ClientNetworkManager {
   };
 
   private joinSocketIORoom = () => {
-    this.socket.emit(REQUEST_CLIENT, this.roomId);
+    this.socket.emit(REQUEST_CLIENT, this.roomId, this.onRoomJoined);
   };
 
   private onRoomJoined = (res: RequestClientAcceptedModel) => {

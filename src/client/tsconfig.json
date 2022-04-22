@@ -10,6 +10,7 @@
     "outDir": "../../dist/client/",
     "sourceMap": true,
     "module": "commonjs",
+    "moduleResolution": "Node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "downlevelIteration": true,

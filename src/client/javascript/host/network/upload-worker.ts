@@ -10,7 +10,7 @@ export class UploadWorker {
   private fileSender: BaseFileSender;
   private progress = 0;
 
-  constructor(private id: string, private socket: Socket, private file: Blob) {
+  constructor(private id: string, private socket: Socket, private file: Blob, private progressChangedListener: (progress) => void) {
     this.init();
   }
 
@@ -50,5 +50,7 @@ export class UploadWorker {
 
   private onProgressChanged = (progress: number) => {
     this.progress = progress;
+    console.log(progress);
+    this.progressChangedListener(progress);
   };
 }

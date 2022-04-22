@@ -1,9 +1,12 @@
 import { Component, h } from "preact";
+import { HostNetworkManager } from '../../network/host-network-manager';
 import { BaseDialog } from "./base-dialog";
+import { HostDialogProgressBar } from './hostDialogProgressBar';
 import style from './index-dialog.module.css';
 
 export interface HostDialogProps {
   roomCode: string;
+  hostNetworkManager: HostNetworkManager,
   oncancel: () => void;
 }
 
@@ -28,6 +31,7 @@ export class HostDialog extends Component <HostDialogProps, HostDialogState> imp
           Use this code to receive files <br/>
           (must keep dialog open)
         </p>
+        <HostDialogProgressBar hostNetworkManager={this.props.hostNetworkManager}/>
         <div className={style.Hostdialogcancel} onClick={this.props.oncancel}>CANCEL</div>
       </div>
     );

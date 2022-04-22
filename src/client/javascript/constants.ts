@@ -27,8 +27,6 @@ export namespace Constants {
     files: FileDescription[];
   }
 
-  export const REQUEST_HOST_ACCEPTED = 'request-host-accepted';
-
   export interface RequestHostAcceptedModel {
     roomCode: string;
     files: FileDescription[];
@@ -41,7 +39,7 @@ export namespace Constants {
   export const REQUEST_JOIN_ROOM = '/request/room/';
 
   export const REQUEST_CLIENT = 'request-client';
-  export const REQUEST_CLIENT_ACCEPTED = 'request-client-accepted';
+  export const NEW_CLIENT_JOINED = 'new-client-joined';
 
   export interface RequestClientAcceptedModel {
     roomId: string;

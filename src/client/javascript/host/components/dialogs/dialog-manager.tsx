@@ -1,4 +1,5 @@
 import { h, render } from "preact";
+import { HostNetworkManager } from '../../network/host-network-manager';
 import { BaseDialog } from "./base-dialog";
 import { DialogContainer } from "./dialog-container";
 import { HostDialog } from "./host-dialog";
@@ -27,13 +28,14 @@ export class DialogManager {
     />);
   };
 
-  showHostDialog = (roomCode: string, oncancel: () => void) => {
+  showHostDialog = (roomCode: string, hostNetworkManager: HostNetworkManager, oncancel: () => void) => {
     this.showDialog(<HostDialog
       roomCode={roomCode}
       oncancel={() => {
         oncancel();
         this.hideDialog();
       }}
+      hostNetworkManager={hostNetworkManager}
     />);
   };
 
