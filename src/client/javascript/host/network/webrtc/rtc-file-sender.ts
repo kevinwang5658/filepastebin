@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io-client';
-import { Constants } from '../../../constants';
 import { HostRtcPeerConnectionWrapper } from './host-rtc-peer-connection-wrapper';
+import { Constants } from '../../../constants';
 import { BaseFileSender } from '../../../webrtc-base/base-file-sender';
 import EOF = Constants.EOF;
 import MAX_BUFFER = Constants.MAX_BUFFER;

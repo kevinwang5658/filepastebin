@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io-client';
+import { UploadWorker } from './upload-worker';
 import { Constants } from '../../constants';
 import { FileRequest, Message, MessageAction, MessageType } from '../../webrtc-base/models/message';
-import { UploadWorker } from './upload-worker';
 import DISCONNECT = Constants.DISCONNECT;
 import ERROR = Constants.ERROR;
 import FileDescription = Constants.FileDescription;

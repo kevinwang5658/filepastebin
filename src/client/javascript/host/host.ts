@@ -3,11 +3,11 @@
 import { Socket } from 'socket.io-client';
 import * as io from 'socket.io-client';
 import adapter from 'webrtc-adapter';
-import { Constants } from '../constants';
 import { DialogManager } from './components/dialogs/dialog-manager';
 import { FileInputRenderer } from './components/file-input/file-input-renderer';
 import { fetchRoomIdFromCode } from './join-room-request';
 import { HostNetworkManager } from './network/host-network-manager';
+import { Constants } from '../constants';
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 
 const join_room_button = <HTMLDivElement>document.getElementById('join-room-button');
