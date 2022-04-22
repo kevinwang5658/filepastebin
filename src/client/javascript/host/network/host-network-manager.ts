@@ -24,7 +24,7 @@ export class HostNetworkManager {
 
   private workers = new Map<string, UploadWorker>();
   private progressListeners: HostProgressListener[] = [];
-  private state = HostProgressState.SOCKET_IO_WAITING_FOR_JOIN;
+  public state = HostProgressState.SOCKET_IO_WAITING_FOR_JOIN;
 
   //Override outside to listen
   public onRoomCreatedCallback: (response: RequestHostAcceptedModel, hostNetworkManager: HostNetworkManager) => void;
@@ -62,7 +62,7 @@ export class HostNetworkManager {
     this.onRoomCreatedCallback(response, this);
   };
 
-  private onMessage = (message: Message) => {
+  private onMessage = (message: Message): void => {
     if (message.type === MessageType.Request && message.action === MessageAction.CreatePeer) {
       const request: FileRequest = message.content;
       const file = this.files.find((u) => u.name === request.fileName);
@@ -94,8 +94,10 @@ export class HostNetworkManager {
       .reduce((prev, curr) => prev + curr);
 
     if (progress < 1) {
+      this.state = HostProgressState.FILES_SENDING;
       this.callProgressStateListeners(HostProgressState.FILES_SENDING, progress);
     } else {
+      this.state = HostProgressState.FILES_SENT;
       this.callProgressStateListeners(HostProgressState.FILES_SENT, 1);
     }
   };

@@ -6,7 +6,7 @@ import adapter from 'webrtc-adapter';
 import { Constants } from '../constants';
 import { DialogManager } from './components/dialogs/dialog-manager';
 import { FileInputRenderer } from './components/file-input/file-input-renderer';
-import { requestJoinRoom } from './join-room-request';
+import { fetchRoomIdFromCode } from './join-room-request';
 import { HostNetworkManager } from './network/host-network-manager';
 import RequestHostAcceptedModel = Constants.RequestHostAcceptedModel;
 
@@ -38,7 +38,7 @@ paste.addEventListener('click', (e) => {
 });
 
 join_room_button.addEventListener('click', (_) => {
-  dialogManager.showJoinDialog(requestJoinRoom, (roomId: string) => {
+  dialogManager.showJoinDialog(fetchRoomIdFromCode, (roomId: string) => {
     window.location.href = window.location.href + roomId;
   });
 });

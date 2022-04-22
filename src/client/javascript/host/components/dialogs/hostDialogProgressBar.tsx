@@ -18,7 +18,7 @@ export function HostDialogProgressBar(props: HostDialogProgressBarProps) {
 
   useEffect(() => {
     console.log('hi');
-    const progressListener: HostProgressListener = (state: HostProgressState, uploadProgress: number) => {
+    const progressListener: HostProgressListener = throttle(50, (state: HostProgressState, uploadProgress: number) => {
       if (state === HostProgressState.FILES_SENT) {
         setJoinItemState(ItemState.COMPLETE);
         setConnectItemState(ItemState.COMPLETE);
@@ -36,7 +36,7 @@ export function HostDialogProgressBar(props: HostDialogProgressBarProps) {
         setConnectItemState(ItemState.EMPTY);
         setUploadItemState({ itemState: ItemState.EMPTY, uploadProgress: 0 });
       }
-    };
+    });
 
     props.hostNetworkManager.addProgressListener(progressListener);
     return () => props.hostNetworkManager.removeProgressListener(progressListener);
@@ -73,7 +73,6 @@ function CheckMarkProgressItem(props) {
 }
 
 function FileSendProgressItem(props) {
-  console.log('update');
   const { itemState, uploadProgress } = props.state
 
   const text = itemState <= ItemState.IN_PROGRESS ? 'Sending' : 'Sent';
@@ -122,5 +121,17 @@ function getNextPeriodAnimation(curr: string): string {
       return curr + '.';
     default:
       return '';
+  }
+}
+
+function throttle(delay, fn: HostProgressListener) {
+  let lastCall = 0;
+  return function (state: HostProgressState, uploadProgress: number) {
+    const now = (new Date).getTime();
+    if (state === HostProgressState.FILES_SENDING && now - lastCall < delay) {
+      return;
+    }
+    lastCall = now;
+    return fn(state, uploadProgress);
   }
 }

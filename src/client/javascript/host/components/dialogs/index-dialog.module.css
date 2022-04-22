@@ -25,16 +25,34 @@
   align-items: center;
 }
 
-.Dialogcode {
-  margin-top: 40px;
-  margin-bottom: 0;
+.DialogCodeWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 12px;
+  padding: 12px;
+}
+
+.DialogCodeWrapper:hover {
+  background: #D8D8D8;
+  border-radius: 4px;
+}
+
+.DialogCode {
+  margin: 0;
   letter-spacing: 5px;
   font-size: 24px;
   color: #4A4A4A;
 }
 
-.Dialogdescription {
-  margin-top: 14px;
+.DialogCodeCopyIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.DialogDescription {
+  margin-top: 0;
   padding-left: 41px;
   padding-right: 41px;
   font-size: 12px;
@@ -79,7 +97,7 @@
   cursor: pointer;
 }
 
-.Hostdialogcancel {
+.HostDialogCancel {
   color: #4A90E2;
   padding: 10px;
   margin-left: auto;
@@ -97,7 +115,7 @@
 }
 
 @media (hover: hover) {
-  .Hostdialogcancel:hover {
+  .HostDialogCancel:hover {
     background: #F2F2F2;
   }
 }
