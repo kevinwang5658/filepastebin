@@ -89,8 +89,10 @@ export class HostNetworkManager {
   }
 
   private uploadWorkerProgressChangedListener = (): void => {
+    const totalFileSize = Array.from(this.workers, ([, worker]) => worker.fileSize)
+      .reduce((prev, curr) => prev + curr);
     const progress = Array.from(this.workers,
-      ([, worker]) => worker.progress / worker.fileSize)
+      ([, worker]) => worker.progress / totalFileSize)
       .reduce((prev, curr) => prev + curr);
 
     if (progress < 1) {

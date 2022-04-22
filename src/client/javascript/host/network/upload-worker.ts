@@ -16,7 +16,7 @@ export class UploadWorker {
     this.fileSize = file.size;
   }
 
-  private async init() {
+  private async init(): Promise<void> {
     const rtcFileSender = new RtcFileSender(this.id, this.file, this.socket);
     Promise.race([
       rtcFileSender.initDataChannel()
@@ -37,20 +37,20 @@ export class UploadWorker {
     });
   }
 
-  private onOpen = (fileSender: BaseFileSender) => {
+  private onOpen = (fileSender: BaseFileSender): void => {
     console.log(`onopen: ${this.id}`);
     this.fileSender = fileSender;
     this.fileSender.onProgressChanged = this.onProgressChanged;
     this.fileSender.sendFiles();
   };
 
-  private onRTCClose = () => {
+  private onRTCClose = (): void => {
     console.log('onclosed');
     this.fileSender = new SocketFileSender(this.file, this.socket, this.id);
     this.fileSender.sendFiles(this.progress);
   };
 
-  private onProgressChanged = (progress: number) => {
+  private onProgressChanged = (progress: number): void => {
     this.progress = progress;
     this.progressChangedListener();
   };
