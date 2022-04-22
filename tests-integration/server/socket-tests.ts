@@ -73,9 +73,7 @@ describe('Socket', function () {
           fileSize: HOST_MODEL.files[0].fileSize,
         },
       ],
-    });
-
-    host.on('request-host-accepted', (response: RequestHostAcceptedModel) => {
+    }, (response) => {
       assert.isNotNull(response.roomCode);
       assert.equal(response.files[0].fileName, HOST_MODEL.files[0].fileName);
       assert.equal(response.files[0].fileType, HOST_MODEL.files[0].fileType);
@@ -89,11 +87,9 @@ describe('Socket', function () {
     RoomMap.set(ROOM_ID, HOST_MODEL);
     RoomCodeToHostIdMap.set(ROOM_CODE, ROOM_ID);
 
-    client.emit('request-client', ROOM_ID);
-
-    client.on('request-client-accepted', (cResponse: RequestClientAcceptedModel) => {
-      assert.equal(cResponse.roomId, ROOM_ID);
-      assert.deepEqual(cResponse.files, HOST_MODEL.files);
+    client.emit('request-client', ROOM_ID, (response) => {
+      assert.equal(response.roomId, ROOM_ID);
+      assert.deepEqual(response.files, HOST_MODEL.files);
       done();
     });
   });

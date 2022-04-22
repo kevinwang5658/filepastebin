@@ -96,6 +96,7 @@ export class JoinDialog extends Component<JoinDialogProps, JoinDialogState> impl
                onKeyPress={this.onkeypressed}
                value={this.state.value}
                ref={(input) => this.input = input}/>
+        <div style={"height: 96px;"}/>
         <div className={style.Dialogbuttonwrapper} id="dialogbuttonwrapper">
           <div className={style.Dialogjoin}
                id="dialogjoin"
