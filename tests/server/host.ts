@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import { describe } from 'mocha';
 import { Host, RequestHostRequestModel } from '../../src/server/signaling/entities';
-import { HostService } from '../../src/server/signaling/hostService';
+import { RoomService } from '../../src/server/signaling/roomService';
 import { RoomMap, RoomCodeToHostIdMap } from '../../src/server/storage';
 
 const hostMap = RoomMap;
@@ -20,7 +20,7 @@ describe('Host', () => {
   };
 
   it('is able to create a host', () => {
-    HostService.createHost(HOST_MODEL);
+    RoomService.createRoom(HOST_MODEL);
 
     assert.equal(hostMap.size, 1);
     const host = hostMap.values().next().value as Host;
@@ -31,11 +31,11 @@ describe('Host', () => {
   });
 
   it('is able to destroy a host', () => {
-    HostService.createHost(HOST_MODEL);
+    RoomService.createRoom(HOST_MODEL);
     assert.equal(hostMap.size, 1);
     const id = (hostMap.values().next().value as Host).id;
 
-    HostService.destroyHost(id);
+    RoomService.destroyRoom(id);
     assert.equal(hostMap.size, 0);
   });
 

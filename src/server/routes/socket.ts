@@ -1,43 +1,45 @@
 import * as console from 'console';
 import { Event, Socket } from 'socket.io';
 import { RequestClientAcceptedModel, RequestHostAcceptedModel, RequestHostRequestModel } from '../signaling/entities';
-import { HostService } from '../signaling/hostService';
+import { RoomService } from '../signaling/roomService';
 import { RoomMap } from '../storage';
 
-const hostMap = RoomMap;
+const roomMap = RoomMap;
 
 export function socketIORouter(socket: Socket): void {
   socket.use(logger);
-  socket.on('request-host', (req: RequestHostRequestModel) => {
-    const host = HostService.createHost(req);
+  socket.on('request-host', (req: RequestHostRequestModel, callback) => {
+    const room = RoomService.createRoom(req);
 
-    socket.join(host.id);
-    socket.emit('request-host-accepted', <RequestHostAcceptedModel>{
-      roomCode: host.roomCode,
-      files: host.files,
+    socket.join(room.id);
+    callback(<RequestHostAcceptedModel>{
+      roomCode: room.roomCode,
+      files: room.files,
     });
-    console.info(`Host created: ${host.id}`);
+    console.info(`Host created: ${room.id}`);
 
     socket.on('disconnect', () => {
-      socket.leave(host.id);
-      HostService.destroyHost(host.id);
+      socket.leave(room.id);
+      RoomService.destroyRoom(room.id);
     });
   });
 
-  socket.on('request-client', (hostId: string) => {
-    if (!hostMap.get(hostId)) {
+  socket.on('request-client', (roomId: string, callback) => {
+    if (!roomMap.get(roomId)) {
       socket.emit('exception', 'host disconnected');
       return;
     }
-    const host = hostMap.get(hostId);
+    const host = roomMap.get(roomId);
+    socket.join(roomId);
+    socket.to(roomId).emit('new-client-joined');
 
-    socket.join(hostId);
-    socket.emit('request-client-accepted', <RequestClientAcceptedModel>{
+
+    callback(<RequestClientAcceptedModel>{
       roomId: host.id,
       files: host.files,
     });
 
-    console.info(`SocketIO client connected: ${hostId}`);
+    console.info(`SocketIO client connected: ${roomId}`);
   });
 
   socket.on('message', (payload: any): void => {
