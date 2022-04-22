@@ -19,8 +19,11 @@ export function HostDialogProgressBar(props: HostDialogProgressBarProps) {
   useEffect(() => {
     console.log('hi');
     const progressListener: HostProgressListener = (state: HostProgressState, uploadProgress: number) => {
-      console.log('state ' + state);
-      if (state >= HostProgressState.FILES_SENDING) {
+      if (state === HostProgressState.FILES_SENT) {
+        setJoinItemState(ItemState.COMPLETE);
+        setConnectItemState(ItemState.COMPLETE);
+        setUploadItemState({ itemState: ItemState.COMPLETE, uploadProgress: 1 });
+      } else if (state >= HostProgressState.FILES_SENDING) {
         setJoinItemState(ItemState.COMPLETE);
         setConnectItemState(ItemState.COMPLETE);
         setUploadItemState({ itemState: ItemState.IN_PROGRESS, uploadProgress: uploadProgress });
@@ -70,24 +73,21 @@ function CheckMarkProgressItem(props) {
 }
 
 function FileSendProgressItem(props) {
+  console.log('update');
   const { itemState, uploadProgress } = props.state
-  const [periodAnimation, updatePeriodAnimation] = useState('');
 
-  console.log(uploadProgress);
+  const text = itemState <= ItemState.IN_PROGRESS ? 'Sending' : 'Sent';
+  const progress = (parseFloat(uploadProgress) * 100).toFixed(2) + '%';
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      updatePeriodAnimation(getNextPeriodAnimation(periodAnimation));
-    }, 500);
-    return () => clearTimeout(timer);
-  });
-  const text = itemState <= ItemState.IN_PROGRESS ? 'Sending' + periodAnimation : 'Sent';
+  const icon = itemState !== ItemState.COMPLETE ?
+    <p className={style.HostDialogProgressBarFileSenderText}>{progress}</p>
+    : <img className={style.HostDialogProgressBarCheckMark} src={window.origin + '/images/checkmark.png'}/>;
 
   return <div className={style.HostDialogProgressBarItem}>{
     itemState !== ItemState.EMPTY &&
     <Fragment>
       <p className={style.HostDialogProgressBarText}>{text}</p>
-      <p>{uploadProgress}</p>
+      {icon}
     </Fragment>
   }</div>;
 }

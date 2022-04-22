@@ -8,10 +8,12 @@ import RTC_INIT_TIMEOUT = Constants.RTC_INIT_TIMEOUT;
 export class UploadWorker {
 
   private fileSender: BaseFileSender;
-  private progress = 0;
+  public progress = 0;
+  public fileSize = 0;
 
-  constructor(private id: string, private socket: Socket, private file: Blob, private progressChangedListener: (progress) => void) {
+  constructor(private id: string, private socket: Socket, private file: Blob, private progressChangedListener: () => void) {
     this.init();
+    this.fileSize = file.size;
   }
 
   private async init() {
@@ -50,7 +52,6 @@ export class UploadWorker {
 
   private onProgressChanged = (progress: number) => {
     this.progress = progress;
-    console.log(progress);
-    this.progressChangedListener(progress);
+    this.progressChangedListener();
   };
 }

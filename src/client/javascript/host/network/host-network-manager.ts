@@ -83,13 +83,21 @@ export class HostNetworkManager {
         this.state = HostProgressState.WEBRTC_CONNECTING;
         return this.callProgressStateListeners(HostProgressState.WEBRTC_CONNECTING, 0);
       case MessageType.Data:
-        this.state = HostProgressState.FILES_SENDING
+        this.state = HostProgressState.FILES_SENDING;
         return this.callProgressStateListeners(HostProgressState.FILES_SENDING, 0);
     }
   }
 
-  private uploadWorkerProgressChangedListener = (progress: number): void => {
-    this.callProgressStateListeners(HostProgressState.FILES_SENDING, progress);
+  private uploadWorkerProgressChangedListener = (): void => {
+    const progress = Array.from(this.workers,
+      ([, worker]) => worker.progress / worker.fileSize)
+      .reduce((prev, curr) => prev + curr);
+
+    if (progress < 1) {
+      this.callProgressStateListeners(HostProgressState.FILES_SENDING, progress);
+    } else {
+      this.callProgressStateListeners(HostProgressState.FILES_SENT, 1);
+    }
   };
 
   private callProgressStateListeners = (state: HostProgressState, downloadProgress: number): void => {
