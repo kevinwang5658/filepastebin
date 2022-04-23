@@ -28,7 +28,7 @@ export class HostDialog extends Component <HostDialogProps, HostDialogState> imp
 
   onCodeClicked = async () => {
     selectTextInDiv(this.dialogCode)
-    clipboard.writeText(this.dialogCode);
+    clipboard.writeText(this.props.roomCode);
   }
 
   onCancelClicked = () => {
