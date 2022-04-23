@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "clipboard-polyfill": "^4.0.0-rc1",
     "preact": "^10.7.1",
     "pretty-bytes": "^6.0.0",
     "socket.io-client": "^4.4.1",

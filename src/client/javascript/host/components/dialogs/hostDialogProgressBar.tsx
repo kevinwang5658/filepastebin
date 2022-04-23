@@ -17,7 +17,6 @@ export function HostDialogProgressBar(props: HostDialogProgressBarProps) {
   });
 
   useEffect(() => {
-    console.log('hi');
     const progressListener: HostProgressListener = throttle(50, (state: HostProgressState, uploadProgress: number) => {
       if (state === HostProgressState.FILES_SENT) {
         setJoinItemState(ItemState.COMPLETE);

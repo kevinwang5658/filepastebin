@@ -19,7 +19,11 @@ done
 [ -z "$PROFILE" ] && PROFILE=default
 
 docker login
-docker build -t filepastebin .
+if [[ $(uname -m) == 'arm64' ]]; then
+  docker buildx build -t filepastebin --platform=linux/amd64 .
+else
+  docker build -t filepastebin .
+fi
 docker tag filepastebin:latest kevinwang5658/filepastebin
 docker push kevinwang5658/filepastebin
 
