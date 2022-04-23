@@ -72,6 +72,5 @@ export class ClientNetworkManager {
       file.fileName,
       file.fileSize,
     );
-    this.socket.disconnect();
   };
 }
