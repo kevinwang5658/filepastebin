@@ -1,4 +1,5 @@
 import { Component, h } from "preact";
+import * as clipboard from "clipboard-polyfill/text";
 import { fetchRoomIdFromCode } from '../../join-room-request';
 import { HostNetworkManager, HostProgressState } from '../../network/host-network-manager';
 import { BaseDialog } from "./base-dialog";
@@ -26,9 +27,9 @@ export class HostDialog extends Component <HostDialogProps, HostDialogState> imp
   onBackgroundClicked = () => {};
 
   onCodeClicked = async () => {
-    const roomId = await fetchRoomIdFromCode(this.props.roomCode);
     selectTextInDiv(this.dialogCode)
-    navigator.clipboard.writeText(`${window.origin}/${roomId}`);
+    const roomId = await fetchRoomIdFromCode(this.props.roomCode);
+    clipboard.writeText(`${window.origin}/${roomId}`);
   }
 
   onCancelClicked = () => {
