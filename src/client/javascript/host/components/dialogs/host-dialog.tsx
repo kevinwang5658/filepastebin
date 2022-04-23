@@ -28,8 +28,7 @@ export class HostDialog extends Component <HostDialogProps, HostDialogState> imp
 
   onCodeClicked = async () => {
     selectTextInDiv(this.dialogCode)
-    const roomId = await fetchRoomIdFromCode(this.props.roomCode);
-    clipboard.writeText(`${window.origin}/${roomId}`);
+    clipboard.writeText(this.dialogCode);
   }
 
   onCancelClicked = () => {
