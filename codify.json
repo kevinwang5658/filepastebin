@@ -1,0 +1,5 @@
+[
+  { "type":  "nvm", "nodeVersions":  ["18"], "global": "18" },
+  { "type": "homebrew", "formulae": ["docker"] },
+  { "type": "aws-cli" }
+]
