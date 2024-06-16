@@ -38,7 +38,9 @@ router.get('/:room_id', (req: Request, res: Response, next: NextFunction) => {
       files: escape(JSON.stringify(host.files)),
     });
   } else {
-    next();
+    res.render('not-found', {
+      code: escape(req.params.room_id),
+    });
   }
 });
 
