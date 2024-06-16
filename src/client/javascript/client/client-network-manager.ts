@@ -23,7 +23,7 @@ export class ClientNetworkManager {
     this.joinSocketIORoom();
   }
 
-  public requestDownload = () => {
+  public requestDownload = async (): Promise<void> => {
     for (const file of this.files) {
       const id = file.fileName;
 
@@ -35,12 +35,13 @@ export class ClientNetworkManager {
           file));
     }
 
-    Promise.all([...this.workers.values()].map((peer: FileRequester) => peer.getCompleteListener()
-      .then((value: ArrayBuffer[]) => {
-        this.onDataLoaded(value, peer.file);
-      })));
-
-    [...this.workers.values()].forEach((peer: FileRequester) => peer.onProgressChangedCallback = this.handleprogresschanged);
+    for (const worker of this.workers.values()) {
+      worker.onProgressChangedCallback = this.handleprogresschanged;
+      await worker.getCompleteListener()
+        .then((value: ArrayBuffer[]) => {
+          this.onDataLoaded(value, worker.file);
+        });
+    }
   };
 
   private joinSocketIORoom = () => {

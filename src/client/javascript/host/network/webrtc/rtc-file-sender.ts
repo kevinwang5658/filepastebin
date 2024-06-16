@@ -87,7 +87,7 @@ export class RtcFileSender implements BaseFileSender {
       } else {
         resolve();
       }
-    }, 1000);
+    }, 10);
   };
 
   private onRTCError = (err: Event) => console.log(`onerror${err}`);
