@@ -43,7 +43,7 @@
     "gulp-watch": "^5.0.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "mocha": "^6.2.2",
+    "mocha": "^10.2.0",
     "nodemon": "^1.19.4",
     "ts-node": "~10.7.0",
     "typemoq": "^2.1.0",
