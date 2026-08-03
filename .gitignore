@@ -11,3 +11,4 @@ src/client/.fusebox
 logs/
 *.env
 tsconfig.tsbuildinfo
+.wrangler/

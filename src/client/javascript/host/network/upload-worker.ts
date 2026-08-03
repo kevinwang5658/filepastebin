@@ -1,9 +1,6 @@
-import { Socket } from 'socket.io-client';
+import { SignalingSocket } from '../../signaling/signaling-socket';
 import { RtcFileSender } from './webrtc/rtc-file-sender';
-import { SocketFileSender } from './webrtc/socket-file-sender';
-import { Constants } from '../../constants';
 import { BaseFileSender } from '../../webrtc-base/base-file-sender';
-import RTC_INIT_TIMEOUT = Constants.RTC_INIT_TIMEOUT;
 
 export class UploadWorker {
 
@@ -11,30 +8,23 @@ export class UploadWorker {
   public progress = 0;
   public fileSize = 0;
 
-  constructor(private id: string, private socket: Socket, private file: Blob, private progressChangedListener: () => void) {
-    this.init();
+  constructor(
+    private id: string,
+    private socket: SignalingSocket,
+    private file: Blob,
+    private progressChangedListener: () => void,
+  ) {
     this.fileSize = file.size;
+    this.init();
   }
 
   private async init(): Promise<void> {
     const rtcFileSender = new RtcFileSender(this.id, this.file, this.socket);
-    Promise.race([
-      rtcFileSender.initDataChannel()
-        .then((dataChannel) => {
-          console.log('dataChannel is open in uploadWorker');
+    const dataChannel = await rtcFileSender.initDataChannel();
 
-          dataChannel.onclose = this.onRTCClose;
-          return rtcFileSender;
-        }),
-      //fallback to socketIO
-      new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(new SocketFileSender(this.file, this.socket, this.id));
-        }, RTC_INIT_TIMEOUT);
-      }),
-    ]).then((fileSender: BaseFileSender) => {
-      this.onOpen(fileSender);
-    });
+    console.log('dataChannel is open in uploadWorker');
+    dataChannel.onclose = this.onRTCClose;
+    this.onOpen(rtcFileSender);
   }
 
   private onOpen = (fileSender: BaseFileSender): void => {
@@ -45,9 +35,7 @@ export class UploadWorker {
   };
 
   private onRTCClose = (): void => {
-    console.log('onclosed');
-    this.fileSender = new SocketFileSender(this.file, this.socket, this.id);
-    this.fileSender.sendFiles(this.progress);
+    console.log('WebRTC channel closed');
   };
 
   private onProgressChanged = (progress: number): void => {

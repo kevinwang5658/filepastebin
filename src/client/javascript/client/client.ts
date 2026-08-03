@@ -1,28 +1,42 @@
-import { io, Socket } from 'socket.io-client';
 import adapter from 'webrtc-adapter';
 import { ClientNetworkManager } from './client-network-manager';
 import { DownloadPanelRenderer } from './components/download-panel-renderer';
+import { SignalingSocket } from '../signaling/signaling-socket';
+import { Constants } from '../constants';
 
 const roomId = window.location.pathname.replace(/^\//, '');
-
 const downloadPanel = new DownloadPanelRenderer();
-const socket: Socket = io(__SERVER_URL__);
-const clientNetworkManager = new ClientNetworkManager(socket, roomId);
 
 console.log(adapter.browserDetails.browser);
 
-downloadPanel.setOnDownloadClickedCallback(() => {
-  clientNetworkManager.requestDownload();
-});
+(async () => {
+  try {
+    const res = await fetch(`${__SERVER_URL__}/api/room/${roomId}/info`);
+    if (!res.ok) {
+      downloadPanel.showRoomNotFound();
+      return;
+    }
 
-clientNetworkManager.onProgressChangedCallback = (progress: number[]) => {
-  downloadPanel.updateProgress(progress);
-};
+    const { files } = await res.json() as { files: Constants.FileDescription[] };
+    downloadPanel.setFiles(files);
 
-clientNetworkManager.onFilesReceived = (files) => {
-  downloadPanel.setFiles(files);
-};
+    const wsUrl = `${__SERVER_URL__ || window.location.origin}/room/${roomId}/ws?role=client`;
+    const signalingSocket = new SignalingSocket(wsUrl);
+    const clientNetworkManager = new ClientNetworkManager(signalingSocket, files);
 
-clientNetworkManager.onRoomNotFound = () => {
-  downloadPanel.showRoomNotFound();
-};
+    clientNetworkManager.onProgressChangedCallback = (progress) => {
+      downloadPanel.updateProgress(progress);
+    };
+
+    clientNetworkManager.onHostDisconnected = () => {
+      downloadPanel.showRoomNotFound();
+    };
+
+    downloadPanel.setOnDownloadClickedCallback(() => {
+      clientNetworkManager.requestDownload();
+    });
+  } catch (err) {
+    console.error('Failed to load room:', err);
+    downloadPanel.showRoomNotFound();
+  }
+})();

@@ -1,4 +1,4 @@
-import { Socket } from 'socket.io-client';
+import { SignalingSocket } from '../../../signaling/signaling-socket';
 import { HostRtcPeerConnectionWrapper } from './host-rtc-peer-connection-wrapper';
 import { Constants } from '../../../constants';
 import { BaseFileSender } from '../../../webrtc-base/base-file-sender';
@@ -15,8 +15,7 @@ export class RtcFileSender implements BaseFileSender {
   private dataChannel: RTCDataChannel;
   private bytesPerChunk = 0;
 
-
-  constructor(private id: string, private file: Blob, socket: Socket) {
+  constructor(private id: string, private file: Blob, socket: SignalingSocket) {
     this.rtcWrapper = new HostRtcPeerConnectionWrapper(this.rtcPeerConnection, id, socket);
   }
 
@@ -46,7 +45,7 @@ export class RtcFileSender implements BaseFileSender {
       const end = Math.min(this.file.size, start + this.bytesPerChunk);
 
       await this.readAsArrayBuffer(this.file.slice(start, end));
-      this.dataChannel.send(<ArrayBuffer> this.fileReader.result);
+      this.dataChannel.send(this.fileReader.result as ArrayBuffer);
 
       this.currentChunk++;
       this.onProgressChanged(this.currentChunk * this.bytesPerChunk);
@@ -55,24 +54,21 @@ export class RtcFileSender implements BaseFileSender {
     this.dataChannel.send(EOF);
   };
 
-  public onProgressChanged: (progress: number) => void = (_) => {
-  };
+  public onProgressChanged: (progress: number) => void = (_) => {};
 
   private readAsArrayBuffer = (file: Blob) => {
     return new Promise((resolve, reject) => {
       this.fileReader.onload = () => resolve(this.fileReader.result);
-
       this.fileReader.onerror = reject;
-
       this.fileReader.readAsArrayBuffer(file);
     });
   };
 
   private bufferedAmountLow = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       try {
         this.bufferAmountLowTimer(resolve);
-        this.dataChannel.addEventListener('bufferedamountlow', () => resolve(null), { once: true });
+        this.dataChannel.addEventListener('bufferedamountlow', () => resolve(), { once: true });
       } catch (err) {
         console.log(err);
         reject();
@@ -80,7 +76,7 @@ export class RtcFileSender implements BaseFileSender {
     });
   };
 
-  private bufferAmountLowTimer = (resolve) => {
+  private bufferAmountLowTimer = (resolve: () => void) => {
     setTimeout(() => {
       if (this.dataChannel.bufferedAmount > this.bytesPerChunk) {
         this.bufferedAmountLow();

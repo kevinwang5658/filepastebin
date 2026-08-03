@@ -1,83 +1,55 @@
-import { Socket } from 'socket.io-client';
+import { SignalingSocket } from '../signaling/signaling-socket';
 import { Constants } from '../constants';
 import { FileRequester } from './web-rtc/file-requester';
 import { Message } from '../webrtc-base/models/message';
 import MESSAGE = Constants.MESSAGE;
-import REQUEST_CLIENT = Constants.REQUEST_CLIENT;
-import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
 
-declare let download: any;
+declare let download: (blob: Blob, name: string, size: number) => void;
 
 export class ClientNetworkManager {
 
   public onProgressChangedCallback: (progress: number[]) => void = (_) => {};
-  public onFilesReceived: (files: Constants.FileDescription[]) => void = (_) => {};
-  public onRoomNotFound: () => void = () => {};
+  public onHostDisconnected: () => void = () => {};
 
   private workers = new Map<string, FileRequester>();
-  private files: Constants.FileDescription[];
 
-  constructor(private socket: Socket,
-    private roomId: string) {
+  constructor(
+    private socket: SignalingSocket,
+    private files: Constants.FileDescription[],
+  ) {
     socket.on(MESSAGE, this.onMessage);
-    socket.on('exception', this.onException);
+    socket.on('host-disconnected', () => this.onHostDisconnected());
 
-    this.joinSocketIORoom();
+    // Notify the room that this client has joined (triggers client-joined on host)
+    socket.sendControl('joined');
   }
 
   public requestDownload = async (): Promise<void> => {
     for (const file of this.files) {
-      const id = file.fileName;
-
-      this.workers.set(
-        id,
-        new FileRequester(
-          id,
-          this.socket,
-          file));
+      this.workers.set(file.fileName, new FileRequester(file.fileName, this.socket, file));
     }
 
     for (const worker of this.workers.values()) {
-      worker.onProgressChangedCallback = this.handleprogresschanged;
-      await worker.getCompleteListener()
-        .then((value: ArrayBuffer[]) => {
-          this.onDataLoaded(value, worker.file);
-        });
-    }
-  };
-
-  private joinSocketIORoom = () => {
-    this.socket.emit(REQUEST_CLIENT, this.roomId, this.onRoomJoined);
-  };
-
-  private onRoomJoined = (res: RequestClientAcceptedModel) => {
-    this.files = res.files;
-    this.onFilesReceived(res.files);
-  };
-
-  private onException = (error: string) => {
-    if (error === 'host disconnected') {
-      this.onRoomNotFound();
+      worker.onProgressChangedCallback = this.handleProgressChanged;
+      const data = await worker.getCompleteListener();
+      this.onDataLoaded(data, worker.file);
     }
   };
 
   private onMessage = (message: Message) => {
-    this.workers.get(message.senderId).handleMessage(message);
+    const worker = this.workers.get(message.senderId);
+    if (worker) worker.handleMessage(message);
   };
 
-  private handleprogresschanged = () => {
+  private handleProgressChanged = () => {
     const progress = [...this.workers.values()]
-      .map((peer: FileRequester) => peer.progress)
-      .map((progress) => progress * 100);
-
+      .map(w => w.progress * 100);
     this.onProgressChangedCallback(progress);
   };
 
-  private onDataLoaded = (value: ArrayBuffer[], file: Constants.FileDescription) => {
+  private onDataLoaded = (data: ArrayBuffer[], file: Constants.FileDescription) => {
     download(
-      new Blob(value, {
-        type: file.fileType,
-      }),
+      new Blob(data, { type: file.fileType }),
       file.fileName,
       file.fileSize,
     );

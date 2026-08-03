@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "css-loader": "^6.7.1",
+    "dotenv": "^17.4.2",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.2.8",
     "typescript": "~4.6.3",
