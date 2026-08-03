@@ -4,27 +4,33 @@ import { DownloadPanelBase } from "./download-panel-base";
 import FileDescription = Constants.FileDescription;
 
 export class DownloadPanelRenderer {
-  private downloadPanelBase;
+  private downloadPanelBase: DownloadPanelBase;
 
-  constructor(filesList: FileDescription[]) {
-    const initialProgress = Array(filesList.length).fill(0);
-
+  constructor() {
     render(
       <DownloadPanelBase
-        onDownloadClickedCallback={() => {
-        }}
-        progress={initialProgress}
-        filesList={filesList}
-        ref={f => this.downloadPanelBase = f}
+        onDownloadClickedCallback={() => {}}
+        progress={[]}
+        filesList={[]}
+        loading={true}
+        ref={f => this.downloadPanelBase = f as DownloadPanelBase}
       />, document.getElementById("download-panel"),
     );
   }
 
-  public setOnDownloadClickedCallback(callback: (progress: number[]) => void) {
-    this.downloadPanelBase.props.onDownloadClickedCallback = callback;
+  public setFiles(files: FileDescription[]) {
+    this.downloadPanelBase.setFiles(files);
+  }
+
+  public setOnDownloadClickedCallback(callback: () => void) {
+    this.downloadPanelBase.setDownloadCallback(callback);
   }
 
   public updateProgress(progress: number[]) {
     this.downloadPanelBase.setProgress(progress);
+  }
+
+  public showRoomNotFound() {
+    this.downloadPanelBase.setNotFound();
   }
 }

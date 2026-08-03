@@ -6,6 +6,7 @@
     "clean": "rimraf dist && rimraf src/client/node_modules && rimraf node_modules",
     "start-dev": "gulp start-dev",
     "build": "gulp build-prod",
+    "build:pages": "gulp build-pages",
     "start": "node dist/server/server.js",
     "postinstall": "cd src/client && npm install",
     "test": "gulp test-unit && gulp test-integration"

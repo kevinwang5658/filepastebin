@@ -24,14 +24,10 @@ gulp.task('compile-client', (done) => {
   });
 });
 
-gulp.task('copy-client', gulp.parallel(
-  function copypublic() {
-    return gulp.src('./src/client/public/**/*')
-      .pipe(gulp.dest('dist/client/public/'));
-  }, function copyviews() {
-    return gulp.src('./src/client/views/**/*')
-      .pipe(gulp.dest('dist/client/views'));
-  }));
+gulp.task('copy-client', function copypublic() {
+  return gulp.src('./src/client/public/**/*')
+    .pipe(gulp.dest('dist/client/public/'));
+});
 
 gulp.task('build', gulp.series(
   'clean',
@@ -41,11 +37,6 @@ gulp.task('build', gulp.series(
 gulp.task('watch-public', () => {
   watch('src/client/public/**/*')
     .pipe(gulp.dest('dist/client/public/'));
-});
-
-gulp.task('watch-views', () => {
-  watch('src/client/views/**/*')
-    .pipe(gulp.dest('dist/client/views'));
 });
 
 gulp.task('watch-client', () => {
@@ -69,7 +60,7 @@ gulp.task('nodemon', (done) => {
 });
 
 gulp.task('watch', gulp.series(
-  gulp.parallel('watch-public', 'watch-views', 'watch-client')),
+  gulp.parallel('watch-public', 'watch-client')),
 );
 
 gulp.task('start-dev', (done) => {

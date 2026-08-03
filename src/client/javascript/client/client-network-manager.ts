@@ -10,8 +10,9 @@ declare let download: any;
 
 export class ClientNetworkManager {
 
-  public onProgressChangedCallback: (progress: number[]) => void = (_) => {
-  };
+  public onProgressChangedCallback: (progress: number[]) => void = (_) => {};
+  public onFilesReceived: (files: Constants.FileDescription[]) => void = (_) => {};
+  public onRoomNotFound: () => void = () => {};
 
   private workers = new Map<string, FileRequester>();
   private files: Constants.FileDescription[];
@@ -19,6 +20,7 @@ export class ClientNetworkManager {
   constructor(private socket: Socket,
     private roomId: string) {
     socket.on(MESSAGE, this.onMessage);
+    socket.on('exception', this.onException);
 
     this.joinSocketIORoom();
   }
@@ -50,6 +52,13 @@ export class ClientNetworkManager {
 
   private onRoomJoined = (res: RequestClientAcceptedModel) => {
     this.files = res.files;
+    this.onFilesReceived(res.files);
+  };
+
+  private onException = (error: string) => {
+    if (error === 'host disconnected') {
+      this.onRoomNotFound();
+    }
   };
 
   private onMessage = (message: Message) => {
@@ -60,7 +69,6 @@ export class ClientNetworkManager {
     const progress = [...this.workers.values()]
       .map((peer: FileRequester) => peer.progress)
       .map((progress) => progress * 100);
-
 
     this.onProgressChangedCallback(progress);
   };

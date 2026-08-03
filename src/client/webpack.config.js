@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: {
@@ -30,6 +31,11 @@ module.exports = {
       'react-dom': 'preact-compat',
     },
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      '__SERVER_URL__': JSON.stringify(process.env.SERVER_URL || ''),
+    }),
+  ],
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, '../../dist/client/javascript'),

@@ -10,17 +10,17 @@ import { socketIORouter } from './routes/socket';
 
 export function newExpressInstance(): Express {
   const app = express();
-
-  app.set('views', path.join(__dirname, '../client/views'));
-  app.set('view engine', 'ejs');
   attachMiddleware(app);
-
   return app;
 }
 
 export function newSocketIOInstance(server: http.Server): Server {
   const socketIOServer = new Server(server, {
     pingTimeout: 30000,
+    cors: {
+      origin: process.env.PAGES_ORIGIN || true,
+      methods: ['GET', 'POST'],
+    },
   });
   socketIOServer.use(wrap(morgan('combined')));
   socketIOServer.on('connect', socketIORouter);
@@ -50,10 +50,7 @@ function defaultToError(req: Request, res: Response, next: NextFunction): void {
 
 function handleErrors(err: any, req: Request, res: Response): void {
   console.error(err.message);
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  res.status(err.status || 500).send(err.message || 'Internal Server Error');
 }
 
 function wrap(middleware) {

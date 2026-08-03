@@ -16,7 +16,7 @@ export async function fetchRoomIdFromCode(roomCode: string): Promise<string | nu
     };
     xhttp.onerror = () => reject();
 
-    xhttp.open('GET', REQUEST_JOIN_ROOM + roomCode, true);
+    xhttp.open('GET', __SERVER_URL__ + REQUEST_JOIN_ROOM + roomCode, true);
     xhttp.send();
   });
 }

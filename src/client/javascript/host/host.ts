@@ -32,7 +32,7 @@ paste.addEventListener('click', (e) => {
   paste.innerHTML = '<div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
   paste.style.background = '#62A4F0';
 
-  socket = io.connect();
+  socket = io.connect(__SERVER_URL__);
   socketManager = new HostNetworkManager(socket, fileInputRenderer.getFileList());
   socketManager.onRoomCreatedCallback = onRoomCreated;
 });
