@@ -17,6 +17,7 @@ export type DownloadPageBaseState = {
   filesList: FileDescription[],
   loading: boolean,
   notFound: boolean,
+  transferFailed: boolean,
   onDownloadClickedCallback: () => void,
 }
 
@@ -30,6 +31,7 @@ export class DownloadPanelBase extends Component<DownloadPageBaseProps, Download
       filesList: this.props.filesList,
       loading: this.props.loading,
       notFound: false,
+      transferFailed: false,
       onDownloadClickedCallback: this.props.onDownloadClickedCallback,
     });
   }
@@ -44,6 +46,10 @@ export class DownloadPanelBase extends Component<DownloadPageBaseProps, Download
 
   public setNotFound = () => {
     this.setState({ notFound: true, loading: false });
+  };
+
+  public setTransferFailed = () => {
+    this.setState({ transferFailed: true });
   };
 
   public setDownloadCallback = (cb: () => void) => {
@@ -62,6 +68,17 @@ export class DownloadPanelBase extends Component<DownloadPageBaseProps, Download
           <div className={styles.DownloadPanelHeader}>Room not found</div>
           <div className={styles.NotFoundMessage}>
             This transfer session has expired or does not exist.
+          </div>
+        </div>
+      );
+    }
+
+    if (this.state.transferFailed) {
+      return (
+        <div className={styles.DownloadPanelWrapper}>
+          <div className={styles.DownloadPanelHeader}>Connection lost</div>
+          <div className={styles.NotFoundMessage}>
+            The transfer connection was interrupted. Please refresh and try again.
           </div>
         </div>
       );

@@ -32,6 +32,10 @@ console.log(adapter.browserDetails.browser);
       downloadPanel.showRoomNotFound();
     };
 
+    clientNetworkManager.onTransferFailed = () => {
+      downloadPanel.showTransferFailed();
+    };
+
     downloadPanel.setOnDownloadClickedCallback(() => {
       clientNetworkManager.requestDownload();
     });

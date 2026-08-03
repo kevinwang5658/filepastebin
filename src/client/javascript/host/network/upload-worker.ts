@@ -1,45 +1,16 @@
-import { SignalingSocket } from '../../signaling/signaling-socket';
 import { RtcFileSender } from './webrtc/rtc-file-sender';
-import { BaseFileSender } from '../../webrtc-base/base-file-sender';
 
 export class UploadWorker {
-
-  private fileSender: BaseFileSender;
   public progress = 0;
-  public fileSize = 0;
+  public fileSize: number;
 
-  constructor(
-    private id: string,
-    private socket: SignalingSocket,
-    private file: Blob,
-    private progressChangedListener: () => void,
-  ) {
+  constructor(file: Blob, dataChannel: RTCDataChannel, progressListener: () => void) {
     this.fileSize = file.size;
-    this.init();
+    const sender = new RtcFileSender(file, dataChannel);
+    sender.onProgressChanged = (bytesSent) => {
+      this.progress = bytesSent;
+      progressListener();
+    };
+    sender.sendFiles();
   }
-
-  private async init(): Promise<void> {
-    const rtcFileSender = new RtcFileSender(this.id, this.file, this.socket);
-    const dataChannel = await rtcFileSender.initDataChannel();
-
-    console.log('dataChannel is open in uploadWorker');
-    dataChannel.onclose = this.onRTCClose;
-    this.onOpen(rtcFileSender);
-  }
-
-  private onOpen = (fileSender: BaseFileSender): void => {
-    console.log(`onopen: ${this.id}`);
-    this.fileSender = fileSender;
-    this.fileSender.onProgressChanged = this.onProgressChanged;
-    this.fileSender.sendFiles();
-  };
-
-  private onRTCClose = (): void => {
-    console.log('WebRTC channel closed');
-  };
-
-  private onProgressChanged = (progress: number): void => {
-    this.progress = progress;
-    this.progressChangedListener();
-  };
 }

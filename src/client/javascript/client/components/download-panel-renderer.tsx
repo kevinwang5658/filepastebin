@@ -33,4 +33,8 @@ export class DownloadPanelRenderer {
   public showRoomNotFound() {
     this.downloadPanelBase.setNotFound();
   }
+
+  public showTransferFailed() {
+    this.downloadPanelBase.setTransferFailed();
+  }
 }
