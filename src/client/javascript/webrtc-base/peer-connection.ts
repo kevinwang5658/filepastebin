@@ -8,8 +8,10 @@ class PeerConnection {
   protected peer: RTCPeerConnection;
   public onFailed: () => void = () => {};
 
-  constructor(protected socket: SignalingSocket) {
-    this.peer = new RTCPeerConnection(Constants.PeerConfiguration);
+  constructor(protected socket: SignalingSocket, iceServers: RTCIceServer[] = []) {
+    this.peer = new RTCPeerConnection({
+      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, ...iceServers],
+    });
     this.peer.onicecandidate = ev => {
       socket.send(new Message(TRANSFER_ID, MessageType.Signal, MessageAction.IceCandidate, ev.candidate));
     };
@@ -54,6 +56,10 @@ class PeerConnection {
 }
 
 export class HostPeerConnection extends PeerConnection {
+  constructor(socket: SignalingSocket, iceServers: RTCIceServer[] = []) {
+    super(socket, iceServers);
+  }
+
   // Creates a data channel, negotiates, and resolves once the receiver sends READY.
   public open(): Promise<RTCDataChannel> {
     const ch = this.peer.createDataChannel('transfer', { ordered: true });
@@ -79,6 +85,10 @@ export class HostPeerConnection extends PeerConnection {
 }
 
 export class ClientPeerConnection extends PeerConnection {
+  constructor(socket: SignalingSocket, iceServers: RTCIceServer[] = []) {
+    super(socket, iceServers);
+  }
+
   // Registers ondatachannel and resolves when the channel opens.
   // Does NOT send READY — caller does that to control when sending starts.
   public accept(): Promise<RTCDataChannel> {

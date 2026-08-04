@@ -40,11 +40,11 @@ paste.addEventListener('click', async (e) => {
 
     if (!res.ok) throw new Error('Failed to create room');
 
-    const { roomId, roomCode } = await res.json() as { roomId: string; roomCode: string };
+    const { roomId, roomCode, iceServers } = await res.json() as { roomId: string; roomCode: string; iceServers: RTCIceServer[] };
 
     const wsUrl = `${__SERVER_URL__ || window.location.origin}/room/${roomId}/ws?role=host`;
     signalingSocket = new SignalingSocket(wsUrl);
-    const socketManager = new HostNetworkManager(signalingSocket, files);
+    const socketManager = new HostNetworkManager(signalingSocket, files, iceServers ?? []);
 
     dialogManager.showHostDialog(roomCode, socketManager, () => {
       paste.disabled = false;

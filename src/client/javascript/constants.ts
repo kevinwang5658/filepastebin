@@ -56,16 +56,6 @@ export namespace Constants {
   export const RTC_OPEN = 'open';
   export const RTC_INIT_TIMEOUT = 5000;
 
-  export const PeerConfiguration = {
-    iceServers: [
-      { urls: 'stun:stun.l.google.com:19302' },
-      {
-        urls: ['turn:openrelay.metered.ca:80', 'turn:openrelay.metered.ca:443', 'turns:openrelay.metered.ca:443'],
-        username: 'openrelayproject',
-        credential: 'openrelayproject',
-      },
-    ],
-  };
 
   //***********************
   // Socket Constants

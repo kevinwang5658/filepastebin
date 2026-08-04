@@ -5,6 +5,8 @@ export { Room };
 export interface Env {
   ROOMS_KV: KVNamespace;
   ROOM: DurableObjectNamespace;
+  TURN_KEY_ID: string;
+  TURN_KEY_API_TOKEN: string;
 }
 
 interface FileDescription {
@@ -16,6 +18,34 @@ interface FileDescription {
 interface RoomInfo {
   files: FileDescription[];
   roomCode: string;
+}
+
+interface IceServer {
+  urls: string | string[];
+  username?: string;
+  credential?: string;
+}
+
+async function getTurnIceServers(env: Env): Promise<IceServer[]> {
+  if (!env.TURN_KEY_ID || !env.TURN_KEY_API_TOKEN) return [];
+  try {
+    const res = await fetch(
+      `https://rtc.live.cloudflare.com/v1/turn/keys/${env.TURN_KEY_ID}/credentials/generate`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${env.TURN_KEY_API_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ttl: 86400 }),
+      },
+    );
+    if (!res.ok) return [];
+    const data = await res.json<{ iceServers: IceServer }>();
+    return [data.iceServers];
+  } catch {
+    return [];
+  }
 }
 
 const CORS_HEADERS = {
@@ -68,7 +98,8 @@ export default {
         expirationTtl: 86400,
       });
 
-      return json({ roomId, roomCode });
+      const iceServers = await getTurnIceServers(env);
+      return json({ roomId, roomCode, iceServers });
     }
 
     // GET /api/room/:code — look up room by 6-digit code
@@ -84,7 +115,8 @@ export default {
     if (infoMatch && request.method === 'GET') {
       const roomInfo = await env.ROOMS_KV.get<RoomInfo>(`room-id:${infoMatch[1]}`, 'json');
       if (!roomInfo) return json(null, 404);
-      return json({ files: roomInfo.files });
+      const iceServers = await getTurnIceServers(env);
+      return json({ files: roomInfo.files, iceServers });
     }
 
     // GET /room/:roomId/ws — WebSocket upgrade to Durable Object

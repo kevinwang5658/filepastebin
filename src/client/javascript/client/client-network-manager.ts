@@ -15,10 +15,10 @@ export class ClientNetworkManager {
   // Accept is called immediately so ondatachannel is registered before 'joined' is sent.
   private channelPromise: Promise<RTCDataChannel>;
 
-  constructor(private socket: SignalingSocket, private files: Constants.FileDescription[]) {
+  constructor(private socket: SignalingSocket, private files: Constants.FileDescription[], iceServers: RTCIceServer[] = []) {
     socket.on('host-disconnected', () => this.onHostDisconnected());
 
-    this.clientPeer = new ClientPeerConnection(socket);
+    this.clientPeer = new ClientPeerConnection(socket, iceServers);
     this.clientPeer.onFailed = () => this.onTransferFailed();
     this.channelPromise = this.clientPeer.accept();
 

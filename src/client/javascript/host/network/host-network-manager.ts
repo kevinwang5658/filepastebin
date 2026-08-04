@@ -20,7 +20,7 @@ export class HostNetworkManager {
   private progressListeners: HostProgressListener[] = [];
   public state = HostProgressState.SOCKET_IO_WAITING_FOR_JOIN;
 
-  constructor(private socket: SignalingSocket, private files: File[]) {
+  constructor(private socket: SignalingSocket, private files: File[], private iceServers: RTCIceServer[] = []) {
     socket.on('disconnect', reason => console.log('Signaling disconnected:', reason));
     socket.on('error', err => console.log('Signaling error:', err));
     socket.on('client-joined', this.onNewClientJoined);
@@ -42,7 +42,7 @@ export class HostNetworkManager {
       ? this.files[0]
       : await this.zipFiles(this.files);
 
-    const peer = new HostPeerConnection(this.socket);
+    const peer = new HostPeerConnection(this.socket, this.iceServers);
     peer.onFailed = () => {
       this.currentWorker = null;
       this.callProgressStateListeners(HostProgressState.SOCKET_IO_WAITING_FOR_JOIN, 0);

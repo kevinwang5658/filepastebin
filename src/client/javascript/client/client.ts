@@ -17,12 +17,12 @@ console.log(adapter.browserDetails.browser);
       return;
     }
 
-    const { files } = await res.json() as { files: Constants.FileDescription[] };
+    const { files, iceServers } = await res.json() as { files: Constants.FileDescription[]; iceServers: RTCIceServer[] };
     downloadPanel.setFiles(files);
 
     const wsUrl = `${__SERVER_URL__ || window.location.origin}/room/${roomId}/ws?role=client`;
     const signalingSocket = new SignalingSocket(wsUrl);
-    const clientNetworkManager = new ClientNetworkManager(signalingSocket, files);
+    const clientNetworkManager = new ClientNetworkManager(signalingSocket, files, iceServers ?? []);
 
     clientNetworkManager.onProgressChangedCallback = (progress) => {
       downloadPanel.updateProgress(progress);
