@@ -46,7 +46,7 @@ paste.addEventListener('click', async (e) => {
     signalingSocket = new SignalingSocket(wsUrl);
     const socketManager = new HostNetworkManager(signalingSocket, files, iceServers ?? []);
 
-    dialogManager.showHostDialog(roomCode, socketManager, () => {
+    dialogManager.showHostDialog(roomCode, roomId, socketManager, () => {
       paste.disabled = false;
       paste.innerText = 'Paste It';
       paste.style.background = '#297FE2';

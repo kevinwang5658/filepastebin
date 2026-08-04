@@ -69,6 +69,7 @@ export namespace Constants {
 
   // client =====> host
   export const READY = 'ready';
+  export const DONE = 'done';
   // bytes are sent
   // host =====> client
   export const EOF = 'eof';

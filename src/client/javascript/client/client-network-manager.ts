@@ -33,6 +33,7 @@ export class ClientNetworkManager {
     const requester = new FileRequester(totalSize, channel);
     requester.onProgressChangedCallback = this.handleProgressChanged;
     const data = await requester.getCompleteListener();
+    channel.send(Constants.DONE);
 
     if (this.files.length === 1) {
       const f = this.files[0];

@@ -2,6 +2,7 @@ import { zip } from 'fflate';
 import { SignalingSocket } from '../../signaling/signaling-socket';
 import { UploadWorker } from './upload-worker';
 import { HostPeerConnection } from '../../webrtc-base/peer-connection';
+import { Constants } from '../../constants';
 
 export type HostProgressListener = (state: HostProgressState, uploadProgress: number) => void;
 
@@ -11,7 +12,8 @@ export enum HostProgressState {
   WEBRTC_CONNECTING,
   WEBRTC_CONNECTED,
   FILES_SENDING,
-  FILES_SENT
+  FILES_SENT,
+  FILES_DOWNLOADED
 }
 
 export class HostNetworkManager {
@@ -49,6 +51,12 @@ export class HostNetworkManager {
     };
 
     const ch = await peer.open();
+    ch.onmessage = (ev) => {
+      if (ev.data === Constants.DONE) {
+        this.state = HostProgressState.FILES_DOWNLOADED;
+        this.callProgressStateListeners(HostProgressState.FILES_DOWNLOADED, 1);
+      }
+    };
     this.currentWorker = new UploadWorker(blob, ch, this.onWorkerProgress);
   };
 
