@@ -1,19 +1,12 @@
+'use strict';
+
 const gulp = require('gulp');
 const del = require('del');
-const nodemon = require('gulp-nodemon');
 const watch = require('gulp-watch');
 const exec = require('child_process').exec;
 
 gulp.task('clean', () => {
   return del(['./dist', './tsconfig.tsbuildinfo']);
-});
-
-gulp.task('compile-ts', (done) => {
-  exec('tsc', (err, stdout, stderr) => {
-    console.log(stdout);
-    console.log(stderr);
-    done(err);
-  });
 });
 
 gulp.task('compile-client', (done) => {
@@ -31,7 +24,7 @@ gulp.task('copy-client', function copypublic() {
 
 gulp.task('build', gulp.series(
   'clean',
-  gulp.parallel('compile-ts', 'copy-client'),
+  gulp.parallel('copy-client', 'compile-client'),
 ));
 
 gulp.task('watch-public', () => {
@@ -50,15 +43,6 @@ gulp.task('watch-client', () => {
     });
 });
 
-gulp.task('nodemon', (done) => {
-  return nodemon({
-    script: 'dist/server/server.js',
-    watch: ['src/server'],
-    tasks: ['compile-ts'],
-    done: done,
-  });
-});
-
 gulp.task('watch', gulp.series(
   gulp.parallel('watch-public', 'watch-client')),
 );
@@ -66,9 +50,7 @@ gulp.task('watch', gulp.series(
 gulp.task('start-dev', (done) => {
   gulp.series(
     'clean',
-    'compile-ts',
     gulp.parallel('copy-client', 'compile-client'),
-    gulp.parallel('nodemon', 'watch'),
+    'watch',
   )(done);
 });
-
