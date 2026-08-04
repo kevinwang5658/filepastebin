@@ -45,7 +45,9 @@ class PeerConnection {
           .catch(console.error);
         break;
       case MessageAction.Answer:
-        this.peer.setRemoteDescription(msg.content as RTCSessionDescriptionInit).catch(console.error);
+        if (this.peer.signalingState === 'have-local-offer') {
+          this.peer.setRemoteDescription(msg.content as RTCSessionDescriptionInit).catch(console.error);
+        }
         break;
     }
   };
@@ -59,8 +61,10 @@ export class HostPeerConnection extends PeerConnection {
       ch.onmessage = ev => { if (ev.data === Constants.READY) resolve(); };
     });
     this.peer.onnegotiationneeded = async () => {
+      if (this.peer.signalingState !== 'stable') return;
       try {
         const offer = await this.peer.createOffer();
+        if (this.peer.signalingState !== 'stable') return;
         await this.peer.setLocalDescription(offer);
         this.socket.send(new Message(
           TRANSFER_ID, MessageType.Signal, MessageAction.Offer,
