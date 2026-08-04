@@ -1,77 +1,51 @@
-import { Socket } from 'socket.io-client';
+import { SignalingSocket } from '../signaling/signaling-socket';
 import { Constants } from '../constants';
 import { FileRequester } from './web-rtc/file-requester';
-import { Message } from '../webrtc-base/models/message';
-import MESSAGE = Constants.MESSAGE;
-import REQUEST_CLIENT = Constants.REQUEST_CLIENT;
-import RequestClientAcceptedModel = Constants.RequestClientAcceptedModel;
+import { ClientPeerConnection } from '../webrtc-base/peer-connection';
 
-declare let download: any;
+declare let download: (blob: Blob, name: string, size: number) => void;
 
 export class ClientNetworkManager {
 
-  public onProgressChangedCallback: (progress: number[]) => void = (_) => {
-  };
+  public onProgressChangedCallback: (progress: number[]) => void = () => {};
+  public onHostDisconnected: () => void = () => {};
+  public onTransferFailed: () => void = () => {};
 
-  private workers = new Map<string, FileRequester>();
-  private files: Constants.FileDescription[];
+  private clientPeer: ClientPeerConnection;
+  // Accept is called immediately so ondatachannel is registered before 'joined' is sent.
+  private channelPromise: Promise<RTCDataChannel>;
 
-  constructor(private socket: Socket,
-    private roomId: string) {
-    socket.on(MESSAGE, this.onMessage);
+  constructor(private socket: SignalingSocket, private files: Constants.FileDescription[], iceServers: RTCIceServer[] = []) {
+    socket.on('host-disconnected', () => this.onHostDisconnected());
 
-    this.joinSocketIORoom();
+    this.clientPeer = new ClientPeerConnection(socket, iceServers);
+    this.clientPeer.onFailed = () => this.onTransferFailed();
+    this.channelPromise = this.clientPeer.accept();
+
+    socket.sendControl('joined');
   }
 
   public requestDownload = async (): Promise<void> => {
-    for (const file of this.files) {
-      const id = file.fileName;
+    const channel = await this.channelPromise;
+    channel.send(Constants.READY);
 
-      this.workers.set(
-        id,
-        new FileRequester(
-          id,
-          this.socket,
-          file));
-    }
+    const totalSize = this.files.reduce((s, f) => s + f.fileSize, 0);
+    const requester = new FileRequester(totalSize, channel);
+    requester.onProgressChangedCallback = this.handleProgressChanged;
+    const data = await requester.getCompleteListener();
+    channel.send(Constants.DONE);
 
-    for (const worker of this.workers.values()) {
-      worker.onProgressChangedCallback = this.handleprogresschanged;
-      await worker.getCompleteListener()
-        .then((value: ArrayBuffer[]) => {
-          this.onDataLoaded(value, worker.file);
-        });
+    if (this.files.length === 1) {
+      const f = this.files[0];
+      download(new Blob(data, { type: f.fileType }), f.fileName, f.fileSize);
+    } else {
+      const blob = new Blob(data, { type: 'application/zip' });
+      download(blob, 'files.zip', blob.size);
     }
   };
 
-  private joinSocketIORoom = () => {
-    this.socket.emit(REQUEST_CLIENT, this.roomId, this.onRoomJoined);
-  };
-
-  private onRoomJoined = (res: RequestClientAcceptedModel) => {
-    this.files = res.files;
-  };
-
-  private onMessage = (message: Message) => {
-    this.workers.get(message.senderId).handleMessage(message);
-  };
-
-  private handleprogresschanged = () => {
-    const progress = [...this.workers.values()]
-      .map((peer: FileRequester) => peer.progress)
-      .map((progress) => progress * 100);
-
-
-    this.onProgressChangedCallback(progress);
-  };
-
-  private onDataLoaded = (value: ArrayBuffer[], file: Constants.FileDescription) => {
-    download(
-      new Blob(value, {
-        type: file.fileType,
-      }),
-      file.fileName,
-      file.fileSize,
-    );
+  private handleProgressChanged = (progress: number) => {
+    const allProgress = this.files.map(() => progress * 100);
+    this.onProgressChangedCallback(allProgress);
   };
 }

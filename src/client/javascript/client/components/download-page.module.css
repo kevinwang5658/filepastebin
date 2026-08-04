@@ -62,3 +62,25 @@
   max-width: 510px
 }
 
+.LoadingWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+  gap: 16px;
+}
+
+.LoadingText {
+  font-family: Roboto, Helvetica, sans-serif;
+  font-size: 16px;
+  color: #9B9B9B;
+}
+
+.NotFoundMessage {
+  font-family: Roboto, Helvetica, sans-serif;
+  font-size: 16px;
+  color: #9B9B9B;
+  text-align: center;
+  margin-top: 16px;
+}
+

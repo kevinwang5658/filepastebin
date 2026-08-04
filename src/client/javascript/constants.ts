@@ -56,9 +56,6 @@ export namespace Constants {
   export const RTC_OPEN = 'open';
   export const RTC_INIT_TIMEOUT = 5000;
 
-  export const PeerConfiguration = {
-    iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
-  };
 
   //***********************
   // Socket Constants
@@ -72,6 +69,7 @@ export namespace Constants {
 
   // client =====> host
   export const READY = 'ready';
+  export const DONE = 'done';
   // bytes are sent
   // host =====> client
   export const EOF = 'eof';

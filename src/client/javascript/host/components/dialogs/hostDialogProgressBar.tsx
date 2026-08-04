@@ -15,25 +15,35 @@ export function HostDialogProgressBar(props: HostDialogProgressBarProps) {
     itemState: ItemState.EMPTY,
     uploadProgress: 0,
   });
+  const [downloadItemState, setDownloadItemState] = useState(ItemState.EMPTY);
 
   useEffect(() => {
     const progressListener: HostProgressListener = throttle(50, (state: HostProgressState, uploadProgress: number) => {
-      if (state === HostProgressState.FILES_SENT) {
+      if (state === HostProgressState.FILES_DOWNLOADED) {
         setJoinItemState(ItemState.COMPLETE);
         setConnectItemState(ItemState.COMPLETE);
         setUploadItemState({ itemState: ItemState.COMPLETE, uploadProgress: 1 });
+        setDownloadItemState(ItemState.COMPLETE);
+      } else if (state === HostProgressState.FILES_SENT) {
+        setJoinItemState(ItemState.COMPLETE);
+        setConnectItemState(ItemState.COMPLETE);
+        setUploadItemState({ itemState: ItemState.COMPLETE, uploadProgress: 1 });
+        setDownloadItemState(ItemState.IN_PROGRESS);
       } else if (state >= HostProgressState.FILES_SENDING) {
         setJoinItemState(ItemState.COMPLETE);
         setConnectItemState(ItemState.COMPLETE);
         setUploadItemState({ itemState: ItemState.IN_PROGRESS, uploadProgress: uploadProgress });
+        setDownloadItemState(ItemState.EMPTY);
       } else if (state >= HostProgressState.SOCKET_IO_WAITING_FOR_JOIN) {
         setJoinItemState(ItemState.COMPLETE);
         setConnectItemState(ItemState.IN_PROGRESS);
         setUploadItemState({ itemState: ItemState.EMPTY, uploadProgress: 0 });
+        setDownloadItemState(ItemState.EMPTY);
       } else {
         setJoinItemState(ItemState.IN_PROGRESS);
         setConnectItemState(ItemState.EMPTY);
         setUploadItemState({ itemState: ItemState.EMPTY, uploadProgress: 0 });
+        setDownloadItemState(ItemState.EMPTY);
       }
     });
 
@@ -45,6 +55,7 @@ export function HostDialogProgressBar(props: HostDialogProgressBarProps) {
     <CheckMarkProgressItem inProgressText="Joining" completedText="Joined" state={joinItemState}/>
     <CheckMarkProgressItem inProgressText="Connecting" completedText="Connected" state={connectItemState}/>
     <FileSendProgressItem state={uploadItemState}/>
+    <CheckMarkProgressItem inProgressText="Downloading" completedText="Downloaded" state={downloadItemState}/>
   </div>;
 }
 

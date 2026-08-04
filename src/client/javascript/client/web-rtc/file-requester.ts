@@ -1,76 +1,32 @@
-import { Socket } from 'socket.io-client';
 import { Constants } from '../../constants';
-import { ClientRtcPeerConnectionWrapper } from './client-rtc-peer-connection-wrapper';
-import { FileRequest, Message, MessageAction, MessageType } from '../../webrtc-base/models/message';
 
 export class FileRequester {
-
   public progress = 0;
+  public onProgressChangedCallback: (n: number) => void = () => {};
 
-  private rtcPeer: RTCPeerConnection;
-  private rtcWrapper: ClientRtcPeerConnectionWrapper;
-  private dataChannel: RTCDataChannel;
-  private resolveOnComplete;
+  private receivedBytes = 0;
   private fileData: ArrayBuffer[] = [];
+  private resolveOnComplete: ((data: ArrayBuffer[]) => void) | null = null;
 
-  constructor(public id: string, private socket: Socket, public file: Constants.FileDescription) {
-    this.rtcPeer = new RTCPeerConnection(Constants.PeerConfiguration);
-    this.rtcWrapper = new ClientRtcPeerConnectionWrapper(this.rtcPeer, id, socket);
-
-    this.init();
+  constructor(private totalSize: number, dataChannel: RTCDataChannel) {
+    dataChannel.onmessage = ev => this.onMessage(ev.data);
   }
 
-  public handleMessage = (message: Message) => {
-    this.rtcWrapper.handleMessage(message);
-    if (message.type === MessageType.Data) {
-      this.onRTCMessage(message.content);
-    }
-  };
-
-  public getCompleteListener() {
-    return new Promise((resolve) => {
-      this.resolveOnComplete = resolve;
-    });
+  public getCompleteListener(): Promise<ArrayBuffer[]> {
+    return new Promise(resolve => { this.resolveOnComplete = resolve; });
   }
 
-  public onProgressChangedCallback: (number: number) => void = (_) => {
-  };
-
-  private requestFile = () => this.socket.send(
-    new Message(
-      this.id,
-      MessageType.Request,
-      MessageAction.CreatePeer,
-      new FileRequest(this.file.fileName)),
-  );
-
-  private init = () => {
-    this.rtcWrapper.initDataChannel()
-      .then((dataChannel) => {
-        console.log(`Promise return onOpen: ${this.id}`);
-
-        this.dataChannel = dataChannel;
-        this.dataChannel.onmessage = (ev: MessageEvent) => this.onRTCMessage(ev.data);
-      });
-
-    this.requestFile();
-  };
-
-  private onRTCMessage = (message: any) => {
-    if (message !== 'eof') {
-      this.fileData.push(message);
-      this.progress = (this.fileData[0].byteLength || 0) * this.fileData.length
-        / this.file.fileSize;
-    } else {
-      this.resolveOnComplete(this.fileData);
+  private onMessage = (data: unknown) => {
+    if (data === Constants.EOF) {
       this.progress = 1;
-
-      if (this.dataChannel) {
-        this.dataChannel.close();
-        this.rtcPeer.close();
-      }
+      this.onProgressChangedCallback(1);
+      this.resolveOnComplete?.(this.fileData);
+    } else {
+      const buf = data as ArrayBuffer;
+      this.fileData.push(buf);
+      this.receivedBytes += buf.byteLength;
+      this.progress = this.receivedBytes / this.totalSize;
+      this.onProgressChangedCallback(this.progress);
     }
-
-    this.onProgressChangedCallback(this.progress);
   };
 }

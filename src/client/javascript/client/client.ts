@@ -1,28 +1,46 @@
-import { io, Socket } from 'socket.io-client';
 import adapter from 'webrtc-adapter';
 import { ClientNetworkManager } from './client-network-manager';
 import { DownloadPanelRenderer } from './components/download-panel-renderer';
+import { SignalingSocket } from '../signaling/signaling-socket';
+import { Constants } from '../constants';
 
-declare const FILES_LIST: string;
-declare const ROOM_CODE: string;
-
-const filesList = JSON.parse(unescape(FILES_LIST));
-const roomCode = unescape(ROOM_CODE);
-
-const downloadPanel = new DownloadPanelRenderer(filesList);
-const socket: Socket = io();
-const clientNetworkManager = new ClientNetworkManager(socket, roomCode);
+const roomId = window.location.pathname.replace(/^\//, '');
+const downloadPanel = new DownloadPanelRenderer();
 
 console.log(adapter.browserDetails.browser);
 
-//******************************
-// Document events
-//******************************
+(async () => {
+  try {
+    const res = await fetch(`${__SERVER_URL__}/api/room/${roomId}/info`);
+    if (!res.ok) {
+      downloadPanel.showRoomNotFound();
+      return;
+    }
 
-downloadPanel.setOnDownloadClickedCallback(() => {
-  clientNetworkManager.requestDownload();
-});
+    const { files, iceServers } = await res.json() as { files: Constants.FileDescription[]; iceServers: RTCIceServer[] };
+    downloadPanel.setFiles(files);
 
-clientNetworkManager.onProgressChangedCallback = (progress: number[]) => {
-  downloadPanel.updateProgress(progress);
-};
+    const wsUrl = `${__SERVER_URL__ || window.location.origin}/room/${roomId}/ws?role=client`;
+    const signalingSocket = new SignalingSocket(wsUrl);
+    const clientNetworkManager = new ClientNetworkManager(signalingSocket, files, iceServers ?? []);
+
+    clientNetworkManager.onProgressChangedCallback = (progress) => {
+      downloadPanel.updateProgress(progress);
+    };
+
+    clientNetworkManager.onHostDisconnected = () => {
+      downloadPanel.showRoomNotFound();
+    };
+
+    clientNetworkManager.onTransferFailed = () => {
+      downloadPanel.showTransferFailed();
+    };
+
+    downloadPanel.setOnDownloadClickedCallback(() => {
+      clientNetworkManager.requestDownload();
+    });
+  } catch (err) {
+    console.error('Failed to load room:', err);
+    downloadPanel.showRoomNotFound();
+  }
+})();
