@@ -6,14 +6,6 @@ gulp.task('clean-prod', () => {
   return del(['./dist']);
 });
 
-gulp.task('compile-server-prod', (done) => {
-  exec('tsc', (err, stdout, stderr) => {
-    console.log(stdout);
-    console.log(stderr);
-    done(err);
-  });
-});
-
 gulp.task('compile-client-prod', (done) => {
   exec('cd src/client && npx webpack --mode=production', (err, stdout, stderr) => {
     console.log(stdout);
@@ -40,7 +32,6 @@ gulp.task('copy-pages-js', function() {
 
 gulp.task('build-prod', gulp.series(
   'clean-prod',
-  'compile-server-prod',
   gulp.parallel('copy-client-assets-prod', 'compile-client-prod'),
 ));
 
